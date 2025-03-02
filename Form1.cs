@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace RD_TableTool_WinForms
 {
     public partial class Form1 : Form
@@ -26,7 +28,7 @@ namespace RD_TableTool_WinForms
             this.MainMenuStrip = menuStrip;
             this.Controls.Add(menuStrip);
 
-            
+
         }
 
         //Datagrid Initalisieren
@@ -86,6 +88,16 @@ namespace RD_TableTool_WinForms
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void OkButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

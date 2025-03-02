@@ -184,6 +184,7 @@
             CancelButton.TabIndex = 4;
             CancelButton.Text = "Cancel";
             CancelButton.UseVisualStyleBackColor = true;
+            CancelButton.Click += CancelButton_Click;
             // 
             // OkButton
             // 
@@ -193,6 +194,7 @@
             OkButton.TabIndex = 5;
             OkButton.Text = "Ok";
             OkButton.UseVisualStyleBackColor = true;
+            OkButton.Click += OkButton_Click;
             // 
             // Form1
             // 
