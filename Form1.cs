@@ -37,7 +37,8 @@ namespace RD_TableTool_WinForms
             {
                 Location = new Point(10, 300), // Positioniere das DataGridView
                 Size = new Size(750, 250), // Setze die Größe des DataGridView
-                AllowUserToAddRows = true // Erlaube das Hinzufügen von Zeilen
+                AllowUserToAddRows = true, // Erlaube das Hinzufügen von Zeilen
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill //füllt die Spaltenbreite automatisch auf 
             };
 
             // Füge fünf Spalten hinzu
