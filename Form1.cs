@@ -42,9 +42,9 @@ namespace RD_TableTool_WinForms
 
             // Füge fünf Spalten hinzu
             dataGridView.Columns.Add("Colum1", "Name");
-            dataGridView.Columns.Add("Label", "Label");
-            dataGridView.Columns.Add("BaseEDT", "BaseEDT");
-            dataGridView.Columns.Add("CreateEDT", "CreateEDT");
+            dataGridView.Columns.Add("Colum2", "Label");
+            dataGridView.Columns.Add("Colum3", "BaseEDT");
+            dataGridView.Columns.Add("Colum4", "CreateEDT");
             dataGridView.Columns.Add("Column5", "Spalte 5");
 
             // Füge das DataGridView zum Formular hinzu

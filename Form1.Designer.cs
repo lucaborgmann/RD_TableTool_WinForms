@@ -41,6 +41,8 @@
             LabelLabel = new Label();
             NameTextBox = new TextBox();
             NameLabel = new Label();
+            CancelButton = new Button();
+            OkButton = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -174,11 +176,31 @@
             NameLabel.Text = "Name";
             NameLabel.Click += label1_Click;
             // 
+            // CancelButton
+            // 
+            CancelButton.Location = new Point(655, 568);
+            CancelButton.Name = "CancelButton";
+            CancelButton.Size = new Size(115, 35);
+            CancelButton.TabIndex = 4;
+            CancelButton.Text = "Cancel";
+            CancelButton.UseVisualStyleBackColor = true;
+            // 
+            // OkButton
+            // 
+            OkButton.Location = new Point(534, 568);
+            OkButton.Name = "OkButton";
+            OkButton.Size = new Size(115, 35);
+            OkButton.TabIndex = 5;
+            OkButton.Text = "Ok";
+            OkButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(782, 615);
+            Controls.Add(OkButton);
+            Controls.Add(CancelButton);
             Controls.Add(groupBox1);
             Controls.Add(menuStrip3);
             Name = "Form1";
@@ -204,5 +226,7 @@
         private CheckBox CreateEntityCheckBox;
         private CheckBox CreatePrivilegesCheckBox;
         private CheckBox CreateMenuItemsCheckBox;
+        private Button CancelButton;
+        private Button OkButton;
     }
 }
