@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -5,6 +6,7 @@ namespace RD_TableTool_WinForms
 {
     public partial class Form1 : Form
     {
+        private DataGridView dataGridView; //um es überall in der Klasse zu verwenden
         public Form1()
         {
             InitializeComponent();
@@ -36,7 +38,7 @@ namespace RD_TableTool_WinForms
         private void InitializeDataGridView()
         {
             // Erstelle ein neues DataGridView-Steuerelement
-            DataGridView dataGridView = new DataGridView
+            dataGridView = new DataGridView
             {
                 Location = new Point(10, 300), // Positioniere das DataGridView
                 Size = new Size(750, 250), // Setze die Größe des DataGridView
@@ -45,10 +47,10 @@ namespace RD_TableTool_WinForms
             };
 
             // Füge fünf Spalten hinzu
-            dataGridView.Columns.Add("Colum1", "Name");
-            dataGridView.Columns.Add("Colum2", "Label");
-            dataGridView.Columns.Add("Colum3", "BaseEDT");
-            dataGridView.Columns.Add("Colum4", "CreateEDT");
+            dataGridView.Columns.Add("Column1", "Name");
+            dataGridView.Columns.Add("Column2", "Label");
+            dataGridView.Columns.Add("Column3", "BaseEDT");
+            dataGridView.Columns.Add("Column4", "CreateEDT");
             dataGridView.Columns.Add("Column5", "Alternate Key");
 
             FormPatternCombobox.Items.Add("Simple List");
@@ -99,7 +101,48 @@ namespace RD_TableTool_WinForms
             string label = this.LabelTextBox.Text;
             string properties = this.PropertyTextBox.Text;
 
-            //Auslesen aller audgefüllten Felder im DataGrid 
+            //ArrayList zum speichern der Werte im aus dem DataGrid 
+            ArrayList dataListValues = new ArrayList();
+            //Falls das dataGrid initialiesiert ist
+            if (dataGridView != null)
+            {
+                // erstellen einer ArrayList mit allen Feldern des DataGrids 
+                foreach (DataGridViewRow row in dataGridView.Rows) //für jedes Element im DataGrid
+                {
+                    if (!row.IsNewRow) // Ignoriere die neue Zeile
+                    {
+                        string dataGridNameValue = row.Cells["Column1"].Value?.ToString();
+                        string dataGridLabelValue = row.Cells["Column2"].Value?.ToString();
+                        string baseEDT = row.Cells["Column3"].Value?.ToString();
+                        string createEDT = row.Cells["Column4"].Value?.ToString();
+                        string alternateKey = row.Cells["Column5"].Value?.ToString();
+
+                        // Ausgabe der Werte
+                        //Console.WriteLine($"Name: {name}, Label: {label}, BaseEDT: {baseEDT}, CreateEDT: {createEDT}, Alternate Key: {alternateKey}");
+                        //System.Diagnostics.Debug.WriteLine($"Name: {dataGridNameValue}, Label: {dataGridLabelValue}, BaseEDT: {baseEDT}, CreateEDT: {createEDT}, Alternate Key: {alternateKey}");
+
+
+                        // neues Objekt der Klasse DataGridViewRowData
+                        DataGridViewRowData rowData = new DataGridViewRowData
+                        {
+                            Name = dataGridNameValue,
+                            Label = dataGridLabelValue,
+                            BaseEDT = baseEDT,
+                            CreateEDT = createEDT,
+                            alternateKey = alternateKey
+                        };
+                        dataListValues.Add(rowData);
+
+
+                    }
+                }
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("DataGrid nicht initialiert");
+            }
+
+
 
 
         }
@@ -109,4 +152,17 @@ namespace RD_TableTool_WinForms
             this.Close();
         }
     }
+
+    //Klasse um die Daten besser speichern zu können 
+    public class DataGridViewRowData
+    {
+        public string Name { get; set; }
+        public string Label { get; set; }   
+        public string BaseEDT { get; set; }
+
+        public string CreateEDT {  get; set; }
+        public string alternateKey { get; set; }
+
+    }
+
 }
