@@ -48,7 +48,9 @@ namespace RD_TableTool_WinForms
             dataGridView.Columns.Add("Colum2", "Label");
             dataGridView.Columns.Add("Colum3", "BaseEDT");
             dataGridView.Columns.Add("Colum4", "CreateEDT");
-            dataGridView.Columns.Add("Column5", "Spalte 5");
+            dataGridView.Columns.Add("Column5", "Alternate Key");
+
+            FormPatternCombobox.Items.Add("Simple List");
 
             // Füge das DataGridView zum Formular hinzu
             this.Controls.Add(dataGridView);
@@ -92,7 +94,7 @@ namespace RD_TableTool_WinForms
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

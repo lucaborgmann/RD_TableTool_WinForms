@@ -34,7 +34,7 @@
             CreatePrivilegesCheckBox = new CheckBox();
             CreateEntityCheckBox = new CheckBox();
             FormPatternLabel = new Label();
-            comboBox1 = new ComboBox();
+            FormPatternCombobox = new ComboBox();
             textBox2 = new TextBox();
             PropertyLabel = new Label();
             textBox1 = new TextBox();
@@ -61,7 +61,7 @@
             groupBox1.Controls.Add(CreatePrivilegesCheckBox);
             groupBox1.Controls.Add(CreateEntityCheckBox);
             groupBox1.Controls.Add(FormPatternLabel);
-            groupBox1.Controls.Add(comboBox1);
+            groupBox1.Controls.Add(FormPatternCombobox);
             groupBox1.Controls.Add(textBox2);
             groupBox1.Controls.Add(PropertyLabel);
             groupBox1.Controls.Add(textBox1);
@@ -117,13 +117,13 @@
             FormPatternLabel.Text = "Form Pattern";
             FormPatternLabel.Click += label1_Click_2;
             // 
-            // comboBox1
+            // FormPatternCombobox
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(18, 116);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(151, 28);
-            comboBox1.TabIndex = 6;
+            FormPatternCombobox.FormattingEnabled = true;
+            FormPatternCombobox.Location = new Point(18, 116);
+            FormPatternCombobox.Name = "FormPatternCombobox";
+            FormPatternCombobox.Size = new Size(151, 28);
+            FormPatternCombobox.TabIndex = 6;
             // 
             // textBox2
             // 
@@ -224,7 +224,7 @@
         private Label PropertyLabel;
         private TextBox textBox2;
         private Label FormPatternLabel;
-        private ComboBox comboBox1;
+        private ComboBox FormPatternCombobox;
         private CheckBox CreateEntityCheckBox;
         private CheckBox CreatePrivilegesCheckBox;
         private CheckBox CreateMenuItemsCheckBox;
