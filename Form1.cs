@@ -1,4 +1,5 @@
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RD_TableTool_WinForms
 {
@@ -94,7 +95,13 @@ namespace RD_TableTool_WinForms
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-            
+            string name = this.NameTextBox.Text;
+            string label = this.LabelTextBox.Text;
+            string properties = this.PropertyTextBox.Text;
+
+            //Auslesen aller audgefüllten Felder im DataGrid 
+
+
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

@@ -35,9 +35,9 @@
             CreateEntityCheckBox = new CheckBox();
             FormPatternLabel = new Label();
             FormPatternCombobox = new ComboBox();
-            textBox2 = new TextBox();
+            PropertyTextBox = new TextBox();
             PropertyLabel = new Label();
-            textBox1 = new TextBox();
+            LabelTextBox = new TextBox();
             LabelLabel = new Label();
             NameTextBox = new TextBox();
             NameLabel = new Label();
@@ -62,9 +62,9 @@
             groupBox1.Controls.Add(CreateEntityCheckBox);
             groupBox1.Controls.Add(FormPatternLabel);
             groupBox1.Controls.Add(FormPatternCombobox);
-            groupBox1.Controls.Add(textBox2);
+            groupBox1.Controls.Add(PropertyTextBox);
             groupBox1.Controls.Add(PropertyLabel);
-            groupBox1.Controls.Add(textBox1);
+            groupBox1.Controls.Add(LabelTextBox);
             groupBox1.Controls.Add(LabelLabel);
             groupBox1.Controls.Add(NameTextBox);
             groupBox1.Controls.Add(NameLabel);
@@ -125,12 +125,12 @@
             FormPatternCombobox.Size = new Size(151, 28);
             FormPatternCombobox.TabIndex = 6;
             // 
-            // textBox2
+            // PropertyTextBox
             // 
-            textBox2.Location = new Point(393, 47);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(186, 27);
-            textBox2.TabIndex = 5;
+            PropertyTextBox.Location = new Point(393, 47);
+            PropertyTextBox.Name = "PropertyTextBox";
+            PropertyTextBox.Size = new Size(186, 27);
+            PropertyTextBox.TabIndex = 5;
             // 
             // PropertyLabel
             // 
@@ -142,12 +142,12 @@
             PropertyLabel.Text = "Property";
             PropertyLabel.Click += PropertyLabel_Click;
             // 
-            // textBox1
+            // LabelTextBox
             // 
-            textBox1.Location = new Point(185, 47);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(188, 27);
-            textBox1.TabIndex = 3;
+            LabelTextBox.Location = new Point(185, 47);
+            LabelTextBox.Name = "LabelTextBox";
+            LabelTextBox.Size = new Size(188, 27);
+            LabelTextBox.TabIndex = 3;
             // 
             // LabelLabel
             // 
@@ -220,9 +220,9 @@
         private Label NameLabel;
         private TextBox NameTextBox;
         private Label LabelLabel;
-        private TextBox textBox1;
+        private TextBox LabelTextBox;
         private Label PropertyLabel;
-        private TextBox textBox2;
+        private TextBox PropertyTextBox;
         private Label FormPatternLabel;
         private ComboBox FormPatternCombobox;
         private CheckBox CreateEntityCheckBox;
