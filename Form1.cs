@@ -109,6 +109,7 @@ namespace RD_TableTool_WinForms
                 // erstellen einer ArrayList mit allen Feldern des DataGrids 
                 foreach (DataGridViewRow row in dataGridView.Rows) //für jedes Element im DataGrid
                 {
+                    
                     if (!row.IsNewRow) // Ignoriere die neue Zeile
                     {
                         string dataGridNameValue = row.Cells["Column1"].Value?.ToString();
@@ -116,11 +117,6 @@ namespace RD_TableTool_WinForms
                         string baseEDT = row.Cells["Column3"].Value?.ToString();
                         string createEDT = row.Cells["Column4"].Value?.ToString();
                         string alternateKey = row.Cells["Column5"].Value?.ToString();
-
-                        // Ausgabe der Werte
-                        //Console.WriteLine($"Name: {name}, Label: {label}, BaseEDT: {baseEDT}, CreateEDT: {createEDT}, Alternate Key: {alternateKey}");
-                        //System.Diagnostics.Debug.WriteLine($"Name: {dataGridNameValue}, Label: {dataGridLabelValue}, BaseEDT: {baseEDT}, CreateEDT: {createEDT}, Alternate Key: {alternateKey}");
-
 
                         // neues Objekt der Klasse DataGridViewRowData
                         DataGridViewRowData rowData = new DataGridViewRowData
@@ -133,7 +129,15 @@ namespace RD_TableTool_WinForms
                         };
                         dataListValues.Add(rowData);
 
-
+                        //Prüfen ob ein neues EDT erstellt werden muss 
+                        if (createEDT.Equals("Yes",StringComparison.OrdinalIgnoreCase))
+                        {
+                            System.Diagnostics.Debug.WriteLine("CreateEDT: ist ja ");
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine("CreateEDT: ist Nein");
+                        }
                     }
                 }
             }
