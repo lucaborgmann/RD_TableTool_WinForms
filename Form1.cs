@@ -1,3 +1,4 @@
+using RD_TableTool_WinForms.Properties;
 using System.Collections;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -7,6 +8,13 @@ namespace RD_TableTool_WinForms
     public partial class Form1 : Form
     {
         private DataGridView dataGridView; //um es überall in der Klasse zu verwenden
+
+        //Pfade zu den AusgabeOrdnern
+        String MenuItemOutputDirectoryPath = Settings.Default.OutputMenuItemPath;
+        String EdtOutputPath = Settings.Default.OutputEDTPath;
+        String TableOutputPath = Settings.Default.OutputTablePath;
+        String FormsOutputpath = Settings.Default.OutputFormsPath;
+
         public Form1()
         {
             InitializeComponent();

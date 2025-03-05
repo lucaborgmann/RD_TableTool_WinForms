@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RD_Table_Tool.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="OutputMenuItemPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt</Value>
+    </Setting>
+    <Setting Name="OutputEDTPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\EDT</Value>
+    </Setting>
+    <Setting Name="OutputTablePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\Tables</Value>
+    </Setting>
+    <Setting Name="OutputFormsPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\Forms</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
