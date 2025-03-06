@@ -11,6 +11,7 @@ namespace RD_Table_Tool
 {
     class XML
     {
+        public static string scriptDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         //Konstruktor
         public XML() { }
 
@@ -26,7 +27,8 @@ namespace RD_Table_Tool
             {
                 // Template laden
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
+                //templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
+                templateDoc.Load($"{scriptDir}\\EdtTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("Lädt die Template-Datei");
 
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
@@ -73,7 +75,8 @@ namespace RD_Table_Tool
             try
             {
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
+                //templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
+                templateDoc.Load($"{scriptDir}\\EdtTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Lädt die Template-Datei");
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
                 XmlDocument newDoc = new XmlDocument();
@@ -125,7 +128,8 @@ namespace RD_Table_Tool
             try
             {
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\TableTemplate.xml");
+                //templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\TableTemplate.xml");
+                templateDoc.Load($"{scriptDir}\\TableTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("CreateTable: Lädt die Template-Datei");
 
                 XmlDocument newDoc = new XmlDocument();
@@ -225,7 +229,10 @@ namespace RD_Table_Tool
             {
                 //Lädt die Datei 
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\lucaborgmann\\RD_Table_Tool\\RD_Table_Tool\\FormTemplate.xml");
+                //templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\lucaborgmann\\RD_Table_Tool\\RD_Table_Tool\\FormTemplate.xml");
+                templateDoc.Load($"{scriptDir}\\FormTemplate.xml");
+
+                System.Diagnostics.Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("CreateForm: Lädt die Template-Datei");
 
                 // Schreibt die Werte der Template Datei in die neue XML Datei 
@@ -284,7 +291,8 @@ namespace RD_Table_Tool
                 //erstmal Entity XML anlegen
                 //Lädt die Datei 
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\lucaborgmann\\RD_Table_Tool\\RD_Table_Tool\\EntityTemplate.xml");
+                //templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\lucaborgmann\\RD_Table_Tool\\RD_Table_Tool\\EntityTemplate.xml");
+                templateDoc.Load($"{scriptDir}\\EntityTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("CreateEntity: Lädt die Template-Datei");
 
                 // Schreibt die Werte der Template Datei in die neue XML Datei 
