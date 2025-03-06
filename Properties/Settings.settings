@@ -1,9 +1,9 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RD_Table_Tool.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RD_TableTool_WinForms.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="OutputMenuItemPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt</Value>
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\MenuItems</Value>
     </Setting>
     <Setting Name="OutputEDTPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\EDT</Value>

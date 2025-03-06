@@ -25,7 +25,8 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\Men" +
+            "uItems")]
         public string OutputMenuItemPath {
             get {
                 return ((string)(this["OutputMenuItemPath"]));

@@ -85,6 +85,7 @@
             CreateMenuItemsCheckBox.TabIndex = 10;
             CreateMenuItemsCheckBox.Text = "CreateMenuItems";
             CreateMenuItemsCheckBox.UseVisualStyleBackColor = true;
+            CreateMenuItemsCheckBox.CheckedChanged += CreateMenuItemsCheckBox_CheckedChanged;
             // 
             // CreatePrivilegesCheckBox
             // 

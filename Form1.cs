@@ -17,6 +17,8 @@ namespace RD_TableTool_WinForms
         String TableOutputPath = Settings.Default.OutputTablePath;
         String FormsOutputpath = Settings.Default.OutputFormsPath;
 
+        bool isCheckedMenuItems = false;    
+
         public Form1()
         {
             InitializeComponent();
@@ -157,12 +159,26 @@ namespace RD_TableTool_WinForms
             {
                 System.Diagnostics.Debug.WriteLine("DataGrid nicht initialisiert");
             }
+
+            if (isCheckedMenuItems)
+            {
+                System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
+
+                XML.CreateMenuItem(name, label, MenuItemOutputDirectoryPath);
+                System.Diagnostics.Debug.WriteLine("Erstellt", "MenuItem wurde erstellt");
+            }
+
         }
 
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void CreateMenuItemsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            isCheckedMenuItems = true;
         }
     }
 
