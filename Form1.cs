@@ -1,6 +1,8 @@
+using RD_Table_Tool;
 using RD_TableTool_WinForms.Properties;
 using System.Collections;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RD_TableTool_WinForms
@@ -109,15 +111,15 @@ namespace RD_TableTool_WinForms
             string label = this.LabelTextBox.Text;
             string properties = this.PropertyTextBox.Text;
 
-            //ArrayList zum speichern der Werte im aus dem DataGrid 
-            ArrayList dataListValues = new ArrayList();
-            //Falls das dataGrid initialiesiert ist
+            // Liste zum Speichern der Werte aus dem DataGrid
+            List<Dictionary<string, string>> dataListValues = new List<Dictionary<string, string>>();
+
+            // Falls das DataGrid initialisiert ist
             if (dataGridView != null)
             {
-                // erstellen einer ArrayList mit allen Feldern des DataGrids 
-                foreach (DataGridViewRow row in dataGridView.Rows) //für jedes Element im DataGrid
+                // Erstellen einer Liste mit allen Feldern des DataGrids
+                foreach (DataGridViewRow row in dataGridView.Rows) // für jedes Element im DataGrid
                 {
-                    
                     if (!row.IsNewRow) // Ignoriere die neue Zeile
                     {
                         string dataGridNameValue = row.Cells["Column1"].Value?.ToString();
@@ -126,38 +128,37 @@ namespace RD_TableTool_WinForms
                         string createEDT = row.Cells["Column4"].Value?.ToString();
                         string alternateKey = row.Cells["Column5"].Value?.ToString();
 
-                        // neues Objekt der Klasse DataGridViewRowData
-                        DataGridViewRowData rowData = new DataGridViewRowData
-                        {
-                            Name = dataGridNameValue,
-                            Label = dataGridLabelValue,
-                            BaseEDT = baseEDT,
-                            CreateEDT = createEDT,
-                            alternateKey = alternateKey
-                        };
+                        // Neues Dictionary für die Zeile erstellen
+                        Dictionary<string, string> rowData = new Dictionary<string, string>
+                {
+                    { "Name", dataGridNameValue },
+                    { "Label", dataGridLabelValue },
+                    { "BaseEDT", baseEDT },
+                    { "CreateEDT", createEDT },
+                    { "AlternateKey", alternateKey }
+                };
+
                         dataListValues.Add(rowData);
 
-                        //Prüfen ob ein neues EDT erstellt werden muss 
-                        if (createEDT.Equals("Yes",StringComparison.OrdinalIgnoreCase))
+                        // Prüfen, ob ein neues EDT erstellt werden muss
+                        if (createEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
                         {
-                            System.Diagnostics.Debug.WriteLine("CreateEDT: ist ja ");
-                        }
-                        else
-                        {
-                            System.Diagnostics.Debug.WriteLine("CreateEDT: ist Nein");
+                            System.Diagnostics.Debug.WriteLine("CreateEDT: ist ja");
+                            System.Diagnostics.Debug.WriteLine($"Der ist {dataGridNameValue}");
+                            XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", $"C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\EDT");
                         }
                     }
                 }
+
+                // Übergabe der Liste an die CreateTable-Methode
+                XML.CreateTable(name, label, "C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\Tables", dataListValues);
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("DataGrid nicht initialiert");
+                System.Diagnostics.Debug.WriteLine("DataGrid nicht initialisiert");
             }
-
-
-
-
         }
+
 
         private void CancelButton_Click(object sender, EventArgs e)
         {

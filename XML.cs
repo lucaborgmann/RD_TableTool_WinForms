@@ -26,7 +26,7 @@ namespace RD_Table_Tool
             {
                 // Template laden
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\lucaborgmann\\RD_Table_Tool\\RD_Table_Tool\\MenuItemTemplate.xml");
+                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("Lädt die Template-Datei");
 
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
@@ -73,7 +73,7 @@ namespace RD_Table_Tool
             try
             {
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\lucaborgmann\\RD_Table_Tool\\RD_Table_Tool\\EdtTemplate.xml");
+                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Lädt die Template-Datei");
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
                 XmlDocument newDoc = new XmlDocument();
@@ -114,6 +114,7 @@ namespace RD_Table_Tool
 
         }
 
+        /*
         public static void CreateTable(string pName, string pLabel, string pOutputPath, ArrayList fieldList)
         {
             string name = pName;
@@ -125,7 +126,7 @@ namespace RD_Table_Tool
             try
             {
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\lucaborgmann\\RD_Table_Tool\\RD_Table_Tool\\TableTemplate.xml");
+                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\TableTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("CreateTable: Lädt die Template-Datei");
 
                 XmlDocument newDoc = new XmlDocument();
@@ -227,6 +228,110 @@ namespace RD_Table_Tool
                 System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
             }
         }
+        */
+
+        public static void CreateTable(string pName, string pLabel, string pOutputPath, List<Dictionary<string, string>> fieldList)
+        {
+            string name = pName;
+            string label = pLabel;
+            string outputPath = pOutputPath;
+
+            System.Diagnostics.Debug.WriteLine($"Größe der Liste: {fieldList.Count}");
+
+            try
+            {
+                XmlDocument templateDoc = new XmlDocument();
+                templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\TableTemplate.xml");
+                System.Diagnostics.Debug.WriteLine("CreateTable: Lädt die Template-Datei");
+
+                XmlDocument newDoc = new XmlDocument();
+                newDoc.LoadXml(templateDoc.OuterXml);
+
+                XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label");
+
+                foreach (XmlNode node in nodes)
+                {
+                    switch (node.Name)
+                    {
+                        case "Name":
+                            node.InnerText = name;
+                            System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt den Namen");
+                            break;
+                        case "Label":
+                            node.InnerText = label;
+                            System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt das Label");
+                            break;
+                    }
+                }
+
+                // Alle Nodes finden, nur das letzte weiterverwerten
+                XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");
+                XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null;
+
+                if (fieldNode != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("CreateTable: fieldNode ist nicht leer");
+
+                    foreach (Dictionary<string, string> fieldDict in fieldList) // Durchläuft die inneren Dictionaries in der Liste
+                    {
+                        if (fieldDict != null)
+                        {
+                            // Zugriff auf die Werte im Dictionary
+                            string fieldName = fieldDict["Name"];
+                            string fieldLabel = fieldDict["Label"];
+                            string fieldBaseEDT = fieldDict["BaseEDT"];
+                            string fieldCreatEDT = fieldDict["CreateEDT"];
+
+                            // Ausgabe der Werte
+                            Console.WriteLine($"Name: {fieldName}, Label: {fieldLabel}, BaseEDT: {fieldBaseEDT}");
+
+                            XmlElement neuesAxTableField = newDoc.CreateElement("AxTableField"); //erstellt ein neues XML Dokument
+
+                            // Attribut für i:type setzen (Namespace beachten!)
+                            XmlAttribute typeAttribute = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
+
+                            // Hier prüfen, ob CreateEDT Yes ist
+                            if (fieldCreatEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                            {
+                                typeAttribute.Value = $"AxTableField{fieldName}";
+                            }
+                            else
+                            {
+                                typeAttribute.Value = $"AxTableField{fieldBaseEDT}";
+                            }
+                            neuesAxTableField.Attributes.Append(typeAttribute);
+
+                            // Name-Element hinzufügen
+                            XmlElement nameElement = newDoc.CreateElement("Name");
+                            nameElement.InnerText = fieldName;
+                            neuesAxTableField.AppendChild(nameElement);
+
+                            fieldNode.AppendChild(neuesAxTableField);
+                        }
+                    }
+
+                    System.Diagnostics.Debug.WriteLine("Neues Feld hinzugefügt");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
+                }
+
+                // Speichern erst nach allen Änderungen
+                string[] paths = { @$"{outputPath}", $"{name}", ".xml" };
+                string fullPath = Path.Combine(paths);
+                System.Diagnostics.Debug.WriteLine($"Ausgabe fullpath: {fullPath}");
+
+                newDoc.Save($"{outputPath}\\{name}.xml");
+                System.Diagnostics.Debug.WriteLine("CreateTable: XML-Datei aktualisiert");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
+            }
+        }
+
+
         public static void CreateForm(string pName, string pOutputPath)
         {
             string name = pName;
