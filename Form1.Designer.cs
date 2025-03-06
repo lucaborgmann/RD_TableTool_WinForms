@@ -107,6 +107,7 @@
             CreateEntityCheckBox.TabIndex = 8;
             CreateEntityCheckBox.Text = "Create Entity";
             CreateEntityCheckBox.UseVisualStyleBackColor = true;
+            CreateEntityCheckBox.CheckedChanged += CreateEntityCheckBox_CheckedChanged;
             // 
             // FormPatternLabel
             // 

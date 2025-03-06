@@ -17,7 +17,8 @@ namespace RD_TableTool_WinForms
         String TableOutputPath = Settings.Default.OutputTablePath;
         String FormsOutputpath = Settings.Default.OutputFormsPath;
 
-        bool isCheckedMenuItems = false;    
+        bool isCheckedMenuItems = false;
+        bool isChecked_Entity = false;
 
         public Form1()
         {
@@ -168,6 +169,12 @@ namespace RD_TableTool_WinForms
                 System.Diagnostics.Debug.WriteLine("Erstellt", "MenuItem wurde erstellt");
             }
 
+            if (isChecked_Entity)
+            {
+                System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
+
+            }
+
         }
 
 
@@ -179,6 +186,11 @@ namespace RD_TableTool_WinForms
         private void CreateMenuItemsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             isCheckedMenuItems = true;
+        }
+
+        private void CreateEntityCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            isChecked_Entity = true;
         }
     }
 
