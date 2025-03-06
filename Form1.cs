@@ -13,8 +13,8 @@ namespace RD_TableTool_WinForms
 
         //Pfade zu den AusgabeOrdnern
         String MenuItemOutputDirectoryPath = Settings.Default.OutputMenuItemPath;
-        String EdtOutputPath = Settings.Default.OutputEDTPath;
-        String TableOutputPath = Settings.Default.OutputTablePath;
+        String OutputEDTPath = Settings.Default.OutputEDTPath;
+        String OutputTablePath = Settings.Default.OutputTablePath;
         String FormsOutputpath = Settings.Default.OutputFormsPath;
 
         bool isCheckedMenuItems = false;
@@ -148,13 +148,13 @@ namespace RD_TableTool_WinForms
                         {
                             System.Diagnostics.Debug.WriteLine("CreateEDT: ist ja");
                             System.Diagnostics.Debug.WriteLine($"Der ist {dataGridNameValue}");
-                            XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", $"C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\EDT");
+                            XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", OutputEDTPath);
                         }
                     }
                 }
 
                 // Übergabe der Liste an die CreateTable-Methode
-                XML.CreateTable(name, label, "C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\Tables", dataListValues);
+                XML.CreateTable(name, label, OutputTablePath, dataListValues);
             }
             else
             {
@@ -174,6 +174,10 @@ namespace RD_TableTool_WinForms
                 System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
 
             }
+
+            //als letztes 
+            XML.CreateForm(name, FormsOutputpath);
+
 
         }
 
