@@ -177,8 +177,6 @@ namespace RD_TableTool_WinForms
 
             //als letztes 
             XML.CreateForm(name, FormsOutputpath);
-
-
         }
 
 
