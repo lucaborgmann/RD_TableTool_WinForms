@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic;
 using RD_Table_Tool;
 using RD_TableTool_WinForms.Properties;
 using System.Collections;
@@ -10,6 +11,7 @@ namespace RD_TableTool_WinForms
     public partial class Form1 : Form
     {
         private DataGridView dataGridView; //um es überall in der Klasse zu verwenden
+        public static string scriptDirForm = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
         //Pfade zu den AusgabeOrdnern
         String MenuItemOutputDirectoryPath = Settings.Default.OutputMenuItemPath;
@@ -234,12 +236,40 @@ namespace RD_TableTool_WinForms
 
         private void OpenFileMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Open file menu clicked!");
+            OpenFileDialog ofd = new OpenFileDialog()
+            {
+                InitialDirectory = $"{scriptDirForm}",
+                Filter = "XML Dateien (*.xml)|*.xml",
+                Title = "Datei zum Öffnen auswählen"
+            };
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show($"Öffnen: {ofd.FileName}");
+                // Hier kannst du den Code hinzufügen, um die Datei zu laden und zu verarbeiten
+            }
+            else
+            {
+                MessageBox.Show("Abbruch");
+            }
         }
 
-        private void SaveFileMenuItem_Click(object sender, EventArgs e)
+        private void SaveFileMenuItem_Click(object sender, EventArgs e) 
         {
-            MessageBox.Show("Save file menu clicked!");
+            //Quelle: Einstieg in C# mit Visual Studio 2022 von Thomas Theis Thomas Theis Seite 353
+
+            /*
+            FolderBrowserDialog fbd     = new FolderBrowserDialog();
+            MessageBox.Show(fbd.ShowDialog() == DialogResult.OK ? $"Verzeichnis: {fbd.SelectedPath}" : "Abbruch"); // If-Bedingung in einer Zeile 
+            */
+
+            SaveFileDialog sfd = new SaveFileDialog()
+            {
+                InitialDirectory = scriptDirForm,
+                Filter = "XML Dateien (*.xml)|*.xml",
+                Title = "Datei zum Speichern auswählen"
+            };
+            MessageBox.Show(sfd.ShowDialog() == DialogResult.OK ? $"Speichern: {sfd.FileName}" : "Abbruch");
         }
 
     }
