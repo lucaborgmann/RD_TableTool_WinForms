@@ -295,9 +295,20 @@ namespace RD_TableTool_WinForms
                 }
             }
             //DataGrid 
-        }
-            
+            XmlNodeList nodes = doc.SelectNodes("//datagrid/field");
 
+            // Zeile für Zeile hinzufügen
+            foreach (XmlNode node in nodes)
+            {
+                string fieldName = node.SelectSingleNode("fieldname")?.InnerText ?? "Kein Wert";
+                string fieldLabel = node.SelectSingleNode("fieldlabel")?.InnerText ?? "Kein Wert";
+                string baseEDT = node.SelectSingleNode("baseEDT")?.InnerText ?? "Kein Wert";
+                string createEDT = node.SelectSingleNode("createEDT")?.InnerText ?? "Kein Wert";
+                string alternateKey = node.SelectSingleNode("alternateKey")?.InnerText ?? "Kein Wert";
+
+                dataGridView.Rows.Add(fieldName, fieldLabel, baseEDT, createEDT, alternateKey);
+            }
+        }
     }
 
 
