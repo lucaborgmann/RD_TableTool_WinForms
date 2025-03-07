@@ -3,6 +3,7 @@ using RD_Table_Tool;
 using RD_TableTool_WinForms.Properties;
 using System.Collections;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Serialization;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -39,14 +40,15 @@ namespace RD_TableTool_WinForms
             ToolStripMenuItem optionsMenu = new ToolStripMenuItem("Options");
 
             // Erstelle Untermenüpunkte für "File"
-            ToolStripMenuItem newFileMenuItem = new ToolStripMenuItem("New");
+            ToolStripMenuItem SaveAsFileMenuItem = new ToolStripMenuItem("Save as");
             ToolStripMenuItem openFileMenuItem = new ToolStripMenuItem("Open");
             ToolStripMenuItem saveFileMenuItem = new ToolStripMenuItem("Save");
 
             // Füge die Untermenüpunkte dem "File"-Menü hinzu
-            fileMenu.DropDownItems.Add(newFileMenuItem);
-            fileMenu.DropDownItems.Add(openFileMenuItem);
             fileMenu.DropDownItems.Add(saveFileMenuItem);
+            fileMenu.DropDownItems.Add(SaveAsFileMenuItem);
+            fileMenu.DropDownItems.Add(openFileMenuItem);
+           
 
             // Füge die Menüpunkte zum MenuStrip hinzu
             menuStrip.Items.Add(fileMenu);
@@ -64,7 +66,7 @@ namespace RD_TableTool_WinForms
            //newFileMenuItem.Click += new EventHandler(NewFileMenuItem_Click);
            openFileMenuItem.Click += new EventHandler(OpenFileMenuItem_Click);
            saveFileMenuItem.Click += new EventHandler(SaveFileMenuItem_Click);
-
+           SaveAsFileMenuItem.Click += new EventHandler(SaveAsFileMenuItem_Click);
 
         }
 
@@ -226,13 +228,12 @@ namespace RD_TableTool_WinForms
         {
             System.Diagnostics.Debug.WriteLine("New File Clicked");
         }
-        // Ereignishandler für die Untermenüpunkte
-        /*
-        private void NewFileMenuItem_Click(object sender, EventArgs e)
+
+
+        private void SaveAsFileMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("New file menu clicked!");
+            System.Diagnostics.Debug.WriteLine("Save as wurde gedrückt");
         }
-        */
 
         private void OpenFileMenuItem_Click(object sender, EventArgs e)
         {
@@ -247,6 +248,7 @@ namespace RD_TableTool_WinForms
             {
                 MessageBox.Show($"Öffnen: {ofd.FileName}");
                 // Hier kannst du den Code hinzufügen, um die Datei zu laden und zu verarbeiten
+                LoadFile(ofd.FileName); 
             }
             else
             {
@@ -256,13 +258,7 @@ namespace RD_TableTool_WinForms
 
         private void SaveFileMenuItem_Click(object sender, EventArgs e) 
         {
-            //Quelle: Einstieg in C# mit Visual Studio 2022 von Thomas Theis Thomas Theis Seite 353
-
-            /*
-            FolderBrowserDialog fbd     = new FolderBrowserDialog();
-            MessageBox.Show(fbd.ShowDialog() == DialogResult.OK ? $"Verzeichnis: {fbd.SelectedPath}" : "Abbruch"); // If-Bedingung in einer Zeile 
-            */
-
+            //Quelle: Einstieg in C# mit Visual Studio 2022 von Thomas Theis Thomas Theis Seite 352
             SaveFileDialog sfd = new SaveFileDialog()
             {
                 InitialDirectory = scriptDirForm,
@@ -271,6 +267,50 @@ namespace RD_TableTool_WinForms
             };
             MessageBox.Show(sfd.ShowDialog() == DialogResult.OK ? $"Speichern: {sfd.FileName}" : "Abbruch");
         }
+
+        private void SafeFile(string pFilePath)
+        {
+
+        }
+
+        private void LoadFile(string pFilePath)
+        {
+   
+            XmlDocument doc = new XmlDocument();
+            doc.Load(pFilePath);
+
+            XmlNodeList elemList = doc.GetElementsByTagName("name");
+            
+            foreach (XmlNode node in elemList) 
+            {
+                string tagValue = node.InnerText;
+                NameTextBox.Text = tagValue;
+            }
+
+            XmlNodeList elemList2 = doc.GetElementsByTagName("label");
+
+            foreach (XmlNode node2 in elemList2)
+            {
+                string tagValue2 = node2.InnerText;
+                LabelTextBox.Text = tagValue2;
+            }
+
+            XmlNodeList elemList3 = doc.GetElementsByTagName("property");
+            foreach (XmlNode node3 in elemList3)
+            {
+                string tagValue3 = node3.InnerText;
+                PropertyTextBox.Text = tagValue3;
+            }
+
+
+            XmlNodeList elemList4 = doc.GetElementsByTagName("formpattern");
+            foreach (XmlNode node4 in elemList4)
+            {
+                string tagValue4 = node4.InnerText;
+                FormPatternCombobox.Text = tagValue4;
+            }
+        }
+            
 
     }
 
