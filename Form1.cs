@@ -275,40 +275,26 @@ namespace RD_TableTool_WinForms
 
         private void LoadFile(string pFilePath)
         {
-   
+            //Lädt das angegebene XML Dokument
             XmlDocument doc = new XmlDocument();
             doc.Load(pFilePath);
 
-            XmlNodeList elemList = doc.GetElementsByTagName("name");
-            
-            foreach (XmlNode node in elemList) 
+            Dictionary<string, Action<string>> tagHandlers = new Dictionary<string, Action<string>> //name des XML Tags Action <string> Aktion die ausgeführt wird
+{
+                { "name", value => NameTextBox.Text = value }, //lamda Funktion weißt InnerText eines XML-Knotens das UI-Element zu
+                { "label", value => LabelTextBox.Text = value },
+                { "property", value => PropertyTextBox.Text = value },
+                { "formpattern", value => FormPatternCombobox.Text = value }
+            };
+
+            foreach (XmlNode node in doc.DocumentElement.ChildNodes)
             {
-                string tagValue = node.InnerText;
-                NameTextBox.Text = tagValue;
+                if (tagHandlers.TryGetValue(node.Name, out var handler)) //prüft aktuelles XmlNode als Schlüssel in in tagshandler Dictonary vorkommt
+                {
+                    handler(node.InnerText); //falls Handler existiert gespeicherte Aktion ausgeführt 
+                }
             }
-
-            XmlNodeList elemList2 = doc.GetElementsByTagName("label");
-
-            foreach (XmlNode node2 in elemList2)
-            {
-                string tagValue2 = node2.InnerText;
-                LabelTextBox.Text = tagValue2;
-            }
-
-            XmlNodeList elemList3 = doc.GetElementsByTagName("property");
-            foreach (XmlNode node3 in elemList3)
-            {
-                string tagValue3 = node3.InnerText;
-                PropertyTextBox.Text = tagValue3;
-            }
-
-
-            XmlNodeList elemList4 = doc.GetElementsByTagName("formpattern");
-            foreach (XmlNode node4 in elemList4)
-            {
-                string tagValue4 = node4.InnerText;
-                FormPatternCombobox.Text = tagValue4;
-            }
+            //DataGrid 
         }
             
 
