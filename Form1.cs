@@ -28,6 +28,8 @@ namespace RD_TableTool_WinForms
             InitializeComponent();
             InitializeMenu();
             InitializeDataGridView();
+            this.FormBorderStyle = FormBorderStyle.FixedSingle; //Verhindert das Vergrößern des Fensters 
+            this.MaximizeBox = false; // Optional: Deaktiviert die Maximieren-Schaltfläche
         }
 
         private void InitializeMenu()
