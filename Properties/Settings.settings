@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="OutputMenuItemPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\MenuItems</Value>
+      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxMenuItemDisplay</Value>
     </Setting>
     <Setting Name="OutputEDTPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\EDT</Value>
+      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxEDT</Value>
     </Setting>
     <Setting Name="OutputTablePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\Tables</Value>
+      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxTable</Value>
     </Setting>
     <Setting Name="OutputFormsPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\Forms</Value>
+      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxForm</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -36,6 +36,16 @@ namespace RD_TableTool_WinForms
             ToolStripMenuItem fileMenu = new ToolStripMenuItem("File");
             ToolStripMenuItem optionsMenu = new ToolStripMenuItem("Options");
 
+            // Erstelle Untermenüpunkte für "File"
+            ToolStripMenuItem newFileMenuItem = new ToolStripMenuItem("New");
+            ToolStripMenuItem openFileMenuItem = new ToolStripMenuItem("Open");
+            ToolStripMenuItem saveFileMenuItem = new ToolStripMenuItem("Save");
+
+            // Füge die Untermenüpunkte dem "File"-Menü hinzu
+            fileMenu.DropDownItems.Add(newFileMenuItem);
+            fileMenu.DropDownItems.Add(openFileMenuItem);
+            fileMenu.DropDownItems.Add(saveFileMenuItem);
+
             // Füge die Menüpunkte zum MenuStrip hinzu
             menuStrip.Items.Add(fileMenu);
             menuStrip.Items.Add(optionsMenu);
@@ -43,6 +53,15 @@ namespace RD_TableTool_WinForms
             // Füge das MenuStrip zum Formular hinzu
             this.MainMenuStrip = menuStrip;
             this.Controls.Add(menuStrip);
+
+            // Füge Ereignishandler für die Menüpunkte hinzu
+            fileMenu.Click += new EventHandler(FileMenu_Click);
+            //optionsMenu.Click += new EventHandler(OptionsMenu_Click);
+
+            // Füge Ereignishandler für die Untermenüpunkte hinzu
+           //newFileMenuItem.Click += new EventHandler(NewFileMenuItem_Click);
+           openFileMenuItem.Click += new EventHandler(OpenFileMenuItem_Click);
+           saveFileMenuItem.Click += new EventHandler(SaveFileMenuItem_Click);
 
 
         }
@@ -194,7 +213,37 @@ namespace RD_TableTool_WinForms
         {
             isChecked_Entity = true;
         }
+        // Ereignishandler für den "File"-Menüpunkt
+        private void FileMenu_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show("File menu clicked!");
+            System.Diagnostics.Debug.WriteLine("File Menu Clicked");
+        }
+
+        private void NewFileMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("New File Clicked");
+        }
+        // Ereignishandler für die Untermenüpunkte
+        /*
+        private void NewFileMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("New file menu clicked!");
+        }
+        */
+
+        private void OpenFileMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Open file menu clicked!");
+        }
+
+        private void SaveFileMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Save file menu clicked!");
+        }
+
     }
+
 
     //Klasse um die Daten besser speichern zu können 
     public class DataGridViewRowData
