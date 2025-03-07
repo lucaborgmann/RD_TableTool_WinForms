@@ -246,7 +246,7 @@ namespace RD_TableTool_WinForms
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show($"Öffnen: {ofd.FileName}");
+                //MessageBox.Show($"Öffnen: {ofd.FileName}");
                 // Hier kannst du den Code hinzufügen, um die Datei zu laden und zu verarbeiten
                 LoadFile(ofd.FileName); 
             }
