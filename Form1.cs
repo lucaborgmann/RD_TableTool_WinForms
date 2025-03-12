@@ -159,13 +159,13 @@ namespace RD_TableTool_WinForms
 
                         // Neues Dictionary für die Zeile erstellen
                         Dictionary<string, string> rowData = new Dictionary<string, string>
-                {
+                        {
                             { "Name", dataGridNameValue },
                             { "Label", dataGridLabelValue },
                             { "BaseEDT", baseEDT },
                             { "CreateEDT", createEDT },
                             { "AlternateKey", alternateKey }
-                };
+                        };
 
                         dataListValues.Add(rowData);
 
@@ -246,13 +246,73 @@ namespace RD_TableTool_WinForms
             {
                 string filePath = saveFileDialog.FileName;
 
-                // Beispiel-Daten
-                var data = new XElement("Data",
+                // Beispiel-Daten 
+                /*
+                var data = new XElement("Root",
                      //new XElement("Item", new XAttribute("Name", "Item1"), new XAttribute("Value", "Value1")),
                      new XElement("name", this.NameTextBox.Text),
                      new XElement("label", this.LabelTextBox.Text),
                      new XElement("property",this.PropertyTextBox.Text),
-                     new XElement("formpattern",this.FormPatternCombobox.Text)
+                     new XElement("formpattern",this.FormPatternCombobox.Text),
+
+                    new XElement("DataGrid",
+                        new XElement("field",
+                            new XElement("fieldname", "tabellenfeld2"),
+                            new XElement("fieldlabel", "@Test:Kunde"),
+                            new XElement("baseEDT", "int64"),
+                            new XElement("createEDT", "Yes"),
+                            new XElement("alternateKey", "NO")
+                        )
+                    )   
+                );
+                */
+                /*
+                var data = new XElement("Root",
+                    new XElement("name", this.NameTextBox.Text),
+                    new XElement("label", this.LabelTextBox.Text),
+                    new XElement("property", this.PropertyTextBox.Text),
+                    new XElement("formpattern", this.FormPatternCombobox.Text),
+                    new XElement("DataGrid",
+                        from row in this.dataGridView.Rows.Cast<DataGridViewRow>()
+                        where !row.IsNewRow
+                        select new XElement("field",
+                            new XElement("fieldname", row.Cells["Column1"].Value.ToString()),
+                            new XElement("fieldlabel", row.Cells["Column2"].Value.ToString()),
+                            new XElement("baseEDT", row.Cells["Column3"].Value.ToString()),
+                            new XElement("createEDT", row.Cells["Column4"].Value.ToString()),
+                            new XElement("alternateKey", row.Cells["Column5"].Value.ToString())
+                        )
+                    )
+                );
+                */
+                var data = new XElement("Root",
+                    new XElement("name", this.NameTextBox.Text),
+                    new XElement("label", this.LabelTextBox.Text),
+                    new XElement("property", this.PropertyTextBox.Text),
+                    new XElement("formpattern", this.FormPatternCombobox.Text),
+                    new XElement("DataGrid", //fügt ein neues Kind element hinzu welches um weitere erweitert wird 
+                        this.dataGridView.Rows.Cast<DataGridViewRow>() //Konvertiert die Zeilen des DataGrid in eine Sammlung
+                            .Where(row => !row.IsNewRow) //filtert die Zeilen heraus die neue Zeilen sind 
+                            .Select(row => { //Wendet die Lamda funktion auf alle 
+                                var fieldname = row.Cells["Column1"].Value?.ToString() ?? string.Empty; //Extrahiert den Wert in der Zelle Colum1 und konvertiert ihn in einen String ist der Wert null in einen Leeren string
+                                var fieldlabel = row.Cells["Column2"].Value?.ToString() ?? string.Empty;
+                                var baseEDT = row.Cells["Column3"].Value?.ToString() ?? string.Empty;
+                                var createEDT = row.Cells["Column4"].Value?.ToString() ?? string.Empty;
+                                var alternateKey = row.Cells["Column5"].Value?.ToString() ?? string.Empty;
+
+                                // Debugging-Ausgabe
+                                Console.WriteLine($"fieldname: {fieldname}, fieldlabel: {fieldlabel}, baseEDT: {baseEDT}, createEDT: {createEDT}, alternateKey: {alternateKey}");
+
+                                //erstellt ein neues XML-Element "field" mit den extrahierten Werten als Kind Elemente
+                                return new XElement("field",  
+                                    new XElement("fieldname", fieldname),
+                                    new XElement("fieldlabel", fieldlabel),
+                                    new XElement("baseEDT", baseEDT),
+                                    new XElement("createEDT", createEDT),
+                                    new XElement("alternateKey", alternateKey)
+                                );
+                            })
+                    )
                 );
 
                 // XML-Dokument erstellen und speichern
