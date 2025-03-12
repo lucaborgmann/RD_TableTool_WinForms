@@ -244,43 +244,50 @@ namespace RD_TableTool_WinForms
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string filePath = saveFileDialog.FileName;
+                try
+                {
+                    string filePath = saveFileDialog.FileName;
 
-                var data = new XElement("Root",
-                    new XElement("name", this.NameTextBox.Text),
-                    new XElement("label", this.LabelTextBox.Text),
-                    new XElement("property", this.PropertyTextBox.Text),
-                    new XElement("formpattern", this.FormPatternCombobox.Text),
-                    new XElement("DataGrid", //fügt ein neues Kind element hinzu welches um weitere erweitert wird 
-                        this.dataGridView.Rows.Cast<DataGridViewRow>() //Konvertiert die Zeilen des DataGrid in eine Sammlung
-                            .Where(row => !row.IsNewRow) //filtert die Zeilen heraus die neue Zeilen sind 
-                            .Select(row => { //Wendet die Lamda funktion auf alle 
-                                var fieldname = row.Cells["Column1"].Value?.ToString() ?? string.Empty; //Extrahiert den Wert in der Zelle Colum1 und konvertiert ihn in einen String ist der Wert null in einen Leeren string
-                                var fieldlabel = row.Cells["Column2"].Value?.ToString() ?? string.Empty;
-                                var baseEDT = row.Cells["Column3"].Value?.ToString() ?? string.Empty;
-                                var createEDT = row.Cells["Column4"].Value?.ToString() ?? string.Empty;
-                                var alternateKey = row.Cells["Column5"].Value?.ToString() ?? string.Empty;
+                    var data = new XElement("Root",
+                        new XElement("name", this.NameTextBox.Text),
+                        new XElement("label", this.LabelTextBox.Text),
+                        new XElement("property", this.PropertyTextBox.Text),
+                        new XElement("formpattern", this.FormPatternCombobox.Text),
+                        new XElement("DataGrid", //fügt ein neues Kind element hinzu welches um weitere erweitert wird 
+                            this.dataGridView.Rows.Cast<DataGridViewRow>() //Konvertiert die Zeilen des DataGrid in eine Sammlung
+                                .Where(row => !row.IsNewRow) //filtert die Zeilen heraus die neue Zeilen sind 
+                                .Select(row => { //Wendet die Lamda funktion auf alle 
+                                    var fieldname = row.Cells["Column1"].Value?.ToString() ?? string.Empty; //Extrahiert den Wert in der Zelle Colum1 und konvertiert ihn in einen String ist der Wert null in einen Leeren string
+                                    var fieldlabel = row.Cells["Column2"].Value?.ToString() ?? string.Empty;
+                                    var baseEDT = row.Cells["Column3"].Value?.ToString() ?? string.Empty;
+                                    var createEDT = row.Cells["Column4"].Value?.ToString() ?? string.Empty;
+                                    var alternateKey = row.Cells["Column5"].Value?.ToString() ?? string.Empty;
 
-                                // Debugging-Ausgabe
-                                Console.WriteLine($"fieldname: {fieldname}, fieldlabel: {fieldlabel}, baseEDT: {baseEDT}, createEDT: {createEDT}, alternateKey: {alternateKey}");
+                                    // Debugging-Ausgabe
+                                    Console.WriteLine($"fieldname: {fieldname}, fieldlabel: {fieldlabel}, baseEDT: {baseEDT}, createEDT: {createEDT}, alternateKey: {alternateKey}");
 
-                                //erstellt ein neues XML-Element "field" mit den extrahierten Werten als Kind Elemente
-                                return new XElement("field",  
-                                    new XElement("fieldname", fieldname),
-                                    new XElement("fieldlabel", fieldlabel),
-                                    new XElement("baseEDT", baseEDT),
-                                    new XElement("createEDT", createEDT),
-                                    new XElement("alternateKey", alternateKey)
-                                );
-                            })
-                    )
-                );
+                                    //erstellt ein neues XML-Element "field" mit den extrahierten Werten als Kind Elemente
+                                    return new XElement("field",
+                                        new XElement("fieldname", fieldname),
+                                        new XElement("fieldlabel", fieldlabel),
+                                        new XElement("baseEDT", baseEDT),
+                                        new XElement("createEDT", createEDT),
+                                        new XElement("alternateKey", alternateKey)
+                                    );
+                                })
+                        )
+                    );
 
-                // XML-Dokument erstellen und speichern
-                var xmlDocument = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), data);
-                xmlDocument.Save(filePath);
+                    // XML-Dokument erstellen und speichern
+                    var xmlDocument = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), data);
+                    xmlDocument.Save(filePath);
 
-                MessageBox.Show("XML-Datei erfolgreich gespeichert!", "Erfolg", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("XML-Datei erfolgreich gespeichert!", "Erfolg", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ein unerwarteter Fehler ist aufgetreten: {ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
