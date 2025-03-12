@@ -378,7 +378,7 @@ namespace RD_TableTool_WinForms
     }
 
 
-    //Klasse um die Daten besser speichern zu können 
+    //Klasse um die Daten besser speichern zu können (evtl rausnehmen wird aktuell nicht verwendet) 
     public class DataGridViewRowData
     {
         public string Name { get; set; }
