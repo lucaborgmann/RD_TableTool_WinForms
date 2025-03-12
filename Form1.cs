@@ -4,6 +4,7 @@ using RD_TableTool_WinForms.Properties;
 using System.Collections;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -235,6 +236,28 @@ namespace RD_TableTool_WinForms
         private void SaveAsFileMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Save as wurde gedrückt");
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "XML Files (*.xml)|*.xml",
+                Title = "Save an XML File"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = saveFileDialog.FileName;
+
+                // Beispiel-Daten
+                var data = new XElement("Data",
+                    new XElement("Item", new XAttribute("Name", "Item1"), new XAttribute("Value", "Value1")),
+                    new XElement("Item", new XAttribute("Name", "Item2"), new XAttribute("Value", "Value2"))
+                );
+
+                // XML-Dokument erstellen und speichern
+                var xmlDocument = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), data);
+                xmlDocument.Save(filePath);
+
+                MessageBox.Show("XML-Datei erfolgreich gespeichert!", "Erfolg", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void OpenFileMenuItem_Click(object sender, EventArgs e)
@@ -268,10 +291,20 @@ namespace RD_TableTool_WinForms
                 Title = "Datei zum Speichern auswählen"
             };
             MessageBox.Show(sfd.ShowDialog() == DialogResult.OK ? $"Speichern: {sfd.FileName}" : "Abbruch");
+            SafeFile(sfd.FileName);
         }
 
         private void SafeFile(string pFilePath)
         {
+            try
+            {
+                XmlDocument templateDoc = new XmlDocument();
+                templateDoc.Load($"{scriptDirForm}\\SafeTemplate.xml");
+            }
+            catch(Exception ex)
+            {
+
+            }
 
         }
 
@@ -296,9 +329,9 @@ namespace RD_TableTool_WinForms
                     handler(node.InnerText); //falls Handler existiert gespeicherte Aktion ausgeführt 
                 }
             }
-            //DataGrid 
-            XmlNodeList nodes = doc.SelectNodes("//datagrid/field");
+            
 
+            XmlNodeList nodes = doc.SelectNodes("//datagrid/field");
             // Zeile für Zeile hinzufügen
             foreach (XmlNode node in nodes)
             {
