@@ -160,11 +160,11 @@ namespace RD_TableTool_WinForms
                         // Neues Dictionary für die Zeile erstellen
                         Dictionary<string, string> rowData = new Dictionary<string, string>
                 {
-                    { "Name", dataGridNameValue },
-                    { "Label", dataGridLabelValue },
-                    { "BaseEDT", baseEDT },
-                    { "CreateEDT", createEDT },
-                    { "AlternateKey", alternateKey }
+                            { "Name", dataGridNameValue },
+                            { "Label", dataGridLabelValue },
+                            { "BaseEDT", baseEDT },
+                            { "CreateEDT", createEDT },
+                            { "AlternateKey", alternateKey }
                 };
 
                         dataListValues.Add(rowData);
@@ -248,8 +248,11 @@ namespace RD_TableTool_WinForms
 
                 // Beispiel-Daten
                 var data = new XElement("Data",
-                    new XElement("Item", new XAttribute("Name", "Item1"), new XAttribute("Value", "Value1")),
-                    new XElement("Item", new XAttribute("Name", "Item2"), new XAttribute("Value", "Value2"))
+                     //new XElement("Item", new XAttribute("Name", "Item1"), new XAttribute("Value", "Value1")),
+                     new XElement("name", this.NameTextBox.Text),
+                     new XElement("label", this.LabelTextBox.Text),
+                     new XElement("property",this.PropertyTextBox.Text),
+                     new XElement("formpattern",this.FormPatternCombobox.Text)
                 );
 
                 // XML-Dokument erstellen und speichern
