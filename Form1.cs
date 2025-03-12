@@ -246,45 +246,6 @@ namespace RD_TableTool_WinForms
             {
                 string filePath = saveFileDialog.FileName;
 
-                // Beispiel-Daten 
-                /*
-                var data = new XElement("Root",
-                     //new XElement("Item", new XAttribute("Name", "Item1"), new XAttribute("Value", "Value1")),
-                     new XElement("name", this.NameTextBox.Text),
-                     new XElement("label", this.LabelTextBox.Text),
-                     new XElement("property",this.PropertyTextBox.Text),
-                     new XElement("formpattern",this.FormPatternCombobox.Text),
-
-                    new XElement("DataGrid",
-                        new XElement("field",
-                            new XElement("fieldname", "tabellenfeld2"),
-                            new XElement("fieldlabel", "@Test:Kunde"),
-                            new XElement("baseEDT", "int64"),
-                            new XElement("createEDT", "Yes"),
-                            new XElement("alternateKey", "NO")
-                        )
-                    )   
-                );
-                */
-                /*
-                var data = new XElement("Root",
-                    new XElement("name", this.NameTextBox.Text),
-                    new XElement("label", this.LabelTextBox.Text),
-                    new XElement("property", this.PropertyTextBox.Text),
-                    new XElement("formpattern", this.FormPatternCombobox.Text),
-                    new XElement("DataGrid",
-                        from row in this.dataGridView.Rows.Cast<DataGridViewRow>()
-                        where !row.IsNewRow
-                        select new XElement("field",
-                            new XElement("fieldname", row.Cells["Column1"].Value.ToString()),
-                            new XElement("fieldlabel", row.Cells["Column2"].Value.ToString()),
-                            new XElement("baseEDT", row.Cells["Column3"].Value.ToString()),
-                            new XElement("createEDT", row.Cells["Column4"].Value.ToString()),
-                            new XElement("alternateKey", row.Cells["Column5"].Value.ToString())
-                        )
-                    )
-                );
-                */
                 var data = new XElement("Root",
                     new XElement("name", this.NameTextBox.Text),
                     new XElement("label", this.LabelTextBox.Text),
