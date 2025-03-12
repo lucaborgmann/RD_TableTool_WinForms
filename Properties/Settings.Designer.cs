@@ -70,5 +70,17 @@ namespace RD_TableTool_WinForms.Properties {
                 this["OutputFormsPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DraftPath {
+            get {
+                return ((string)(this["DraftPath"]));
+            }
+            set {
+                this["DraftPath"] = value;
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ using Microsoft.VisualBasic;
 using RD_Table_Tool;
 using RD_TableTool_WinForms.Properties;
 using System.Collections;
+using System.Runtime.InteropServices.Swift;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -23,6 +24,8 @@ namespace RD_TableTool_WinForms
 
         bool isCheckedMenuItems = false;
         bool isChecked_Entity = false;
+
+        
 
         public Form1()
         {
@@ -286,8 +289,7 @@ namespace RD_TableTool_WinForms
         {
             try
             {
-                XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDirForm}\\SafeTemplate.xml");
+                // der Pfad der aktuell verwendeten Datei 
             }
             catch(Exception ex)
             {
@@ -318,7 +320,6 @@ namespace RD_TableTool_WinForms
                 }
             }
             
-
             XmlNodeList nodes = doc.SelectNodes("//datagrid/field");
             // Zeile für Zeile hinzufügen
             foreach (XmlNode node in nodes)
@@ -335,16 +336,19 @@ namespace RD_TableTool_WinForms
 
         private void SaveFileAs(string pFilePath)
         {
+
+            dataGridView.EndEdit(); //sorgt dafür das alle Daten aus dem DataGrid übernommen werden 
+
             try
             {
                 string filePath = pFilePath;
 
-                var data = new XElement("Root",
+                var data = new XElement("root",
                     new XElement("name", this.NameTextBox.Text),
                     new XElement("label", this.LabelTextBox.Text),
                     new XElement("property", this.PropertyTextBox.Text),
                     new XElement("formpattern", this.FormPatternCombobox.Text),
-                    new XElement("DataGrid", //fügt ein neues Kind element hinzu welches um weitere erweitert wird 
+                    new XElement("datagrid", //fügt ein neues Kind element hinzu welches um weitere erweitert wird 
                         this.dataGridView.Rows.Cast<DataGridViewRow>() //Konvertiert die Zeilen des DataGrid in eine Sammlung
                             .Where(row => !row.IsNewRow) //filtert die Zeilen heraus die neue Zeilen sind 
                             .Select(row => { //Wendet die Lamda funktion auf alle 
@@ -381,6 +385,7 @@ namespace RD_TableTool_WinForms
             }
 
         }
+        
     }
 
 
