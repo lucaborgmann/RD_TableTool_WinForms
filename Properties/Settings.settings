@@ -14,7 +14,7 @@
     <Setting Name="OutputFormsPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxForm</Value>
     </Setting>
-    <Setting Name="DraftPath" Type="System.String" Scope="User">
+    <Setting Name="CurrentPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

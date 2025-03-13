@@ -25,8 +25,6 @@ namespace RD_TableTool_WinForms
         bool isCheckedMenuItems = false;
         bool isChecked_Entity = false;
 
-        
-
         public Form1()
         {
             InitializeComponent();
@@ -253,6 +251,7 @@ namespace RD_TableTool_WinForms
 
         private void OpenFileMenuItem_Click(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine($"Vor dem Laden: {Settings.Default.CurrentPath}"); 
             OpenFileDialog ofd = new OpenFileDialog()
             {
                 InitialDirectory = $"{scriptDirForm}",
@@ -264,7 +263,8 @@ namespace RD_TableTool_WinForms
             {
                 //MessageBox.Show($"Öffnen: {ofd.FileName}");
                 // Hier kannst du den Code hinzufügen, um die Datei zu laden und zu verarbeiten
-                LoadFile(ofd.FileName); 
+                LoadFile(ofd.FileName);
+                System.Diagnostics.Debug.WriteLine($"Nach dem Laden: {Settings.Default.CurrentPath}");
             }
             else
             {
@@ -274,7 +274,10 @@ namespace RD_TableTool_WinForms
 
         private void SaveFileMenuItem_Click(object sender, EventArgs e) 
         {
+            System.Diagnostics.Debug.WriteLine("das ist nur Save");
+
             //Quelle: Einstieg in C# mit Visual Studio 2022 von Thomas Theis Thomas Theis Seite 352
+            /*
             SaveFileDialog sfd = new SaveFileDialog()
             {
                 InitialDirectory = scriptDirForm,
@@ -282,24 +285,35 @@ namespace RD_TableTool_WinForms
                 Title = "Datei zum Speichern auswählen"
             };
             MessageBox.Show(sfd.ShowDialog() == DialogResult.OK ? $"Speichern: {sfd.FileName}" : "Abbruch");
-            SafeFile(sfd.FileName);
+            */
+            //SaveFile(sfd.FileName);
+            SaveFile(); 
         }
 
-        private void SafeFile(string pFilePath)
+        private void SaveFile()
         {
-            try
+            
+            if (!string.IsNullOrEmpty(Settings.Default.CurrentPath))
             {
-                // der Pfad der aktuell verwendeten Datei 
-            }
-            catch(Exception ex)
-            {
+                MessageBox.Show($"Die aktuelle Datei ist: {Settings.Default.CurrentPath}", "Es gibt eine aktuelle Datei");
+                dataGridView.EndEdit(); //Alle Daten aus dem 
 
-            }
+                XmlDocument doc = new XmlDocument();
+                doc.Load(Settings.Default.CurrentPath); 
 
+                ReplaceTagContent(doc, "//name", this.NameTextBox.Text);
+                ReplaceTagContent(doc, "//label", this.LabelTextBox.Text);
+                ReplaceTagContent(doc, "//property", this.PropertyTextBox.Text);
+                ReplaceTagContent(doc, "//formpattern",this.FormPatternCombobox.Text);
+
+                doc.Save(Settings.Default.CurrentPath);
+                //Console.WriteLine("Die Inhalte der Tags wurden erfolgreich ersetzt.");
+            }
         }
 
         private void LoadFile(string pFilePath)
         {
+            Settings.Default.CurrentPath = pFilePath; // Sorgt dafür das der Save Funktion weiß welche Datei geöffnet ist 
             //Lädt das angegebene XML Dokument
             XmlDocument doc = new XmlDocument();
             doc.Load(pFilePath);
@@ -385,7 +399,20 @@ namespace RD_TableTool_WinForms
             }
 
         }
-        
+
+        //Methode zum ersetzen eines Inhalts eines Tags 
+        private static void ReplaceTagContent(XmlDocument doc, string xpath, string newValue)
+        {
+            XmlNodeList nodes = doc.SelectNodes(xpath);
+            if (nodes != null)
+            {
+                foreach (XmlNode node in nodes)
+                {
+                    node.InnerText = newValue;
+                }
+            }
+        }
+
     }
 
 

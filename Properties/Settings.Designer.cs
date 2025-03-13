@@ -74,12 +74,12 @@ namespace RD_TableTool_WinForms.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DraftPath {
+        public string CurrentPath {
             get {
-                return ((string)(this["DraftPath"]));
+                return ((string)(this["CurrentPath"]));
             }
             set {
-                this["DraftPath"] = value;
+                this["CurrentPath"] = value;
             }
         }
     }
