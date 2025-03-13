@@ -2,6 +2,7 @@ using Microsoft.VisualBasic;
 using RD_Table_Tool;
 using RD_TableTool_WinForms.Properties;
 using System.Collections;
+using System.Diagnostics;
 using System.Runtime.InteropServices.Swift;
 using System.Windows.Forms;
 using System.Xml;
@@ -13,7 +14,7 @@ namespace RD_TableTool_WinForms
 {
     public partial class Form1 : Form
     {
-        private DataGridView dataGridView; //um es überall in der Klasse zu verwenden
+        public DataGridView dataGridView; //um es überall in der Klasse zu verwenden
         public static string scriptDirForm = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
         //Pfade zu den AusgabeOrdnern
@@ -292,22 +293,68 @@ namespace RD_TableTool_WinForms
 
         private void SaveFile()
         {
-            
             if (!string.IsNullOrEmpty(Settings.Default.CurrentPath))
             {
                 MessageBox.Show($"Die aktuelle Datei ist: {Settings.Default.CurrentPath}", "Es gibt eine aktuelle Datei");
                 dataGridView.EndEdit(); //Alle Daten aus dem 
 
                 XmlDocument doc = new XmlDocument();
-                doc.Load(Settings.Default.CurrentPath); 
+                doc.Load(Settings.Default.CurrentPath);
 
                 ReplaceTagContent(doc, "//name", this.NameTextBox.Text);
                 ReplaceTagContent(doc, "//label", this.LabelTextBox.Text);
                 ReplaceTagContent(doc, "//property", this.PropertyTextBox.Text);
-                ReplaceTagContent(doc, "//formpattern",this.FormPatternCombobox.Text);
+                ReplaceTagContent(doc, "//formpattern", this.FormPatternCombobox.Text);
 
-                doc.Save(Settings.Default.CurrentPath);
-                //Console.WriteLine("Die Inhalte der Tags wurden erfolgreich ersetzt.");
+
+                //DataGrid in ein Dictonary auslesen und als Parameter an UpdateDataGridContent übergeben 
+                List<Dictionary<string, string>> dataListValues = new List<Dictionary<string, string>>();
+
+                // Falls das DataGrid initialisiert ist
+                if (dataGridView != null)
+                {
+                    // Erstellen einer Liste mit allen Feldern des DataGrids
+                    foreach (DataGridViewRow row in dataGridView.Rows) // für jedes Element im DataGrid
+                    {
+                        if (!row.IsNewRow) // Ignoriere die neue Zeile
+                        {
+                            string dataGridNameValue = row.Cells["Column1"].Value?.ToString();
+                            string dataGridLabelValue = row.Cells["Column2"].Value?.ToString();
+                            string baseEDT = row.Cells["Column3"].Value?.ToString();
+                            string createEDT = row.Cells["Column4"].Value?.ToString();
+                            string alternateKey = row.Cells["Column5"].Value?.ToString();
+
+                            // Neues Dictionary für die Zeile erstellen
+                            Dictionary<string, string> rowData = new Dictionary<string, string>
+                            {
+                                { "Name", dataGridNameValue },
+                                { "Label", dataGridLabelValue },
+                                { "BaseEDT", baseEDT },
+                                { "CreateEDT", createEDT },
+                                { "AlternateKey", alternateKey }
+                            };
+
+                            dataListValues.Add(rowData);
+                        }
+                    }
+
+                    /*
+                    foreach (var row in dataListValues)
+                    {
+                        Debug.WriteLine("Neue Zeile:");
+                        foreach (var kvp in row)
+                        {
+                            Debug.WriteLine($"{kvp.Key}: {kvp.Value}");
+                        }
+                        Debug.WriteLine("----------------------");
+                    }
+                    */
+
+                    UpdateDataGridContent(doc, dataListValues);
+
+                    doc.Save(Settings.Default.CurrentPath);
+                    //Console.WriteLine("Die Inhalte der Tags wurden erfolgreich ersetzt.");
+                }
             }
         }
 
@@ -412,6 +459,133 @@ namespace RD_TableTool_WinForms
                 }
             }
         }
+
+        static void UpdateDataGridContent(XmlDocument doc, List<Dictionary<string, string>> pDictionaryList)
+        {
+            XmlNode datagridNode = doc.SelectSingleNode("//datagrid");
+            if (datagridNode != null)
+            {
+                datagridNode.RemoveAll(); // Entferne alle vorhandenen "field"-Elemente
+
+                foreach (var row in pDictionaryList) // Iteriere über jedes Dictionary in der Liste
+                {
+                    XmlElement fieldElement = doc.CreateElement("field");
+
+                    XmlElement fieldnameElement = doc.CreateElement("fieldname");
+                    fieldnameElement.InnerText = row.ContainsKey("Name") ? row["Name"] : string.Empty;
+                    fieldElement.AppendChild(fieldnameElement);
+
+                    XmlElement fieldlabelElement = doc.CreateElement("fieldlabel");
+                    fieldlabelElement.InnerText = row.ContainsKey("Label") ? row["Label"] : string.Empty;
+                    fieldElement.AppendChild(fieldlabelElement);
+
+                    XmlElement baseEDTElement = doc.CreateElement("baseEDT");
+                    baseEDTElement.InnerText = row.ContainsKey("BaseEDT") ? row["BaseEDT"] : string.Empty;
+                    fieldElement.AppendChild(baseEDTElement);
+
+                    XmlElement createEDTElement = doc.CreateElement("createEDT");
+                    createEDTElement.InnerText = row.ContainsKey("CreateEDT") ? row["CreateEDT"] : string.Empty;
+                    fieldElement.AppendChild(createEDTElement);
+
+                    XmlElement alternateKeyElement = doc.CreateElement("alternateKey");
+                    alternateKeyElement.InnerText = row.ContainsKey("AlternateKey") ? row["AlternateKey"] : string.Empty;
+                    fieldElement.AppendChild(alternateKeyElement);
+
+                    datagridNode.AppendChild(fieldElement);
+                }
+            }
+        }
+
+
+        //hier fehlt noch die Übergabe eines Dictonarys 
+        /*
+        static void UpdateDataGridContent(XmlDocument doc, Dictionary<string, string> pDictionary)
+        {
+            // Beispiel DataGridView (du kannst dein eigenes DataGridView verwenden)
+            DataGridView dataGridView = new DataGridView();
+            dataGridView.Columns.Add("Column1", "fieldname");
+            dataGridView.Columns.Add("Column2", "fieldlabel");
+            dataGridView.Columns.Add("Column3", "baseEDT");
+            dataGridView.Columns.Add("Column4", "createEDT");
+            dataGridView.Columns.Add("Column5", "alternateKey");
+
+            // Beispiel-Daten hinzufügen (du kannst deine eigenen Daten verwenden)
+            dataGridView.Rows.Add("Tabellenfeld1", "@Kunde:Label1", "int", "Yes", "No");
+            dataGridView.Rows.Add("tabellenfeld2", "@Test:Kunde", "int64", "Yes", "NO");
+
+            XmlNode datagridNode = doc.SelectSingleNode("//datagrid");
+            if (datagridNode != null)
+            {
+                datagridNode.RemoveAll(); // Entferne alle vorhandenen "field"-Elemente
+
+                foreach (DataGridViewRow row in dataGridView.Rows)
+                {
+                    if (!row.IsNewRow)
+                    {
+                        XmlElement fieldElement = doc.CreateElement("field");
+
+                        XmlElement fieldnameElement = doc.CreateElement("fieldname");
+                        fieldnameElement.InnerText = row.Cells["Column1"].Value?.ToString() ?? string.Empty;
+                        fieldElement.AppendChild(fieldnameElement);
+
+                        XmlElement fieldlabelElement = doc.CreateElement("fieldlabel");
+                        fieldlabelElement.InnerText = row.Cells["Column2"].Value?.ToString() ?? string.Empty;
+                        fieldElement.AppendChild(fieldlabelElement);
+
+                        XmlElement baseEDTElement = doc.CreateElement("baseEDT");
+                        baseEDTElement.InnerText = row.Cells["Column3"].Value?.ToString() ?? string.Empty;
+                        fieldElement.AppendChild(baseEDTElement);
+
+                        XmlElement createEDTElement = doc.CreateElement("createEDT");
+                        createEDTElement.InnerText = row.Cells["Column4"].Value?.ToString() ?? string.Empty;
+                        fieldElement.AppendChild(createEDTElement);
+
+                        XmlElement alternateKeyElement = doc.CreateElement("alternateKey");
+                        alternateKeyElement.InnerText = row.Cells["Column5"].Value?.ToString() ?? string.Empty;
+                        fieldElement.AppendChild(alternateKeyElement);
+
+                        datagridNode.AppendChild(fieldElement);
+                    }
+                }
+            }
+        }
+        */
+
+        /*
+        static Dictionary<string, string> DataGrid2Dictionary()
+        {
+            Dictionary<string, string> dataDictionary = new Dictionary<string, string>();
+
+            if (dataGridView2 != null)
+            {
+                // Erstellen einer Liste mit allen Feldern des DataGrids
+                foreach (DataGridViewRow row in dataGridView2.Rows) // für jedes Element im DataGrid
+                {
+                    if (!row.IsNewRow) // Ignoriere die neue Zeile
+                    {
+                        string dataGridNameValue = row.Cells["Column1"].Value?.ToString();
+                        string dataGridLabelValue = row.Cells["Column2"].Value?.ToString();
+                        string baseEDT = row.Cells["Column3"].Value?.ToString();
+                        string createEDT = row.Cells["Column4"].Value?.ToString();
+                        string alternateKey = row.Cells["Column5"].Value?.ToString();
+
+                        // Neues Dictionary für die Zeile erstellen
+                        Dictionary<string, string> rowData = new Dictionary<string, string>
+                        {
+                            { "Name", dataGridNameValue },
+                            { "Label", dataGridLabelValue },
+                            { "BaseEDT", baseEDT },
+                            { "CreateEDT", createEDT },
+                            { "AlternateKey", alternateKey }
+                        };
+
+                        dataListValues2.Add(rowData);
+                    }
+                }
+            }
+                return dataDictionary;
+        }
+        */
 
     }
 
