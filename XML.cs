@@ -126,6 +126,7 @@ namespace RD_Table_Tool
 
             try
             {
+                /*
                 XmlDocument templateDoc = new XmlDocument();
                 templateDoc.Load($"{scriptDir}\\TableTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("CreateTable: Lädt die Template-Datei");
@@ -137,6 +138,7 @@ namespace RD_Table_Tool
 
                 foreach (XmlNode node in nodes)
                 {
+                    XmlNode lastNode = nodes[nodes.Count - 1];
                     switch (node.Name)
                     {
                         case "Name":
@@ -148,6 +150,44 @@ namespace RD_Table_Tool
                             System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt das Label");
                             break;
                     }
+                }
+                */
+                XmlDocument templateDoc = new XmlDocument();
+                templateDoc.Load($"{scriptDir}\\TableTemplate.xml");
+                System.Diagnostics.Debug.WriteLine("CreateTable: Lädt die Template-Datei");
+
+                XmlDocument newDoc = new XmlDocument();
+                newDoc.LoadXml(templateDoc.OuterXml);
+
+                XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label");
+
+                XmlNode firstNameNode = null;
+
+                // Durchlaufe die Knoten, um den ersten "Name"-Knoten zu finden
+                foreach (XmlNode node in nodes)
+                {
+                    if (node.Name == "Name")
+                    {
+                        firstNameNode = node; // Speichert den ersten "Name"-Knoten
+                        break; // Bricht die Schleife ab, sobald der erste gefunden wurde
+                    }
+                }
+
+                // Jetzt alle Label-Knoten anpassen
+                foreach (XmlNode node in nodes)
+                {
+                    if (node.Name == "Label")
+                    {
+                        node.InnerText = label;
+                        System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt das Label");
+                    }
+                }
+
+                // Falls ein Name-Knoten gefunden wurde, nur den ersten ändern
+                if (firstNameNode != null)
+                {
+                    firstNameNode.InnerText = name;
+                    System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt den ersten Namen");
                 }
 
                 // Alle Nodes finden, nur das letzte weiterverwerten
