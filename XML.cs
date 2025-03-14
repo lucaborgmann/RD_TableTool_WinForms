@@ -211,6 +211,7 @@ namespace RD_Table_Tool
                             // Ausgabe der Werte
                             Console.WriteLine($"Name: {fieldName}, Label: {fieldLabel}, BaseEDT: {fieldBaseEDT}");
 
+                            /*
                             XmlElement neuesAxTableField = newDoc.CreateElement("AxTableField"); //erstellt ein neues XML Dokument
 
                             // Attribut für i:type setzen (Namespace beachten!)
@@ -233,6 +234,42 @@ namespace RD_Table_Tool
                             neuesAxTableField.AppendChild(nameElement);
 
                             fieldNode.AppendChild(neuesAxTableField);
+                            */
+                            // Neues AxTableField-Element erstellen
+
+
+                            XmlElement neuesAxTableField = newDoc.CreateElement("AxTableField");
+
+                            // Sicherstellen, dass das xmlns-Attribut leer ist
+                            neuesAxTableField.SetAttribute("xmlns", "");
+
+                            // Attribut für i:type setzen (Namespace beachten!)
+                            XmlAttribute typeAttribute = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
+
+                            // Wert für i:type basierend auf CreateEDT bestimmen
+                            if (fieldCreatEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                            {
+                                typeAttribute.Value = "AxTableField" + fieldName;
+                            }
+                            else
+                            {
+                                typeAttribute.Value = "AxTableField" + fieldBaseEDT;
+                            }
+
+                            // Attribut dem Element hinzufügen
+                            neuesAxTableField.Attributes.Append(typeAttribute);
+
+                            // Name-Element hinzufügen
+                            XmlElement nameElement = newDoc.CreateElement("Name");
+                            nameElement.InnerText = fieldName;
+                            neuesAxTableField.AppendChild(nameElement);
+
+                            // Neues Fields-Element erstellen
+                            XmlElement fieldsElement = newDoc.CreateElement("Fields");
+                            fieldsElement.AppendChild(neuesAxTableField);
+
+                            // Element in den XML-Baum einfügen
+                            fieldNode.AppendChild(fieldsElement);
                         }
                     }
 
