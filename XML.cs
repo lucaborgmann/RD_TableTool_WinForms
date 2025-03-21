@@ -115,7 +115,6 @@ namespace RD_Table_Tool
             }
 
         }
-
         public static void CreateTable(string pName, string pLabel, string pOutputPath, List<Dictionary<string, string>> fieldList)
         {
             string name = pName;
@@ -126,7 +125,6 @@ namespace RD_Table_Tool
 
             try
             {
-                /*
                 XmlDocument templateDoc = new XmlDocument();
                 templateDoc.Load($"{scriptDir}\\TableTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("CreateTable: Lädt die Template-Datei");
@@ -135,45 +133,17 @@ namespace RD_Table_Tool
                 newDoc.LoadXml(templateDoc.OuterXml);
 
                 XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label");
-
-                foreach (XmlNode node in nodes)
-                {
-                    XmlNode lastNode = nodes[nodes.Count - 1];
-                    switch (node.Name)
-                    {
-                        case "Name":
-                            node.InnerText = name;
-                            System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt den Namen");
-                            break;
-                        case "Label":
-                            node.InnerText = label;
-                            System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt das Label");
-                            break;
-                    }
-                }
-                */
-                XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\TableTemplate.xml");
-                System.Diagnostics.Debug.WriteLine("CreateTable: Lädt die Template-Datei");
-
-                XmlDocument newDoc = new XmlDocument();
-                newDoc.LoadXml(templateDoc.OuterXml);
-
-                XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label");
-
                 XmlNode firstNameNode = null;
 
-                // Durchlaufe die Knoten, um den ersten "Name"-Knoten zu finden
                 foreach (XmlNode node in nodes)
                 {
                     if (node.Name == "Name")
                     {
-                        firstNameNode = node; // Speichert den ersten "Name"-Knoten
-                        break; // Bricht die Schleife ab, sobald der erste gefunden wurde
+                        firstNameNode = node;
+                        break;
                     }
                 }
 
-                // Jetzt alle Label-Knoten anpassen
                 foreach (XmlNode node in nodes)
                 {
                     if (node.Name == "Label")
@@ -183,14 +153,12 @@ namespace RD_Table_Tool
                     }
                 }
 
-                // Falls ein Name-Knoten gefunden wurde, nur den ersten ändern
                 if (firstNameNode != null)
                 {
                     firstNameNode.InnerText = name;
                     System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt den ersten Namen");
                 }
 
-                // Alle Nodes finden, nur das letzte weiterverwerten
                 XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");
                 XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null;
 
@@ -198,55 +166,20 @@ namespace RD_Table_Tool
                 {
                     System.Diagnostics.Debug.WriteLine("CreateTable: fieldNode ist nicht leer");
 
-                    foreach (Dictionary<string, string> fieldDict in fieldList) // Durchläuft die inneren Dictionaries in der Liste
+                    foreach (Dictionary<string, string> fieldDict in fieldList)
                     {
                         if (fieldDict != null)
                         {
-                            // Zugriff auf die Werte im Dictionary
                             string fieldName = fieldDict["Name"];
                             string fieldLabel = fieldDict["Label"];
                             string fieldBaseEDT = fieldDict["BaseEDT"];
                             string fieldCreatEDT = fieldDict["CreateEDT"];
 
-                            // Ausgabe der Werte
-                            Console.WriteLine($"Name: {fieldName}, Label: {fieldLabel}, BaseEDT: {fieldBaseEDT}");
-
-                            /*
-                            XmlElement neuesAxTableField = newDoc.CreateElement("AxTableField"); //erstellt ein neues XML Dokument
-
-                            // Attribut für i:type setzen (Namespace beachten!)
-                            XmlAttribute typeAttribute = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
-
-                            // Hier prüfen, ob CreateEDT Yes ist
-                            if (fieldCreatEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
-                            {
-                                typeAttribute.Value = $"AxTableField{fieldName}";
-                            }
-                            else
-                            {
-                                typeAttribute.Value = $"AxTableField{fieldBaseEDT}";
-                            }
-                            neuesAxTableField.Attributes.Append(typeAttribute);
-
-                            // Name-Element hinzufügen
-                            XmlElement nameElement = newDoc.CreateElement("Name");
-                            nameElement.InnerText = fieldName;
-                            neuesAxTableField.AppendChild(nameElement);
-
-                            fieldNode.AppendChild(neuesAxTableField);
-                            */
-                            // Neues AxTableField-Element erstellen
-
-
                             XmlElement neuesAxTableField = newDoc.CreateElement("AxTableField");
-
-                            // Sicherstellen, dass das xmlns-Attribut leer ist
                             neuesAxTableField.SetAttribute("xmlns", "");
 
-                            // Attribut für i:type setzen (Namespace beachten!)
                             XmlAttribute typeAttribute = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
 
-                            // Wert für i:type basierend auf CreateEDT bestimmen
                             if (fieldCreatEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
                             {
                                 typeAttribute.Value = "AxTableField" + fieldName;
@@ -256,20 +189,14 @@ namespace RD_Table_Tool
                                 typeAttribute.Value = "AxTableField" + fieldBaseEDT;
                             }
 
-                            // Attribut dem Element hinzufügen
                             neuesAxTableField.Attributes.Append(typeAttribute);
 
-                            // Name-Element hinzufügen
                             XmlElement nameElement = newDoc.CreateElement("Name");
                             nameElement.InnerText = fieldName;
                             neuesAxTableField.AppendChild(nameElement);
 
-                            // Neues Fields-Element erstellen
-                            XmlElement fieldsElement = newDoc.CreateElement("Fields");
-                            fieldsElement.AppendChild(neuesAxTableField);
-
-                            // Element in den XML-Baum einfügen
-                            fieldNode.AppendChild(fieldsElement);
+                            // Hier wird das neue Feld direkt in fieldNode eingefügt, ohne zusätzliches <Fields>
+                            fieldNode.AppendChild(neuesAxTableField);
                         }
                     }
 
@@ -280,7 +207,6 @@ namespace RD_Table_Tool
                     System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
                 }
 
-                // Speichern erst nach allen Änderungen
                 string[] paths = { @$"{outputPath}", $"{name}", ".xml" };
                 string fullPath = Path.Combine(paths);
                 System.Diagnostics.Debug.WriteLine($"Ausgabe fullpath: {fullPath}");
@@ -294,6 +220,8 @@ namespace RD_Table_Tool
             }
         }
 
+
+ 
 
         public static void CreateForm(string pName, string pOutputPath)
         {

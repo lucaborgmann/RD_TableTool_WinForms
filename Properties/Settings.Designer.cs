@@ -82,5 +82,17 @@ namespace RD_TableTool_WinForms.Properties {
                 this["CurrentPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Einstellung {
+            get {
+                return ((string)(this["Einstellung"]));
+            }
+            set {
+                this["Einstellung"] = value;
+            }
+        }
     }
 }
