@@ -15,6 +15,7 @@ namespace RD_Table_Tool
         //Konstruktor
         public XML() { }
 
+        /*
         public static void CreateMenuItem(string pName, string pLabel, string pOutputPath)
         {
             string name = pName;
@@ -60,6 +61,55 @@ namespace RD_Table_Tool
                 System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
             }
         }
+        */
+
+        public static void CreateMenuItem(string pName, string pLabel, string pOutputPath)
+        {
+            string name = pName;
+            string label = pLabel;
+            string outputPath = pOutputPath;
+
+            System.Diagnostics.Debug.WriteLine($"OutPut Path: {outputPath}");
+
+            try
+            {
+                // Template laden
+                XmlDocument templateDoc = new XmlDocument();
+                templateDoc.Load($"{scriptDir}\\MenuItemTemplate.xml");
+                System.Diagnostics.Debug.WriteLine("Lädt die Template-Datei");
+
+                // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
+                XmlDocument newDoc = new XmlDocument();
+                newDoc.LoadXml(templateDoc.OuterXml);
+
+                var nodeUpdates = new Dictionary<string, string>
+        {
+                    { "Name", name },
+                    { "Label", label },
+                    { "Object", name }
+                };
+
+                foreach (var update in nodeUpdates)
+                {
+                    XmlNodeList nodes = newDoc.GetElementsByTagName(update.Key);
+                    foreach (XmlNode node in nodes)
+                    {
+                        node.InnerText = update.Value;
+                    }
+                }
+                // Neue XML-Datei speichern
+                //newDoc.Save($"C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\{name}.xml");
+                newDoc.Save($"{outputPath}\\{name}.xml");
+                System.Diagnostics.Debug.WriteLine("XML-Datei aktualisiert");
+
+            }
+            catch (XmlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
+            }
+        }
+
+
         public static void CreateEDT(string pName, string pLabel, string pBaseEDT, string pOutputPath)
         {
             string name = pName;
@@ -125,14 +175,17 @@ namespace RD_Table_Tool
 
             try
             {
+                //Lädt das Template
                 XmlDocument templateDoc = new XmlDocument();
                 templateDoc.Load($"{scriptDir}\\TableTemplate.xml");
                 System.Diagnostics.Debug.WriteLine("CreateTable: Lädt die Template-Datei");
 
+                //erstellt das neue Dokuement
                 XmlDocument newDoc = new XmlDocument();
-                newDoc.LoadXml(templateDoc.OuterXml);
+                newDoc.LoadXml(templateDoc.OuterXml); //Speichert den Inhalt des Templates in dem neuen Dokument
 
-                XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label");
+
+                XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label"); //Sucht alle XML-Knoten dessen taganme Name oder Label ist
                 XmlNode firstNameNode = null;
 
                 foreach (XmlNode node in nodes)
@@ -153,33 +206,37 @@ namespace RD_Table_Tool
                     }
                 }
 
+                //falls die Variable firstNameNode umbenannt wurde wird der Inhalt des XML Elements Überschrieben
                 if (firstNameNode != null)
                 {
                     firstNameNode.InnerText = name;
                     System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt den ersten Namen");
                 }
 
-                XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");
-                XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null;
+                XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields"); //sucht den XML Knoten Fiels 
+                XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null; // Wenn mindestens ein Element enthalten ist wird das letzte Berücksichtigt sonst auf Null gesetzt 
 
-                if (fieldNode != null)
+                if (fieldNode != null) // Wenn Felder angegeben wurden 
                 {
                     System.Diagnostics.Debug.WriteLine("CreateTable: fieldNode ist nicht leer");
 
-                    foreach (Dictionary<string, string> fieldDict in fieldList)
+                    foreach (Dictionary<string, string> fieldDict in fieldList) 
                     {
                         if (fieldDict != null)
                         {
+                            //Extrahieren von Feldwerten
                             string fieldName = fieldDict["Name"];
                             string fieldLabel = fieldDict["Label"];
                             string fieldBaseEDT = fieldDict["BaseEDT"];
                             string fieldCreatEDT = fieldDict["CreateEDT"];
 
+                            //neuer AxtableField Knoten 
                             XmlElement neuesAxTableField = newDoc.CreateElement("AxTableField");
-                            neuesAxTableField.SetAttribute("xmlns", "");
+                            neuesAxTableField.SetAttribute("xmlns", ""); //weißt dem Knoten die Nötigen Attribute zu 
 
-                            XmlAttribute typeAttribute = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
+                            XmlAttribute typeAttribute = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance"); //fügt dem Knoten ein neues Typattribut hinzu
 
+                            //Pürft ob ein neues EDT erstellt werden muss 
                             if (fieldCreatEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
                             {
                                 typeAttribute.Value = "AxTableField" + fieldName;
@@ -188,11 +245,14 @@ namespace RD_Table_Tool
                             {
                                 typeAttribute.Value = "AxTableField" + fieldBaseEDT;
                             }
-
+                            //Fügt des neuen Attributs
                             neuesAxTableField.Attributes.Append(typeAttribute);
 
+                            //Erstellen des Name-Elements
                             XmlElement nameElement = newDoc.CreateElement("Name");
+                            //neuen Wert zuweisen
                             nameElement.InnerText = fieldName;
+                            //hinzufügen zum neuen ELements
                             neuesAxTableField.AppendChild(nameElement);
 
                             // Hier wird das neue Feld direkt in fieldNode eingefügt, ohne zusätzliches <Fields>
