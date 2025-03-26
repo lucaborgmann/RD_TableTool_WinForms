@@ -277,16 +277,11 @@ namespace RD_Table_Tool
                         }
                         else
                         {
-                            /*
-                            XmlCDataSection cdata = newDoc.CreateCDataSection(node.InnerText.Replace("TestTable", $"{name}"));
-                            node.ParentNode.ReplaceChild(cdata, node);
-                            */
-
-                            string updatedText = node.InnerText.Replace("TestTable", $"{name}");
-                            XmlCDataSection cdata = newDoc.CreateCDataSection(updatedText);
-                            XmlElement declarationElement = newDoc.CreateElement("Declaration");
-                            declarationElement.AppendChild(cdata);
-                            node.ParentNode.ReplaceChild(declarationElement, node);
+                            string updatedText = node.InnerText.Replace("TestTable", $"{name}"); // Ersetzt den TestTable durch den Wert der Variable
+                            XmlCDataSection cdata = newDoc.CreateCDataSection(updatedText); //CDATA Abschnitt wird erstelllt 
+                            XmlElement declarationElement = newDoc.CreateElement("Declaration"); // neues XML-Element Declaratiom wird 
+                            declarationElement.AppendChild(cdata); // fügt CDATA als Kindknoten hinzu 
+                            node.ParentNode.ReplaceChild(declarationElement, node); //Ersetzt den Ursprünglichen Knoten 
 
                         }
                     }
