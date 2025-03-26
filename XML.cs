@@ -183,8 +183,7 @@ namespace RD_Table_Tool
                 //erstellt das neue Dokuement
                 XmlDocument newDoc = new XmlDocument();
                 newDoc.LoadXml(templateDoc.OuterXml); //Speichert den Inhalt des Templates in dem neuen Dokument
-
-
+                
                 XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label"); //Sucht alle XML-Knoten dessen taganme Name oder Label ist
                 XmlNode firstNameNode = null;
 
@@ -260,7 +259,37 @@ namespace RD_Table_Tool
                         }
                     }
 
-                    System.Diagnostics.Debug.WriteLine("Neues Feld hinzugefügt");
+
+                    //es muss noch in der Zeile  public class TestForm extends FormRun "TestForm" durch den Namen ergänzt werde
+
+                    //Definieren des Suchenden Strings 
+                    string searchString = "public class TestTable extends common";
+                    // Knoten finden, die den Suchstring enthalten
+                    XmlNodeList searchStringNodes = newDoc.SelectNodes("//*[contains(text(), '" + searchString + "')]");
+
+                    // Teil des Strings ersetzen
+                    foreach (XmlNode node in searchStringNodes)
+                    {
+                        //Umm sicher zu gehen das <![CDATA[ nicht verloren geht
+                        if (node.NodeType == XmlNodeType.CDATA)
+                        {
+                            node.InnerText = node.InnerText.Replace("TestTable",$"{name}");
+                        }
+                        else
+                        {
+                            /*
+                            XmlCDataSection cdata = newDoc.CreateCDataSection(node.InnerText.Replace("TestTable", $"{name}"));
+                            node.ParentNode.ReplaceChild(cdata, node);
+                            */
+
+                            string updatedText = node.InnerText.Replace("TestTable", $"{name}");
+                            XmlCDataSection cdata = newDoc.CreateCDataSection(updatedText);
+                            XmlElement declarationElement = newDoc.CreateElement("Declaration");
+                            declarationElement.AppendChild(cdata);
+                            node.ParentNode.ReplaceChild(declarationElement, node);
+
+                        }
+                    }
                 }
                 else
                 {
