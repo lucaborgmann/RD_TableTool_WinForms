@@ -414,22 +414,51 @@ namespace RD_Table_Tool
                 //Falls Felder vorhanden sind ein neues Element für jedes Feld einfügen 
                 if (fieldsNode != null)
                 {
-                    // Neues AxFormDataSourceField-Element erstellen
-                    XmlElement newFieldElement = newDoc.CreateElement("AxFormDataSourceField");
+                    //Durch die Dictonarys durchgehen und dann das dadrunter einfügen 
+                    foreach (var dict in fieldList)
+                    {
+                        foreach (var kvp in dict)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Dictonary ausgeben Create Form {kvp.Key},Value: {kvp.Value}");
+                            if (kvp.Key == "Name")
+                            {
+                                // Neues AxFormDataSourceField-Element erstellen
+                                XmlElement newFieldElement = newDoc.CreateElement("AxFormDataSourceField");
 
-                    // DataField-Element erstellen und hinzufügen
-                    XmlElement dataFieldElement = newDoc.CreateElement("DataField");
-                    dataFieldElement.InnerText = "NeuesDataField"; // Setze den gewünschten Wert
+                                // DataField-Element erstellen und hinzufügen
+                                XmlElement dataFieldElement = newDoc.CreateElement("DataField");
+                                //dataFieldElement.InnerText = "NeuesDataField"; // Hier name des Feldes angeben 
 
-                    // DataField-Element zum AxFormDataSourceField-Element hinzufügen
-                    newFieldElement.AppendChild(dataFieldElement);
+                                dataFieldElement.InnerText = kvp.Value;
 
-                    // Neues AxFormDataSourceField-Element zum Fields-Element hinzufügen
-                    fieldsNode.AppendChild(newFieldElement);
+                                // DataField-Element zum AxFormDataSourceField-Element hinzufügen
+                                newFieldElement.AppendChild(dataFieldElement);
 
-                    // Änderungen speichern
+                                // Neues AxFormDataSourceField-Element zum Fields-Element hinzufügen
+                                fieldsNode.AppendChild(newFieldElement);
+                            }
+                        }
+                    }
+                    
+                    /*
+                        // Neues AxFormDataSourceField-Element erstellen
+                        XmlElement newFieldElement = newDoc.CreateElement("AxFormDataSourceField");
 
-                    Console.WriteLine("Neues AxFormDataSourceField-Element hinzugefügt!");
+                        // DataField-Element erstellen und hinzufügen
+                        XmlElement dataFieldElement = newDoc.CreateElement("DataField");
+                        //dataFieldElement.InnerText = "NeuesDataField"; // Hier name des Feldes angeben 
+                       
+
+
+                        // DataField-Element zum AxFormDataSourceField-Element hinzufügen
+                        newFieldElement.AppendChild(dataFieldElement);
+
+                        // Neues AxFormDataSourceField-Element zum Fields-Element hinzufügen
+                        fieldsNode.AppendChild(newFieldElement);
+
+
+                        Console.WriteLine("Neues AxFormDataSourceField-Element hinzugefügt!");
+                    */
                 }
                 else
                 {
