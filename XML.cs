@@ -440,25 +440,6 @@ namespace RD_Table_Tool
                         }
                     }
                     
-                    /*
-                        // Neues AxFormDataSourceField-Element erstellen
-                        XmlElement newFieldElement = newDoc.CreateElement("AxFormDataSourceField");
-
-                        // DataField-Element erstellen und hinzufügen
-                        XmlElement dataFieldElement = newDoc.CreateElement("DataField");
-                        //dataFieldElement.InnerText = "NeuesDataField"; // Hier name des Feldes angeben 
-                       
-
-
-                        // DataField-Element zum AxFormDataSourceField-Element hinzufügen
-                        newFieldElement.AppendChild(dataFieldElement);
-
-                        // Neues AxFormDataSourceField-Element zum Fields-Element hinzufügen
-                        fieldsNode.AppendChild(newFieldElement);
-
-
-                        Console.WriteLine("Neues AxFormDataSourceField-Element hinzugefügt!");
-                    */
                 }
                 else
                 {
