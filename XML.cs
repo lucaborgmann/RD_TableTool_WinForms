@@ -304,9 +304,7 @@ namespace RD_Table_Tool
             }
         }
 
-
- 
-
+        /*
         public static void CreateForm(string pName, string pOutputPath)
         {
             string name = pName;
@@ -361,7 +359,93 @@ namespace RD_Table_Tool
                 System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
             }
         }
+        */
 
+        
+        public static void CreateForm(string pName, string pOutputPath,string pFormpatterm, List<Dictionary<string, string>> fieldList)
+        {
+            string name = pName;
+            string outputPath = pOutputPath;
+
+            try
+            {
+                //Lädt die Datei 
+                XmlDocument templateDoc = new XmlDocument();
+                templateDoc.Load($"{scriptDir}\\FormTemplate2.xml");
+
+                System.Diagnostics.Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate2.xml");
+                System.Diagnostics.Debug.WriteLine("CreateForm: Lädt die Template-Datei");
+
+                // Schreibt die Werte der Template Datei in die neue XML Datei 
+                XmlDocument newDoc = new XmlDocument();
+                newDoc.LoadXml(templateDoc.OuterXml);
+
+                
+                //Hier muss das template überarbeitet werden
+                XmlNamespaceManager nsManager = new XmlNamespaceManager(newDoc.NameTable);
+                nsManager.AddNamespace("ax", "Microsoft.Dynamics.AX.Metadata.V6"); //fügt den NameSpace hinzu
+
+                //ersten Knoten unter <Name> unter <AxForm> finden 
+                XmlNode nameNode = newDoc.SelectSingleNode("/ax:AxForm/ax:Name", nsManager);
+
+                if (nameNode != null)
+                {
+                    nameNode.InnerText = name;
+                    System.Diagnostics.Debug.WriteLine("CreateForm: Ersetzt den ersten Namen");
+
+
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("CreateForm: <Name> -Tag nicht gefunden!");
+                }
+
+                //es muss noch in der Zeile  public class TestForm extends FormRun "TestForm" durch den Namen ergänzt werde
+                string searchString = "ToolTest2603"; //Wird Überall im Dokuemnt ersezt 
+                XmlNodeList nodes = newDoc.SelectNodes("//*[contains(text(), '" + searchString + "')]");
+
+                foreach (XmlNode node in nodes)
+                {
+                    node.InnerText = node.InnerText.Replace(searchString, name);
+                }
+
+                XmlNode fieldsNode = newDoc.SelectSingleNode("//Fields");
+
+                //Falls Felder vorhanden sind ein neues Element für jedes Feld einfügen 
+                if (fieldsNode != null)
+                {
+                    // Neues AxFormDataSourceField-Element erstellen
+                    XmlElement newFieldElement = newDoc.CreateElement("AxFormDataSourceField");
+
+                    // DataField-Element erstellen und hinzufügen
+                    XmlElement dataFieldElement = newDoc.CreateElement("DataField");
+                    dataFieldElement.InnerText = "NeuesDataField"; // Setze den gewünschten Wert
+
+                    // DataField-Element zum AxFormDataSourceField-Element hinzufügen
+                    newFieldElement.AppendChild(dataFieldElement);
+
+                    // Neues AxFormDataSourceField-Element zum Fields-Element hinzufügen
+                    fieldsNode.AppendChild(newFieldElement);
+
+                    // Änderungen speichern
+
+                    Console.WriteLine("Neues AxFormDataSourceField-Element hinzugefügt!");
+                }
+                else
+                {
+                    Console.WriteLine("Fields-Element nicht gefunden.");
+                }
+
+
+                //Speichert das Dokument muss am Ende von allem Passieren !!
+                newDoc.Save($"{outputPath}\\{name}.xml");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
+            }
+        }
+        
         public static void createEntity(string pTableName, string pIndexName, string pDataField, string pOutputPath, string pTablePath)
         {
 

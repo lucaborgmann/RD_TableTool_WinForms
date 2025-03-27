@@ -142,6 +142,7 @@ namespace RD_TableTool_WinForms
             string name = this.NameTextBox.Text;
             string label = this.LabelTextBox.Text;
             string properties = this.PropertyTextBox.Text;
+            string formPattern = this.FormPatternCombobox.Text; 
 
             // Liste zum Speichern der Werte aus dem DataGrid
             List<Dictionary<string, string>> dataListValues = new List<Dictionary<string, string>>();
@@ -183,7 +184,9 @@ namespace RD_TableTool_WinForms
                 }
 
                 // Übergabe der Liste an die CreateTable-Methode
-                XML.CreateTable(name, label, OutputTablePath, dataListValues);
+                 XML.CreateTable(name, label, OutputTablePath, dataListValues);
+             
+
             }
             else
             {
@@ -205,7 +208,8 @@ namespace RD_TableTool_WinForms
             }
 
             //als letztes 
-            XML.CreateForm(name, FormsOutputpath);
+            XML.CreateForm(name, FormsOutputpath, formPattern, dataListValues);
+           // XML.CreateForm(name, FormsOutputpath);
             MessageBox.Show("Tabelle wurde erstellt");
         }
 
