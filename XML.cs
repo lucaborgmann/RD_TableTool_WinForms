@@ -465,33 +465,60 @@ namespace RD_Table_Tool
                         if (counter == 4) // Beim 4. <Controls>-Element einfügen
                         {
 
-                            XmlElement newElement = newDoc.CreateElement("AxFormControl");
-                            newElement.SetAttribute("xmlns", "");
-                            newElement.SetAttribute("i:type", "AxFormIntegerControl");
+                            //hier das Dictonary durchgehen und an den Markierten Stellen die Werte angeben 
 
-                            
-                             XmlElement nameElement = newDoc.CreateElement("Name");
-                             nameElement.InnerText = $"{name}_Feld1"; //hier Namen der Form und des Feldes wie angegeben Anhängen
-                             newElement.AppendChild(nameElement);
- 
-                             XmlElement typeElement = newDoc.CreateElement("Type");
-                             typeElement.InnerText = "Integer"; // hier durch den Datentypen ersetzen 
-                             newElement.AppendChild(typeElement);
- 
-                             XmlElement formControlExtensionElement = newDoc.CreateElement("FormControlExtension");
-                             formControlExtensionElement.SetAttribute("i:nil", "true");
-                             newElement.AppendChild(formControlExtensionElement);
- 
-                             XmlElement dataFieldElement = newDoc.CreateElement("DataField");
-                             dataFieldElement.InnerText = "Feld1"; //hier Feldnamen einfügen 
-                             newElement.AppendChild(dataFieldElement);
- 
-                             XmlElement dataSourceElement = newDoc.CreateElement("DataSource");
-                             dataSourceElement.InnerText = $"{name}"; //hier Fom bzw Tabellennamen hinzufügen 
-                             newElement.AppendChild(dataSourceElement);
-                            
-                            controlsNode.AppendChild(newElement);
-                            break; 
+                            string tmpFieldName = "";
+                            string tmpBaseEDT = "";
+
+                            //nur zum Debuggen 
+                            int size = fieldList.Count;
+                            System.Diagnostics.Debug.WriteLine($"CreateForm:  Dictonary Größe: {size}");
+
+                            foreach (var dict in fieldList)
+                            {
+                                foreach (var kvp in dict)
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"Dictonary ausgeben Create Form {kvp.Key},Value: {kvp.Value}");
+                                    if (kvp.Key == "Name")
+                                    {
+                                        tmpFieldName = kvp.Value;
+                                    }
+                                    else if (kvp.Key == "BaseEDT")
+                                    {
+                                        tmpBaseEDT = kvp.Value;
+                                    }
+
+                                    XmlElement newElement = newDoc.CreateElement("AxFormControl");
+                                    newElement.SetAttribute("xmlns", "");
+                                    newElement.SetAttribute("i:type", "AxFormIntegerControl");
+
+
+                                    XmlElement nameElement = newDoc.CreateElement("Name");
+                                    nameElement.InnerText = $"{name}_{tmpFieldName}"; //hier Namen der Form und des Feldes wie angegeben Anhängen
+                                    newElement.AppendChild(nameElement);
+
+                                    XmlElement typeElement = newDoc.CreateElement("Type");
+                                    //typeElement.InnerText = "Integer"; // hier durch den Datentypen ersetzen 
+                                    typeElement.InnerText = tmpBaseEDT; // hier durch den Datentypen ersetzen 
+                                    newElement.AppendChild(typeElement);
+
+                                    XmlElement formControlExtensionElement = newDoc.CreateElement("FormControlExtension");
+                                    formControlExtensionElement.SetAttribute("i:nil", "true");
+                                    newElement.AppendChild(formControlExtensionElement);
+
+                                    XmlElement dataFieldElement = newDoc.CreateElement("DataField");
+                                    //dataFieldElement.InnerText = "Feld1"; //hier Feldnamen einfügen 
+                                    dataFieldElement.InnerText = tmpFieldName; //hier Feldnamen einfügen 
+                                    newElement.AppendChild(dataFieldElement);
+
+                                    XmlElement dataSourceElement = newDoc.CreateElement("DataSource");
+                                    dataSourceElement.InnerText = $"{name}"; //hier Fom bzw Tabellennamen hinzufügen 
+                                    newElement.AppendChild(dataSourceElement);
+
+                                    controlsNode.AppendChild(newElement);
+                                }
+                            }
+                            break;
                         }
                     }
 
