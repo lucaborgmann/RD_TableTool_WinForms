@@ -284,7 +284,20 @@ namespace RD_Table_Tool
                             node.ParentNode.ReplaceChild(declarationElement, node); //Ersetzt den Ursprünglichen Knoten 
 
                         }
+                    }  
+
+                    /*
+                    XmlNode controlsNode = newDoc.SelectSingleNode("//Controls");
+                    if (controlsNode != null) 
+                    {
+                        XmlElement newElement = newDoc.CreateElement("NewElement");
+                        newElement.InnerText = "Test";
+                        controlsNode.AppendChild(newElement);   
                     }
+                    */
+
+
+
                 }
                 else
                 {
@@ -369,6 +382,7 @@ namespace RD_Table_Tool
 
             try
             {
+                System.Diagnostics.Debug.WriteLine("diese Create Form wird ausgeführt");
                 //Lädt die Datei 
                 XmlDocument templateDoc = new XmlDocument();
                 templateDoc.Load($"{scriptDir}\\FormTemplate2.xml");
@@ -414,7 +428,7 @@ namespace RD_Table_Tool
                 //Falls Felder vorhanden sind ein neues Element für jedes Feld einfügen 
                 if (fieldsNode != null)
                 {
-                    //Durch die Dictonarys durchgehen und dann das dadrunter einfügen 
+                    //Durch die Dictonarys durchgehen für alle Namen die 
                     foreach (var dict in fieldList)
                     {
                         foreach (var kvp in dict)
@@ -439,7 +453,49 @@ namespace RD_Table_Tool
                             }
                         }
                     }
-                    
+
+                    //hier noch AxFormControlls unter dem Tag Controls für jedes Feld einfügen
+                    XmlNodeList controlsNodes = newDoc.SelectNodes("//Controls"); // Alle <Controls>-Elemente finden
+                    int counter = 0;
+
+                    foreach (XmlNode controlsNode in controlsNodes)
+                    {
+                        counter++;
+
+                        if (counter == 4) // Beim 4. <Controls>-Element einfügen
+                        {
+
+                            XmlElement newElement = newDoc.CreateElement("AxFormControl");
+                            newElement.SetAttribute("xmlns", "");
+                            newElement.SetAttribute("i:type", "AxFormIntegerControl");
+
+                            
+                             XmlElement nameElement = newDoc.CreateElement("Name");
+                             nameElement.InnerText = $"{name}_Feld1"; //hier Namen der Form und des Feldes wie angegeben Anhängen
+                             newElement.AppendChild(nameElement);
+ 
+                             XmlElement typeElement = newDoc.CreateElement("Type");
+                             typeElement.InnerText = "Integer"; // hier durch den Datentypen ersetzen 
+                             newElement.AppendChild(typeElement);
+ 
+                             XmlElement formControlExtensionElement = newDoc.CreateElement("FormControlExtension");
+                             formControlExtensionElement.SetAttribute("i:nil", "true");
+                             newElement.AppendChild(formControlExtensionElement);
+ 
+                             XmlElement dataFieldElement = newDoc.CreateElement("DataField");
+                             dataFieldElement.InnerText = "Feld1"; //hier Feldnamen einfügen 
+                             newElement.AppendChild(dataFieldElement);
+ 
+                             XmlElement dataSourceElement = newDoc.CreateElement("DataSource");
+                             dataSourceElement.InnerText = $"{name}"; //hier Fom bzw Tabellennamen hinzufügen 
+                             newElement.AppendChild(dataSourceElement);
+                            
+                            controlsNode.AppendChild(newElement);
+                            break; 
+                        }
+                    }
+
+
                 }
                 else
                 {

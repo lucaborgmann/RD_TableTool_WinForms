@@ -99,15 +99,7 @@ public class ToolTest2603 extends FormRun
 				<FormControlExtension
 					i:nil="true" />
 				<Controls>
-					<AxFormControl xmlns=""
-						i:type="AxFormIntegerControl">
-						<Name>ToolTest2603_Feld1</Name>
-						<Type>Integer</Type>
-						<FormControlExtension
-							i:nil="true" />
-						<DataField>Feld1</DataField>
-						<DataSource>ToolTest2603</DataSource>
-					</AxFormControl>
+					
 				</Controls>
 				<DataSource>ToolTest2603</DataSource>
 				<Style>Tabular</Style>
