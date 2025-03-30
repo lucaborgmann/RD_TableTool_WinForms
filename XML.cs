@@ -470,12 +470,15 @@ namespace RD_Table_Tool
                             string tmpFieldName = "";
                             string tmpBaseEDT = "";
 
-                            //nur zum Debuggen 
-                            int size = fieldList.Count;
-                            System.Diagnostics.Debug.WriteLine($"CreateForm:  Dictonary Größe: {size}");
 
                             foreach (var dict in fieldList)
                             {
+                                //Wichtig für eine klare Reihenfolge falls Name vorkomtm wird BaseEDT erst später gesetzt und der letzte Wert alles Überschreibt 
+                                tmpFieldName = dict.ContainsKey("Name") ? dict["Name"] : "";
+                                tmpBaseEDT = dict.ContainsKey("BaseEDT") ? dict["BaseEDT"] : "";
+
+                                System.Diagnostics.Debug.WriteLine($"Processing Field: {tmpFieldName}, Type: {tmpBaseEDT}");
+
                                 foreach (var kvp in dict)
                                 {
                                     System.Diagnostics.Debug.WriteLine($"Dictonary ausgeben Create Form {kvp.Key},Value: {kvp.Value}");
