@@ -470,7 +470,72 @@ namespace RD_Table_Tool
                             string tmpFieldName = "";
                             string tmpBaseEDT = "";
 
+                            string xsiNameSpace = "http://www.w3.org/2001/XMLSchema-instance";
 
+                            // Stelle sicher, dass das Root-Element den Namespace kennt
+                            XmlElement root = newDoc.DocumentElement;
+                            if (root != null && root.GetAttribute("xmlns:i") == "")
+                            {
+                                root.SetAttribute("xmlns:i", xsiNameSpace);
+                            }
+
+                            foreach (var dict in fieldList)
+                            {
+                                tmpFieldName = dict.ContainsKey("Name") ? dict["Name"] : "";
+                                tmpBaseEDT = dict.ContainsKey("BaseEDT") ? dict["BaseEDT"] : "";
+
+                                System.Diagnostics.Debug.WriteLine($"Processing Field: {tmpFieldName}, Type: {tmpBaseEDT}");
+
+                                // Überprüfen, ob ein <AxFormControl> mit dem gleichen DataField-Wert existiert
+                                bool exists = controlsNode.SelectNodes("AxFormControl").Cast<XmlNode>()
+                                                  .Any(control => control.SelectSingleNode("DataField")?.InnerText == tmpFieldName);
+
+                                if (!exists)
+                                {
+                                    XmlElement newElement = newDoc.CreateElement("AxFormControl");
+
+                                    // Setze i:type mit Namespace
+                                    if (tmpBaseEDT == "Int")
+                                    {
+                                        newElement.SetAttribute("type", xsiNameSpace, "AxFormIntegerControl");
+                                    }
+                                    else
+                                    {
+                                        newElement.SetAttribute("type", xsiNameSpace, $"AxForm{tmpBaseEDT}Control");
+                                    }
+
+                                    XmlElement nameElement = newDoc.CreateElement("Name");
+                                    nameElement.InnerText = $"{name}_{tmpFieldName}";
+                                    newElement.AppendChild(nameElement);
+
+                                    XmlElement typeElement = newDoc.CreateElement("Type");
+                                    if (tmpBaseEDT.Equals("Int", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        typeElement.InnerText = "Integer";
+                                    }
+                                    else
+                                    {
+                                        typeElement.InnerText = tmpBaseEDT;
+                                    }
+                                    newElement.AppendChild(typeElement);
+
+                                    XmlElement formControlExtensionElement = newDoc.CreateElement("FormControlExtension");
+                                    formControlExtensionElement.SetAttribute("nil", xsiNameSpace, "true");
+                                    newElement.AppendChild(formControlExtensionElement);
+
+                                    XmlElement dataFieldElement = newDoc.CreateElement("DataField");
+                                    dataFieldElement.InnerText = tmpFieldName;
+                                    newElement.AppendChild(dataFieldElement);
+
+                                    XmlElement dataSourceElement = newDoc.CreateElement("DataSource");
+                                    dataSourceElement.InnerText = name;
+                                    newElement.AppendChild(dataSourceElement);
+
+                                    controlsNode.AppendChild(newElement);
+                                }
+                            }
+
+                            /*
                             foreach (var dict in fieldList)
                             {
                                 //Wichtig für eine klare Reihenfolge falls Name vorkomtm wird BaseEDT erst später gesetzt und der letzte Wert alles Überschreibt 
@@ -491,7 +556,8 @@ namespace RD_Table_Tool
                                         tmpBaseEDT = kvp.Value;
                                     }
 
-                                    // Überprüfen, ob ein <AxFormControl> mit dem gleichen DataField-Wert existiert
+                                    
+                                    // Überprüfen, ob ein <AxFormControl> mit dem gleichen DataField-Wert existiert(sonst schreibt er es x mal rein)
                                     bool exists = controlsNode.SelectNodes("AxFormControl").Cast<XmlNode>()
                                                    .Any(control => control.SelectSingleNode("DataField")?.InnerText == tmpFieldName);
 
@@ -499,7 +565,16 @@ namespace RD_Table_Tool
                                     {
                                         XmlElement newElement = newDoc.CreateElement("AxFormControl");
                                         newElement.SetAttribute("xmlns", "");
-                                        newElement.SetAttribute("i:type", "AxFormIntegerControl");
+                                        //newElement.SetAttribute("i:type", "AxFormIntegerControl"); //hier an den Datentypen anpassen 
+
+                                        if (tmpBaseEDT == "Int")
+                                        {
+                                            newElement.SetAttribute("i:type", "AxFormIntegerControl"); //NameSpace für  muss definiert werden
+                                        }
+                                        else
+                                        {
+                                            newElement.SetAttribute("i:type", $"AxForm{tmpBaseEDT}Control");
+                                        }
 
                                         XmlElement nameElement = newDoc.CreateElement("Name");
                                         nameElement.InnerText = $"{name}_{tmpFieldName}";
@@ -510,7 +585,7 @@ namespace RD_Table_Tool
                                         newElement.AppendChild(typeElement);
 
                                         XmlElement formControlExtensionElement = newDoc.CreateElement("FormControlExtension");
-                                        formControlExtensionElement.SetAttribute("i:nil", "true");
+                                        formControlExtensionElement.SetAttribute("i:nil", "true"); //NameSpace für  muss definiert werden
                                         newElement.AppendChild(formControlExtensionElement);
 
                                         XmlElement dataFieldElement = newDoc.CreateElement("DataField");
@@ -523,10 +598,16 @@ namespace RD_Table_Tool
 
                                         controlsNode.AppendChild(newElement);
                                     }
+                                    
+
+                                    // Überprüfen, ob ein <AxFormControl> mit dem gleichen DataField-Wert existiert (sonst schreibt er es x mal rein)
+
+                                    //XmlNamespaceManager nsmgr = new XmlNamespaceManager(newDoc.); 
 
 
                                 }
                             }
+                            */
                             break;
                         }
                     }
