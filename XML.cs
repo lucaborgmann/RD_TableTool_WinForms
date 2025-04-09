@@ -229,33 +229,52 @@ namespace RD_Table_Tool
                             string fieldBaseEDT = fieldDict["BaseEDT"];
                             string fieldCreatEDT = fieldDict["CreateEDT"];
 
-                            //neuer AxtableField Knoten 
-                            XmlElement neuesAxTableField = newDoc.CreateElement("AxTableField");
-                            neuesAxTableField.SetAttribute("xmlns", ""); //weißt dem Knoten die Nötigen Attribute zu 
 
-                            XmlAttribute typeAttribute = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance"); //fügt dem Knoten ein neues Typattribut hinzu
-
-                            //Pürft ob ein neues EDT erstellt werden muss 
                             if (fieldCreatEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
                             {
-                                typeAttribute.Value = "AxTableField" + fieldName;
+                                XmlElement axTableField = newDoc.CreateElement("AxTableField");
+                                axTableField.SetAttribute("xmlns", "");
+
+                                XmlAttribute typeAttr = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
+                                typeAttr.Value = $"AxTableField{fieldBaseEDT}";
+                                axTableField.Attributes.Append(typeAttr);
+
+                                XmlElement fieldNameElement = newDoc.CreateElement("Name");
+                                fieldNameElement.InnerText = fieldName;
+                                axTableField.AppendChild(fieldNameElement);
+
+                                XmlElement edt = newDoc.CreateElement("ExtendedDataType");
+                                edt.InnerText = fieldName; // Oder fieldBaseEDT
+                                axTableField.AppendChild(edt);
+
+                                XmlElement ignore = newDoc.CreateElement("IgnoreEDTRelation");
+                                ignore.InnerText = "Yes";
+                                axTableField.AppendChild(ignore);
+
+                                // ⬇️ Wichtig: Füge in das <Fields>-Tag ein, nicht an ein neues Root-Element
+                                fieldNode.AppendChild(axTableField);
                             }
                             else
                             {
+                                //neuer AxtableField Knoten 
+                                XmlElement newAxTableField = newDoc.CreateElement("AxTableField");
+                                newAxTableField.SetAttribute("xmlns", ""); //weißt dem Knoten die Nötigen Attribute zu 
+
+                                XmlAttribute typeAttribute = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance"); //fügt dem Knoten ein neues Typattribut hinzu
                                 typeAttribute.Value = "AxTableField" + fieldBaseEDT;
+                                //Fügt des neuen Attributs
+                                newAxTableField.Attributes.Append(typeAttribute);
+
+                                //Erstellen des Name-Elements
+                                XmlElement nameElement = newDoc.CreateElement("Name");
+                                //neuen Wert zuweisen
+                                nameElement.InnerText = fieldName;
+                                //hinzufügen zum neuen ELements
+                                newAxTableField.AppendChild(nameElement);
+
+                                // Hier wird das neue Feld direkt in fieldNode eingefügt, ohne zusätzliches <Fields>
+                                fieldNode.AppendChild(newAxTableField);
                             }
-                            //Fügt des neuen Attributs
-                            neuesAxTableField.Attributes.Append(typeAttribute);
-
-                            //Erstellen des Name-Elements
-                            XmlElement nameElement = newDoc.CreateElement("Name");
-                            //neuen Wert zuweisen
-                            nameElement.InnerText = fieldName;
-                            //hinzufügen zum neuen ELements
-                            neuesAxTableField.AppendChild(nameElement);
-
-                            // Hier wird das neue Feld direkt in fieldNode eingefügt, ohne zusätzliches <Fields>
-                            fieldNode.AppendChild(neuesAxTableField);
                         }
                     }
 
@@ -317,64 +336,6 @@ namespace RD_Table_Tool
             }
         }
 
-        /*
-        public static void CreateForm(string pName, string pOutputPath)
-        {
-            string name = pName;
-            string outputPath = pOutputPath;
-
-            try
-            {
-                //Lädt die Datei 
-                XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\FormTemplate.xml");
-
-                System.Diagnostics.Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate.xml");
-                System.Diagnostics.Debug.WriteLine("CreateForm: Lädt die Template-Datei");
-
-                // Schreibt die Werte der Template Datei in die neue XML Datei 
-                XmlDocument newDoc = new XmlDocument();
-                newDoc.LoadXml(templateDoc.OuterXml);
-
-                //Hier muss das template überarbeitet werden
-                XmlNamespaceManager nsManager = new XmlNamespaceManager(newDoc.NameTable);
-                nsManager.AddNamespace("ax", "Microsoft.Dynamics.AX.Metadata.V6"); //fügt den NameSpace hinzu
-
-                //ersten Knoten unter <Name> unter <AxForm> finden 
-                XmlNode nameNode = newDoc.SelectSingleNode("/ax:AxForm/ax:Name", nsManager);
-
-                if (nameNode != null)
-                {
-                    nameNode.InnerText = name;
-                    System.Diagnostics.Debug.WriteLine("CreateForm: Ersetzt den ersten Namen");
-
-
-                }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine("CreateForm: <Name> -Tag nicht gefunden!");
-                }
-
-                //es muss noch in der Zeile  public class TestForm extends FormRun "TestForm" durch den Namen ergänzt werde
-                string searchString = "TestForm";
-                XmlNodeList nodes = newDoc.SelectNodes("//*[contains(text(), '" + searchString + "')]");
-
-                foreach (XmlNode node in nodes)
-                {
-                    node.InnerText = node.InnerText.Replace(searchString, name);
-                }
-
-                //Speichert das Dokument muss am Ende von allem Passieren !!
-                newDoc.Save($"{outputPath}\\{name}.xml");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
-            }
-        }
-        */
-
-
         public static void CreateForm(string pName, string pOutputPath, string pFormpatterm, List<Dictionary<string, string>> fieldList)
         {
             string name = pName;
@@ -393,6 +354,7 @@ namespace RD_Table_Tool
                 // Schreibt die Werte der Template Datei in die neue XML Datei 
                 XmlDocument newDoc = new XmlDocument();
                 newDoc.LoadXml(templateDoc.OuterXml);
+                //bis hier evtl als Methode in eine eigene Helperklasse Outsourcen
 
 
                 //Hier muss das template überarbeitet werden
@@ -421,6 +383,21 @@ namespace RD_Table_Tool
                 foreach (XmlNode node in nodes)
                 {
                     node.InnerText = node.InnerText.Replace(searchString, name);
+                }
+
+                // CDATA wieder einfügen da es scheinbar verschluckt wird:
+                XmlNode methodNode = newDoc.SelectSingleNode("//*[local-name()='Method']"); //Namespace unabhängige Suche nach dem Element Method
+                if (methodNode != null)
+                {
+                    XmlNode sourceNode = methodNode.SelectSingleNode("*[local-name()='Source']"); //Namespace unabhängige Suche nach dem Kindknoten Source gesucht
+                    if (sourceNode != null)
+                    {
+                        string originalText = sourceNode.InnerText; //aktueller Inhalt des Tags 
+
+                        sourceNode.RemoveAll();//Löscht den aktuellen Inhalt 
+                        XmlCDataSection cdata = newDoc.CreateCDataSection(originalText.Trim()); // neuer Knoten Character Data 
+                        sourceNode.AppendChild(cdata); //fügt den Knoten hinzu
+                    }
                 }
 
                 XmlNode fieldsNode = newDoc.SelectSingleNode("//Fields");
@@ -454,6 +431,91 @@ namespace RD_Table_Tool
                         }
                     }
 
+                    XmlNodeList controlsNodes = newDoc.SelectNodes("//Controls"); // Alle <Controls>-Elemente finden
+                    int counter = 0;
+
+                    foreach (XmlNode controlsNode in controlsNodes)
+                    {
+                        counter++;
+
+                        if (counter == 4) // Beim 4. <Controls>-Element einfügen
+                        {
+                            string tmpFieldName = "";
+                            string tmpBaseEDT = "";
+
+                            string xsiNameSpace = "http://www.w3.org/2001/XMLSchema-instance";
+
+                            // Stelle sicher, dass das Root-Element den Namespace kennt
+                            XmlElement root = newDoc.DocumentElement;
+                            if (root != null && root.GetAttribute("xmlns:i") == "")
+                            {
+                                root.SetAttribute("xmlns:i", xsiNameSpace);
+                            }
+
+                            foreach (var dict in fieldList)
+                            {
+                                tmpFieldName = dict.ContainsKey("Name") ? dict["Name"] : "";
+                                tmpBaseEDT = dict.ContainsKey("BaseEDT") ? dict["BaseEDT"] : "";
+
+                                System.Diagnostics.Debug.WriteLine($"Processing Field: {tmpFieldName}, Type: {tmpBaseEDT}");
+
+                                // Überprüfen, ob ein <AxFormControl> mit dem gleichen DataField-Wert existiert
+                                bool exists = controlsNode.SelectNodes("AxFormControl").Cast<XmlNode>()
+                                                  .Any(control => control.SelectSingleNode("DataField")?.InnerText == tmpFieldName);
+
+                                if (!exists)
+                                {
+                                    XmlElement newElement = newDoc.CreateElement("AxFormControl");
+
+                                    // Hier den xmlns-Attribut hinzufügen
+                                    newElement.SetAttribute("xmlns", "");
+
+                                    // Setze i:type mit Namespace
+                                    if (tmpBaseEDT == "Int")
+                                    {
+                                        newElement.SetAttribute("type", xsiNameSpace, "AxFormIntegerControl");
+                                    }
+                                    else
+                                    {
+                                        newElement.SetAttribute("type", xsiNameSpace, $"AxForm{tmpBaseEDT}Control");
+                                    }
+
+                                    XmlElement nameElement = newDoc.CreateElement("Name");
+                                    nameElement.InnerText = $"{name}_{tmpFieldName}";
+                                    newElement.AppendChild(nameElement);
+
+                                    XmlElement typeElement = newDoc.CreateElement("Type");
+                                    if (tmpBaseEDT.Equals("Int", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        typeElement.InnerText = "Integer";
+                                    }
+                                    else
+                                    {
+                                        typeElement.InnerText = tmpBaseEDT;
+                                    }
+                                    newElement.AppendChild(typeElement);
+
+                                    XmlElement formControlExtensionElement = newDoc.CreateElement("FormControlExtension");
+                                    formControlExtensionElement.SetAttribute("nil", xsiNameSpace, "true");
+                                    newElement.AppendChild(formControlExtensionElement);
+
+                                    XmlElement dataFieldElement = newDoc.CreateElement("DataField");
+                                    dataFieldElement.InnerText = tmpFieldName;
+                                    newElement.AppendChild(dataFieldElement);
+
+                                    XmlElement dataSourceElement = newDoc.CreateElement("DataSource");
+                                    dataSourceElement.InnerText = name;
+                                    newElement.AppendChild(dataSourceElement);
+
+                                    controlsNode.AppendChild(newElement);
+                                }
+                            }
+                            break;
+                        }
+                    }
+
+
+                    /*
                     //hier noch AxFormControlls unter dem Tag Controls für jedes Feld einfügen
                     XmlNodeList controlsNodes = newDoc.SelectNodes("//Controls"); // Alle <Controls>-Elemente finden
                     int counter = 0;
@@ -537,7 +599,7 @@ namespace RD_Table_Tool
                             break;
                         }
                     }
-
+                    */
 
                 }
                 else
