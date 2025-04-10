@@ -565,9 +565,13 @@ namespace RD_Table_Tool
 
         public static void CreatePrivileges(string pOutputPath,string pTableName,string pTableLabel)
         {
-            //MessageBox.Show(" sie haben Privileges ausgewählt", "Privileges ausgewählt", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            XMLHelper.CreatePrivilegesFile(pTableName, $"{scriptDir}\\PrivilegesMaintainTemplate.xml", pTableLabel, $"{pOutputPath}\\{pTableName}Maintain.xml", "Maintain");
+            XMLHelper.CreatePrivilegesFile(pTableName, $"{scriptDir}\\PrivilegesViewTemplate.xml", pTableLabel, $"{pOutputPath}\\{pTableName}View.xml", "View");
+            
+            /*
             string name = pTableName;
             string label = pTableLabel; 
+
             XmlDocument newDoc =  XMLHelper.LoadTemplate($"{scriptDir}\\PrivilegesViewTemplate.xml");
 
             newDoc.LoadXml(newDoc.OuterXml);
@@ -603,6 +607,7 @@ namespace RD_Table_Tool
                 }
             }
             newDoc.Save($"{pOutputPath}\\{pTableName}View.xml");
+            */
         }
 
     }
