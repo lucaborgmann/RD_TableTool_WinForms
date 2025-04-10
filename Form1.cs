@@ -26,6 +26,7 @@ namespace RD_TableTool_WinForms
 
         bool isCheckedMenuItems = false;
         bool isChecked_Entity = false;
+        bool isChecked_Privileges = false;
 
         public Form1()
         {
@@ -132,9 +133,16 @@ namespace RD_TableTool_WinForms
 
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) //das hier ist Checkbox Privileges umbenennung läuft auf einen Fehler
         {
-
+            if (isChecked_Privileges == false)
+            {
+                isChecked_Privileges = true; 
+            }
+            else
+            {
+                isChecked_Privileges = false;
+            }
         }
 
         private void OkButton_Click(object sender, EventArgs e)
@@ -206,6 +214,10 @@ namespace RD_TableTool_WinForms
             {
                 System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
 
+            }
+            if (isChecked_Privileges)
+            {
+                XML.CreatePrivileges();
             }
 
             //als letztes 

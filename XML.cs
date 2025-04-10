@@ -565,7 +565,7 @@ namespace RD_Table_Tool
 
         public static void CreatePrivileges()
         {
-
+            MessageBox.Show(" sie haben Privileges ausgewählt", "Privileges ausgewählt", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
     }
