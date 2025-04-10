@@ -572,26 +572,6 @@ namespace RD_Table_Tool
 
             newDoc.LoadXml(newDoc.OuterXml);
 
-            /*
-            // Tags im Dokument updaten
-            XmlNodeList nodes = newDoc.GetElementsByTagName("Name");
-            foreach (XmlNode node in nodes)
-            {
-                node.InnerText = name;
-            }
-
-            XmlNodeList nodes2 = newDoc.GetElementsByTagName("ObjectName");
-            foreach (XmlNode node in nodes2)
-            {
-                node.InnerText = name;
-            }
-
-            XmlNodeList labelNodes = newDoc.GetElementsByTagName("Label");
-            foreach (XmlNode node in labelNodes)
-            {
-                node.InnerText = label;
-            }
-            */
 
             var nodeUpdates = new Dictionary<string, string>
             {
