@@ -17,8 +17,8 @@
     <Setting Name="CurrentPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Einstellung" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="OutputPrivilegesPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\Privileges</Value>
     </Setting>
   </Settings>
 </SettingsFile>

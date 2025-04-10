@@ -89,13 +89,14 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Einstellung {
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\Pri" +
+            "vileges")]
+        public string OutputPrivilegesPath {
             get {
-                return ((string)(this["Einstellung"]));
+                return ((string)(this["OutputPrivilegesPath"]));
             }
             set {
-                this["Einstellung"] = value;
+                this["OutputPrivilegesPath"] = value;
             }
         }
     }

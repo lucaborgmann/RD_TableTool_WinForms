@@ -563,9 +563,66 @@ namespace RD_Table_Tool
             }
         }
 
-        public static void CreatePrivileges()
+        public static void CreatePrivileges(string pOutputPath,string pTableName,string pTableLabel)
         {
-            MessageBox.Show(" sie haben Privileges ausgewählt", "Privileges ausgewählt", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show(" sie haben Privileges ausgewählt", "Privileges ausgewählt", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            string name = pTableName;
+            string label = pTableLabel; 
+            XmlDocument newDoc =  XMLHelper.LoadTemplate($"{scriptDir}\\PrivilegesViewTemplate.xml");
+
+            newDoc.LoadXml(newDoc.OuterXml);
+
+            /*
+            // Tags im Dokument updaten
+            XmlNodeList nodes = newDoc.GetElementsByTagName("Name");
+            foreach (XmlNode node in nodes)
+            {
+                node.InnerText = name;
+            }
+
+            XmlNodeList nodes2 = newDoc.GetElementsByTagName("ObjectName");
+            foreach (XmlNode node in nodes2)
+            {
+                node.InnerText = name;
+            }
+
+            XmlNodeList labelNodes = newDoc.GetElementsByTagName("Label");
+            foreach (XmlNode node in labelNodes)
+            {
+                node.InnerText = label;
+            }
+            */
+
+            var nodeUpdates = new Dictionary<string, string>
+            {
+                    { "Name", name },
+                    { "Label", label },
+                    { "ObjectName", name }
+            };
+
+
+            bool isFirstNameTag = true;
+
+            foreach (var update in nodeUpdates)
+            {
+                XmlNodeList nodesTest = newDoc.GetElementsByTagName(update.Key);
+                foreach (XmlNode node in nodesTest)
+                {
+                    //Für den Ausnahme beim ersten
+                    if (update.Key == "Name" && isFirstNameTag)
+                    {
+                        // Ausnahme für das erste Tag "Name"
+                        node.InnerText = $"{update.Value}View";
+                        isFirstNameTag = false;
+                        //continue; // Überspringt das erste "Name" Tag
+                    }
+                    else
+                    {
+                        node.InnerText = update.Value;
+                    }
+                }
+            }
+            newDoc.Save($"{pOutputPath}\\{pTableName}View.xml");
         }
 
     }

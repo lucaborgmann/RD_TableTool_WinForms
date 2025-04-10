@@ -23,6 +23,7 @@ namespace RD_TableTool_WinForms
         String OutputEDTPath = Settings.Default.OutputEDTPath;
         String OutputTablePath = Settings.Default.OutputTablePath;
         String FormsOutputpath = Settings.Default.OutputFormsPath;
+        String PrivilegesOutputPath = Settings.Default.OutputPrivilegesPath; 
 
         bool isCheckedMenuItems = false;
         bool isChecked_Entity = false;
@@ -217,7 +218,7 @@ namespace RD_TableTool_WinForms
             }
             if (isChecked_Privileges)
             {
-                XML.CreatePrivileges();
+                XML.CreatePrivileges(PrivilegesOutputPath, name, label);
             }
 
             //als letztes 
