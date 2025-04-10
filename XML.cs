@@ -140,43 +140,6 @@ namespace RD_Table_Tool
 
         }
 
-        /*
-        public static void updateBasedEDT(string pBaseEDT,string pPath)
-        {
-            string baseEDT = pBaseEDT;
-            string Path = pPath;
-
-            XmlDocument doc = new XmlDocument();
-            //templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
-            doc.Load(Path);
-
-            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
-            nsmgr.AddNamespace("i", "http://www.w3.org/2001/XMLSchema-instance");
-
-            // AxEdt-Node holen
-            XmlNode axEdtNode = doc.SelectSingleNode("//AxEdt", nsmgr);
-            if (axEdtNode != null)
-            {
-                // Attribut 'i:type' setzen oder aktualisieren
-                XmlAttribute typeAttr = axEdtNode.Attributes["type", "http://www.w3.org/2001/XMLSchema-instance"];
-                if (typeAttr == null)
-                {
-                    typeAttr = doc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
-                    axEdtNode.Attributes.Append(typeAttr);
-                }
-
-                // Wert zuweisen
-                // typeAttr.Value = "AxEdtString";
-                typeAttr.Value = $"AxEdt{baseEDT}";
-                Console.WriteLine("i:type erfolgreich gesetzt.");
-            }
-
-
-            doc.Save(Path);
-
-
-        }
-        */
         public static void CreateTable(string pName, string pLabel, string pOutputPath, List<Dictionary<string, string>> fieldList)
         {
             string name = pName;
