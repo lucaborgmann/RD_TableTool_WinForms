@@ -15,55 +15,6 @@ namespace RD_Table_Tool
         public static string scriptDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); //Speichert den Pfad zum verzeichnis
         //Konstruktor
         public XML() { }
-
-        /*
-        public static void CreateMenuItem(string pName, string pLabel, string pOutputPath)
-        {
-            string name = pName;
-            string label = pLabel;
-            string outputPath = pOutputPath;
-
-            System.Diagnostics.Debug.WriteLine($"OutPut Path: {outputPath}");
-
-            try
-            {
-                // Template laden
-                XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\EdtTemplate.xml");
-                System.Diagnostics.Debug.WriteLine("Lädt die Template-Datei");
-
-                // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
-                XmlDocument newDoc = new XmlDocument();
-                newDoc.LoadXml(templateDoc.OuterXml);
-
-                var nodeUpdates = new Dictionary<string, string>
-        {
-                    { "Name", name },
-                    { "Label", label },
-                    { "Object", name }
-                };
-
-                foreach (var update in nodeUpdates)
-                {
-                    XmlNodeList nodes = newDoc.GetElementsByTagName(update.Key);
-                    foreach (XmlNode node in nodes)
-                    {
-                        node.InnerText = update.Value;
-                    }
-                }
-                // Neue XML-Datei speichern
-                //newDoc.Save($"C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\{name}.xml");
-                newDoc.Save($"{outputPath}\\{name}.xml");
-                System.Diagnostics.Debug.WriteLine("XML-Datei aktualisiert");
-
-            }
-            catch (XmlException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
-            }
-        }
-        */
-
         public static void CreateMenuItem(string pName, string pLabel, string pOutputPath)
         {
             string name = pName;
@@ -647,6 +598,11 @@ namespace RD_Table_Tool
             {
                 System.Diagnostics.Debug.WriteLine(ex);
             }
+        }
+
+        public static void CreatePrivileges()
+        {
+
         }
 
     }
