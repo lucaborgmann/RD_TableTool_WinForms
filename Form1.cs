@@ -178,7 +178,8 @@ namespace RD_TableTool_WinForms
                         {
                             System.Diagnostics.Debug.WriteLine("CreateEDT: ist ja");
                             System.Diagnostics.Debug.WriteLine($"Der ist {dataGridNameValue}");
-                            XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", OutputEDTPath);
+                           // XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", OutputEDTPath);
+                            XML.CreateEDT(dataGridNameValue, dataGridNameValue,baseEDT, OutputEDTPath);
                         }
                     }
                 }

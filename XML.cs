@@ -6,6 +6,7 @@ using System.Xml;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace RD_Table_Tool
 {
@@ -126,7 +127,8 @@ namespace RD_Table_Tool
                 XmlDocument templateDoc = new XmlDocument();
                 //templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
                 templateDoc.Load($"{scriptDir}\\EdtTemplate.xml");
-                System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Lädt die Template-Datei");
+                System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Lädt die Template-Datei: ");
+                System.Diagnostics.Debug.WriteLine($"{scriptDir}\\EdtTemplate.xml");
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
                 XmlDocument newDoc = new XmlDocument();
                 newDoc.LoadXml(templateDoc.OuterXml);
@@ -143,20 +145,41 @@ namespace RD_Table_Tool
                 foreach (XmlNode node in nodes)
                 {
                     node.InnerText = label;
-                    System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Ersetzt den das Label");
+                    System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Ersetzt das Label");
                 }
 
-                nodes = newDoc.GetElementsByTagName("Extends");
-                foreach (XmlNode node in nodes)
+                System.Diagnostics.Debug.WriteLine("Bis hier wird es AusgeführtS");
+                System.Diagnostics.Debug.WriteLine($"BaseEDT Wert: {baseEDT}");
+
+                XmlNamespaceManager nsmgr = new XmlNamespaceManager(newDoc.NameTable);
+                nsmgr.AddNamespace("i", "http://www.w3.org/2001/XMLSchema-instance");
+
+                // AxEdt-Node holen
+                XmlNode axEdtNode = newDoc.SelectSingleNode("//AxEdt", nsmgr);
+                if (axEdtNode != null)
                 {
-                    node.InnerText = baseEDT;
-                    System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Ersetzt den EDT");
+                    // Attribut 'i:type' setzen oder aktualisieren
+                    XmlAttribute typeAttr = axEdtNode.Attributes["type", "http://www.w3.org/2001/XMLSchema-instance"];
+                    if (typeAttr == null)
+                    {
+                        typeAttr = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
+                        axEdtNode.Attributes.Append(typeAttr);
+                    }
+
+                    // Wert zuweisen
+                    // typeAttr.Value = "AxEdtString";
+                    typeAttr.Value = $"AxEdt{baseEDT}";
+                    Console.WriteLine("i:type erfolgreich gesetzt.");
                 }
+                
+
+
+
 
                 // Neue XML-Datei speichern
                 newDoc.Save($"{outputPath}\\{name}.xml");
                 System.Diagnostics.Debug.WriteLine("CrerateMenuItem: XML-Datei aktualisiert");
-
+                //updateBasedEDT(baseEDT,outputPath);
 
             }
             catch (Exception ex)
@@ -165,6 +188,44 @@ namespace RD_Table_Tool
             }
 
         }
+
+        /*
+        public static void updateBasedEDT(string pBaseEDT,string pPath)
+        {
+            string baseEDT = pBaseEDT;
+            string Path = pPath;
+
+            XmlDocument doc = new XmlDocument();
+            //templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
+            doc.Load(Path);
+
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+            nsmgr.AddNamespace("i", "http://www.w3.org/2001/XMLSchema-instance");
+
+            // AxEdt-Node holen
+            XmlNode axEdtNode = doc.SelectSingleNode("//AxEdt", nsmgr);
+            if (axEdtNode != null)
+            {
+                // Attribut 'i:type' setzen oder aktualisieren
+                XmlAttribute typeAttr = axEdtNode.Attributes["type", "http://www.w3.org/2001/XMLSchema-instance"];
+                if (typeAttr == null)
+                {
+                    typeAttr = doc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
+                    axEdtNode.Attributes.Append(typeAttr);
+                }
+
+                // Wert zuweisen
+                // typeAttr.Value = "AxEdtString";
+                typeAttr.Value = $"AxEdt{baseEDT}";
+                Console.WriteLine("i:type erfolgreich gesetzt.");
+            }
+
+
+            doc.Save(Path);
+
+
+        }
+        */
         public static void CreateTable(string pName, string pLabel, string pOutputPath, List<Dictionary<string, string>> fieldList)
         {
             string name = pName;

@@ -1,10 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <AxEdt xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns=""
 	i:type="AxEdtString">
-	<Name>Beispiel</Name>
-	<Extends>ClassName</Extends>
-	<FormHelp></FormHelp>
-	<Label>Beispiel</Label>
+	<Name>String1</Name>
+	<Label></Label>
 	<ArrayElements />
 	<Relations />
 	<TableReferences />
