@@ -371,15 +371,6 @@ namespace RD_Table_Tool
 
                 bool hasAlternateKey = fieldList.Any(f => f.ContainsKey("AlternateKey") && f["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase));
 
-                /*
-                XmlNode fieldNode = null;
-                if (fieldNodes != null && fieldNodes.Count > 0)
-                {
-                    fieldNode = hasAlternateKey && fieldNodes.Count >= 2 ? fieldNodes[fieldNodes.Count - 2] : fieldNodes[fieldNodes.Count - 1];
-                    System.Diagnostics.Debug.WriteLine("es wurde ein Alternate Key gefunden");
-                }
-                */
-
                 XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null;
 
                 if (fieldNode != null)
@@ -447,8 +438,8 @@ namespace RD_Table_Tool
                     {
                         System.Diagnostics.Debug.WriteLine("Erstelle AxTableIndex für AlternateKey");
 
-                        XmlNodeList indexesNodes = newDoc.SelectNodes("//Indexes");
-                        if (indexesNodes != null && indexesNodes.Count > 0)
+                        XmlNodeList indexesNodes = newDoc.SelectNodes("//Indexes"); //sucht nach dem Tag Indexes
+                        if (indexesNodes != null && indexesNodes.Count > 0) 
                         {
                             XmlNode indexesNode = indexesNodes[0];
 
