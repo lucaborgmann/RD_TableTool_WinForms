@@ -342,7 +342,7 @@ namespace RD_Table_Tool
                 XmlDocument newDoc = new XmlDocument();
                 newDoc.LoadXml(templateDoc.OuterXml); // Template in neues Dokument kopieren
 
-                XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label");
+                XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label"); //Sucht alle XML-Knoten dessen taganme Name oder Label ist
                 XmlNode firstNameNode = null;
 
                 foreach (XmlNode node in nodes)
@@ -362,20 +362,18 @@ namespace RD_Table_Tool
                         System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt das Label");
                     }
                 }
-
+                //falls die Variable firstNameNode umbenannt wurde wird der Inhalt des XML Elements Überschrieben
                 if (firstNameNode != null)
                 {
                     firstNameNode.InnerText = name;
                     System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt den ersten Namen");
                 }
 
-                XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");
-
+                XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");  //sucht den XML Knoten Fiels 
                 bool hasAlternateKey = fieldList.Any(f => f.ContainsKey("AlternateKey") && f["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase));
+                XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null;// Wenn mindestens ein Element enthalten ist wird das letzte Berücksichtigt sonst auf Null gesetzt 
 
-                XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null;
-
-                if (fieldNode != null)
+                if (fieldNode != null) // Wenn Felder angegeben wurden 
                 {
                     System.Diagnostics.Debug.WriteLine("CreateTable: fieldNode ist nicht leer");
 
@@ -383,6 +381,7 @@ namespace RD_Table_Tool
                     {
                         if (fieldDict != null)
                         {
+                            //Extrahieren von Feldwerten
                             string fieldName = fieldDict["Name"];
                             string fieldLabel = fieldDict["Label"];
                             string fieldBaseEDT = fieldDict["BaseEDT"];
@@ -409,13 +408,13 @@ namespace RD_Table_Tool
                                 XmlElement ignore = newDoc.CreateElement("IgnoreEDTRelation");
                                 ignore.InnerText = "Yes";
                                 axTableField.AppendChild(ignore);
-
+                                //Wichtig: Füge in das <Fields>-Tag ein, nicht an ein neues Root-Element
                                 fieldNode.AppendChild(axTableField);
                             }
                             else
                             {
                                 XmlElement newAxTableField = newDoc.CreateElement("AxTableField");
-                                newAxTableField.SetAttribute("xmlns", "");
+                                newAxTableField.SetAttribute("xmlns", "");//weißt dem Knoten die Nötigen Attribute zu 
 
                                 XmlAttribute typeAttribute = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
                                 typeAttribute.Value = "AxTableField" + fieldBaseEDT;
@@ -435,31 +434,31 @@ namespace RD_Table_Tool
                         }
                     }
 
-                    // Ergänzung: Erstelle AxTableIndex wenn AlternateKey vorhanden
+                    // Wenn ein Alternate Key angegeben ist wird ein Index angelegt 
                     if (hasAlternateKey)
                     {
                         System.Diagnostics.Debug.WriteLine("Erstelle AxTableIndex für AlternateKey");
 
                         XmlNodeList indexesNodes = newDoc.SelectNodes("//Indexes"); //sucht nach dem Tag Indexes
-                        if (indexesNodes != null && indexesNodes.Count > 0) 
+                        if (indexesNodes != null && indexesNodes.Count > 0) //wenn index vorhanden und nciht gleich null ist
                         {
-                            XmlNode indexesNode = indexesNodes[0];
+                            XmlNode indexesNode = indexesNodes[0]; // den ersten Treffer manipulieren
 
-                            XmlElement axTableIndex = newDoc.CreateElement("AxTableIndex");
+                            XmlElement axTableIndex = newDoc.CreateElement("AxTableIndex"); //neuen XML Tag AxtableIndex erstellen 
 
-                            XmlElement indexName = newDoc.CreateElement("Name");
-                            indexName.InnerText = "AlternateKey";
-                            axTableIndex.AppendChild(indexName);
+                            XmlElement indexName = newDoc.CreateElement("Name"); // neues XML Tag Name erstellen 
+                            indexName.InnerText = "AlternateKey"; // dem neuen Tag den Inhalt zuweisen 
+                            axTableIndex.AppendChild(indexName); // den neuen Tag Name als Kindelement unter AxTable index einfügen 
 
-                            XmlElement alternateKey = newDoc.CreateElement("AlternateKey");
+                            XmlElement alternateKey = newDoc.CreateElement("AlternateKey"); 
                             alternateKey.InnerText = "Yes";
                             axTableIndex.AppendChild(alternateKey);
 
                             XmlElement fieldsElement = newDoc.CreateElement("Fields");
 
-                            foreach (var fieldDict in fieldList)
+                            foreach (var fieldDict in fieldList) // Werte des DataGrid durch gehen und Felder hinzufügen 
                             {
-                                if (fieldDict.ContainsKey("AlternateKey") && fieldDict["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                                if (fieldDict.ContainsKey("AlternateKey") && fieldDict["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase)) // wenn im der Spalte Alternate Key ja íst (unabhängig von der Groß und klein schreibung)
                                 {
                                     string altKeyFieldName = fieldDict["Name"];
                                     XmlElement axTableIndexTag = newDoc.CreateElement("AxTableIndexField");
@@ -504,8 +503,9 @@ namespace RD_Table_Tool
                     System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
                 }
 
+                //nur zum Debuggen ? 
                 string[] paths = { @$"{outputPath}", $"{name}", ".xml" };
-                string fullPath = Path.Combine(paths);
+                string fullPath = Path.Combine(paths); 
                 System.Diagnostics.Debug.WriteLine($"Ausgabe fullpath: {fullPath}");
 
                 newDoc.Save($"{outputPath}\\{name}.xml");
