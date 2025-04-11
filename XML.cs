@@ -298,6 +298,13 @@ namespace RD_Table_Tool
                     System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
                 }
 
+                //hier nach Indexes suchen
+                XmlNodeList nodesIndexes = newDoc.SelectNodes("Indexes");
+                if (nodesIndexes!= null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Indexes konnten gefunden werden!");
+                }
+
                 string[] paths = { @$"{outputPath}", $"{name}", ".xml" };
                 string fullPath = Path.Combine(paths);
                 System.Diagnostics.Debug.WriteLine($"Ausgabe fullpath: {fullPath}");

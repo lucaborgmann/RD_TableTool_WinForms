@@ -43,7 +43,8 @@ public class TestTable extends common
 	<Fields>
 	</Fields>
 	<FullTextIndexes />
-	<Indexes />
+	<Indexes>
+	</Indexes>
 	<Mappings />
 	<Relations />
 	<StateMachines />
