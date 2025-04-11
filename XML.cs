@@ -58,6 +58,7 @@ namespace RD_Table_Tool
             catch (XmlException ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -136,6 +137,7 @@ namespace RD_Table_Tool
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -512,6 +514,7 @@ namespace RD_Table_Tool
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -706,6 +709,7 @@ namespace RD_Table_Tool
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -764,13 +768,22 @@ namespace RD_Table_Tool
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex);
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         public static void CreatePrivileges(string pOutputPath,string pTableName,string pTableLabel)
         {
-            XMLHelper.CreatePrivilegesFile(pTableName, $"{scriptDir}\\PrivilegesMaintainTemplate.xml", pTableLabel, $"{pOutputPath}\\{pTableName}Maintain.xml", "Maintain");
-            XMLHelper.CreatePrivilegesFile(pTableName, $"{scriptDir}\\PrivilegesViewTemplate.xml", pTableLabel, $"{pOutputPath}\\{pTableName}View.xml", "View");
+            try
+            {
+                XMLHelper.CreatePrivilegesFile(pTableName, $"{scriptDir}\\PrivilegesMaintainTemplate.xml", pTableLabel, $"{pOutputPath}\\{pTableName}Maintain.xml", "Maintain");
+                XMLHelper.CreatePrivilegesFile(pTableName, $"{scriptDir}\\PrivilegesViewTemplate.xml", pTableLabel, $"{pOutputPath}\\{pTableName}View.xml", "View");
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
         }
 
     }
