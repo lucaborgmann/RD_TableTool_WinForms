@@ -140,6 +140,7 @@ namespace RD_Table_Tool
 
         }
 
+        /*
         public static void CreateTable(string pName, string pLabel, string pOutputPath, List<Dictionary<string, string>> fieldList)
         {
             string name = pName;
@@ -188,7 +189,17 @@ namespace RD_Table_Tool
                 }
 
                 XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields"); //sucht den XML Knoten Fiels 
-                XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null; // Wenn mindestens ein Element enthalten ist wird das letzte Berücksichtigt sonst auf Null gesetzt 
+                //XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null; // Wenn mindestens ein Element enthalten ist wird das letzte Berücksichtigt sonst auf Null gesetzt 
+                //XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 2] : null;
+                bool hasAlternateKey = fieldList.Any(f => f.ContainsKey("AlternateKey") && f["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase)); //Prüft ob Alternative Key einmal im Dictonary korrekt ist
+
+                // Entscheiden, ob die vorletzte oder letzte <Fields>-Node genommen wird
+                XmlNode fieldNode = null;
+                if (fieldNodes != null && fieldNodes.Count > 0)
+                {
+                    fieldNode = hasAlternateKey && fieldNodes.Count >= 2 ? fieldNodes[fieldNodes.Count - 2]: fieldNodes[fieldNodes.Count - 1]; // wenn AlternateKey einmal vorkommt wird der Vorletzte ausgewählt sonst der letzte
+                    System.Diagnostics.Debug.WriteLine("es wurde ein Alternate Key gefunden");
+                }
 
                 if (fieldNode != null) // Wenn Felder angegeben wurden 
                 {
@@ -203,7 +214,7 @@ namespace RD_Table_Tool
                             string fieldLabel = fieldDict["Label"];
                             string fieldBaseEDT = fieldDict["BaseEDT"];
                             string fieldCreatEDT = fieldDict["CreateEDT"];
-
+                            string fiedlAlternateKey = fieldDict["AlternateKey"];
 
                             if (fieldCreatEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
                             {
@@ -250,6 +261,15 @@ namespace RD_Table_Tool
                                 // Hier wird das neue Feld direkt in fieldNode eingefügt, ohne zusätzliches <Fields>
                                 fieldNode.AppendChild(newAxTableField);
                             }
+
+                            if (fiedlAlternateKey.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                            {
+                                System.Diagnostics.Debug.WriteLine("AlternateKey ist als ja ausgewählt");
+                                
+                                //hier den Alternate Key berücksichtigen 
+
+                                
+                            }
                         }
                     }
 
@@ -280,29 +300,215 @@ namespace RD_Table_Tool
                         }
                     }  
 
-                    /*
-                    XmlNode controlsNode = newDoc.SelectSingleNode("//Controls");
-                    if (controlsNode != null) 
-                    {
-                        XmlElement newElement = newDoc.CreateElement("NewElement");
-                        newElement.InnerText = "Test";
-                        controlsNode.AppendChild(newElement);   
-                    }
-                    */
-
-
-
                 }
                 else
                 {
                     System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
                 }
 
-                //hier nach Indexes suchen
-                XmlNodeList nodesIndexes = newDoc.SelectNodes("Indexes");
-                if (nodesIndexes!= null)
+                string[] paths = { @$"{outputPath}", $"{name}", ".xml" };
+                string fullPath = Path.Combine(paths);
+                System.Diagnostics.Debug.WriteLine($"Ausgabe fullpath: {fullPath}");
+
+                newDoc.Save($"{outputPath}\\{name}.xml");
+                System.Diagnostics.Debug.WriteLine("CreateTable: XML-Datei aktualisiert");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
+            }
+        }
+        */
+
+
+        public static void CreateTable(string pName, string pLabel, string pOutputPath, List<Dictionary<string, string>> fieldList)
+        {
+            string name = pName;
+            string label = pLabel;
+            string outputPath = pOutputPath;
+
+            System.Diagnostics.Debug.WriteLine($"Größe der Liste: {fieldList.Count}");
+
+            try
+            {
+                //Lädt das Template
+                XmlDocument templateDoc = new XmlDocument();
+                templateDoc.Load($"{scriptDir}\\TableTemplate.xml");
+                System.Diagnostics.Debug.WriteLine("CreateTable: Lädt die Template-Datei");
+
+                //erstellt das neue Dokument
+                XmlDocument newDoc = new XmlDocument();
+                newDoc.LoadXml(templateDoc.OuterXml); // Template in neues Dokument kopieren
+
+                XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label");
+                XmlNode firstNameNode = null;
+
+                foreach (XmlNode node in nodes)
                 {
-                    System.Diagnostics.Debug.WriteLine("Indexes konnten gefunden werden!");
+                    if (node.Name == "Name")
+                    {
+                        firstNameNode = node;
+                        break;
+                    }
+                }
+
+                foreach (XmlNode node in nodes)
+                {
+                    if (node.Name == "Label")
+                    {
+                        node.InnerText = label;
+                        System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt das Label");
+                    }
+                }
+
+                if (firstNameNode != null)
+                {
+                    firstNameNode.InnerText = name;
+                    System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt den ersten Namen");
+                }
+
+                XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");
+
+                bool hasAlternateKey = fieldList.Any(f => f.ContainsKey("AlternateKey") && f["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase));
+
+                /*
+                XmlNode fieldNode = null;
+                if (fieldNodes != null && fieldNodes.Count > 0)
+                {
+                    fieldNode = hasAlternateKey && fieldNodes.Count >= 2 ? fieldNodes[fieldNodes.Count - 2] : fieldNodes[fieldNodes.Count - 1];
+                    System.Diagnostics.Debug.WriteLine("es wurde ein Alternate Key gefunden");
+                }
+                */
+
+                XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null;
+
+                if (fieldNode != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("CreateTable: fieldNode ist nicht leer");
+
+                    foreach (Dictionary<string, string> fieldDict in fieldList)
+                    {
+                        if (fieldDict != null)
+                        {
+                            string fieldName = fieldDict["Name"];
+                            string fieldLabel = fieldDict["Label"];
+                            string fieldBaseEDT = fieldDict["BaseEDT"];
+                            string fieldCreatEDT = fieldDict["CreateEDT"];
+                            string fiedlAlternateKey = fieldDict["AlternateKey"];
+
+                            if (fieldCreatEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                            {
+                                XmlElement axTableField = newDoc.CreateElement("AxTableField");
+                                axTableField.SetAttribute("xmlns", "");
+
+                                XmlAttribute typeAttr = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
+                                typeAttr.Value = $"AxTableField{fieldBaseEDT}";
+                                axTableField.Attributes.Append(typeAttr);
+
+                                XmlElement fieldNameElement = newDoc.CreateElement("Name");
+                                fieldNameElement.InnerText = fieldName;
+                                axTableField.AppendChild(fieldNameElement);
+
+                                XmlElement edt = newDoc.CreateElement("ExtendedDataType");
+                                edt.InnerText = fieldName;
+                                axTableField.AppendChild(edt);
+
+                                XmlElement ignore = newDoc.CreateElement("IgnoreEDTRelation");
+                                ignore.InnerText = "Yes";
+                                axTableField.AppendChild(ignore);
+
+                                fieldNode.AppendChild(axTableField);
+                            }
+                            else
+                            {
+                                XmlElement newAxTableField = newDoc.CreateElement("AxTableField");
+                                newAxTableField.SetAttribute("xmlns", "");
+
+                                XmlAttribute typeAttribute = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
+                                typeAttribute.Value = "AxTableField" + fieldBaseEDT;
+                                newAxTableField.Attributes.Append(typeAttribute);
+
+                                XmlElement nameElement = newDoc.CreateElement("Name");
+                                nameElement.InnerText = fieldName;
+                                newAxTableField.AppendChild(nameElement);
+
+                                fieldNode.AppendChild(newAxTableField);
+                            }
+
+                            if (fiedlAlternateKey.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                            {
+                                System.Diagnostics.Debug.WriteLine("AlternateKey ist als ja ausgewählt");
+                            }
+                        }
+                    }
+
+                    // Ergänzung: Erstelle AxTableIndex wenn AlternateKey vorhanden
+                    if (hasAlternateKey)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Erstelle AxTableIndex für AlternateKey");
+
+                        XmlNodeList indexesNodes = newDoc.SelectNodes("//Indexes");
+                        if (indexesNodes != null && indexesNodes.Count > 0)
+                        {
+                            XmlNode indexesNode = indexesNodes[0];
+
+                            XmlElement axTableIndex = newDoc.CreateElement("AxTableIndex");
+
+                            XmlElement indexName = newDoc.CreateElement("Name");
+                            indexName.InnerText = "AlternateKey";
+                            axTableIndex.AppendChild(indexName);
+
+                            XmlElement alternateKey = newDoc.CreateElement("AlternateKey");
+                            alternateKey.InnerText = "Yes";
+                            axTableIndex.AppendChild(alternateKey);
+
+                            XmlElement fieldsElement = newDoc.CreateElement("Fields");
+
+                            foreach (var fieldDict in fieldList)
+                            {
+                                if (fieldDict.ContainsKey("AlternateKey") && fieldDict["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    string altKeyFieldName = fieldDict["Name"];
+                                    XmlElement axTableIndexTag = newDoc.CreateElement("AxTableIndexField");
+                                    fieldsElement.AppendChild(axTableIndexTag);
+                                    XmlElement dataFieldTag = newDoc.CreateElement("DataField");
+                                    dataFieldTag.InnerText = altKeyFieldName;
+                                    axTableIndexTag.AppendChild(dataFieldTag);
+                                }
+                            }
+
+                            axTableIndex.AppendChild(fieldsElement);
+                            indexesNode.AppendChild(axTableIndex);
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine("Indexes-Knoten wurde nicht gefunden!");
+                        }
+                    }
+
+                    // Ersetze Klassennamen in CDATA
+                    string searchString = "public class TestTable extends common";
+                    XmlNodeList searchStringNodes = newDoc.SelectNodes("//*[contains(text(), '" + searchString + "')]");
+
+                    foreach (XmlNode node in searchStringNodes)
+                    {
+                        if (node.NodeType == XmlNodeType.CDATA)
+                        {
+                            node.InnerText = node.InnerText.Replace("TestTable", $"{name}");
+                        }
+                        else
+                        {
+                            string updatedText = node.InnerText.Replace("TestTable", $"{name}");
+                            XmlCDataSection cdata = newDoc.CreateCDataSection(updatedText);
+                            XmlElement declarationElement = newDoc.CreateElement("Declaration");
+                            declarationElement.AppendChild(cdata);
+                            node.ParentNode.ReplaceChild(declarationElement, node);
+                        }
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
                 }
 
                 string[] paths = { @$"{outputPath}", $"{name}", ".xml" };
