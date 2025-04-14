@@ -157,22 +157,24 @@ namespace RD_TableTool_WinForms
             // Liste zum Speichern der Werte aus dem DataGrid
             List<Dictionary<string, string>> dataListValues = new List<Dictionary<string, string>>();
 
-            // Falls das DataGrid initialisiert ist
-            if (dataGridView != null)
+            try
             {
-                // Erstellen einer Liste mit allen Feldern des DataGrids
-                foreach (DataGridViewRow row in dataGridView.Rows) // für jedes Element im DataGrid
+                // Falls das DataGrid initialisiert ist
+                if (dataGridView != null)
                 {
-                    if (!row.IsNewRow) // Ignoriere die neue Zeile
+                    // Erstellen einer Liste mit allen Feldern des DataGrids
+                    foreach (DataGridViewRow row in dataGridView.Rows) // für jedes Element im DataGrid
                     {
-                        string dataGridNameValue = row.Cells["Column1"].Value?.ToString();
-                        string dataGridLabelValue = row.Cells["Column2"].Value?.ToString();
-                        string baseEDT = row.Cells["Column3"].Value?.ToString();
-                        string createEDT = row.Cells["Column4"].Value?.ToString();
-                        string alternateKey = row.Cells["Column5"].Value?.ToString();
+                        if (!row.IsNewRow) // Ignoriere die neue Zeile
+                        {
+                            string dataGridNameValue = row.Cells["Column1"].Value?.ToString();
+                            string dataGridLabelValue = row.Cells["Column2"].Value?.ToString();
+                            string baseEDT = row.Cells["Column3"].Value?.ToString();
+                            string createEDT = row.Cells["Column4"].Value?.ToString();
+                            string alternateKey = row.Cells["Column5"].Value?.ToString();
 
-                        // Neues Dictionary für die Zeile erstellen
-                        Dictionary<string, string> rowData = new Dictionary<string, string>
+                            // Neues Dictionary für die Zeile erstellen
+                            Dictionary<string, string> rowData = new Dictionary<string, string>
                         {
                             { "Name", dataGridNameValue },
                             { "Label", dataGridLabelValue },
@@ -181,51 +183,57 @@ namespace RD_TableTool_WinForms
                             { "AlternateKey", alternateKey }
                         };
 
-                        dataListValues.Add(rowData);
+                            dataListValues.Add(rowData);
 
-                        // Prüfen, ob ein neues EDT erstellt werden muss
-                        if (createEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
-                        {
-                            System.Diagnostics.Debug.WriteLine("CreateEDT: ist ja");
-                            System.Diagnostics.Debug.WriteLine($"Der ist {dataGridNameValue}");
-                            // XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", OutputEDTPath);
-                            XML.CreateEDT(dataGridNameValue, dataGridNameValue, baseEDT, OutputEDTPath);
+                            // Prüfen, ob ein neues EDT erstellt werden muss
+                            if (createEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                            {
+                                System.Diagnostics.Debug.WriteLine("CreateEDT: ist ja");
+                                System.Diagnostics.Debug.WriteLine($"Der ist {dataGridNameValue}");
+                                // XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", OutputEDTPath);
+                                XML.CreateEDT(dataGridNameValue, dataGridNameValue, baseEDT, OutputEDTPath);
+                            }
                         }
                     }
+
+                    // Übergabe der Liste an die CreateTable-Methode
+                    XML.CreateTable(name, label, OutputTablePath, dataListValues);
+
+
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("DataGrid nicht initialisiert");
                 }
 
-                // Übergabe der Liste an die CreateTable-Methode
-                XML.CreateTable(name, label, OutputTablePath, dataListValues);
+                if (isCheckedMenuItems)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
 
+                    XML.CreateMenuItem(name, label, MenuItemOutputDirectoryPath);
+                    System.Diagnostics.Debug.WriteLine("Erstellt", "MenuItem wurde erstellt");
+                }
 
+                if (isChecked_Entity)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
+                    XML.CreateDataEntity(name, DataEntityOutputPath, label, dataListValues);
+                }
+                if (isChecked_Privileges)
+                {
+                    XML.CreatePrivileges(PrivilegesOutputPath, name, label);
+                }
+
+                //als letztes 
+                XML.CreateForm(name, FormsOutputpath, formPattern, dataListValues);
+                //MessageBox.Show("Tabelle wurde erstellt");
+                MessageBox.Show("Tabelle wurde erstellt", "Erfolg", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else
+            catch (Exception ex) 
             {
-                System.Diagnostics.Debug.WriteLine("DataGrid nicht initialisiert");
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            if (isCheckedMenuItems)
-            {
-                System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
-
-                XML.CreateMenuItem(name, label, MenuItemOutputDirectoryPath);
-                System.Diagnostics.Debug.WriteLine("Erstellt", "MenuItem wurde erstellt");
-            }
-
-            if (isChecked_Entity)
-            {
-                System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
-                XML.CreateDataEntity(name, DataEntityOutputPath, label, dataListValues);
-            }
-            if (isChecked_Privileges)
-            {
-                XML.CreatePrivileges(PrivilegesOutputPath, name, label);
-            }
-
-            //als letztes 
-            XML.CreateForm(name, FormsOutputpath, formPattern, dataListValues);
-            // XML.CreateForm(name, FormsOutputpath);
-            MessageBox.Show("Tabelle wurde erstellt");
+            
         }
 
 
