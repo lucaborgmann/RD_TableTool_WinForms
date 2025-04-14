@@ -24,7 +24,7 @@ namespace RD_TableTool_WinForms
         String OutputTablePath = Settings.Default.OutputTablePath;
         String FormsOutputpath = Settings.Default.OutputFormsPath;
         String PrivilegesOutputPath = Settings.Default.OutputPrivilegesPath;
-        String DataEntityOutputPath = Settings.Default.OutputPathDataEntity; 
+        String DataEntityOutputPath = Settings.Default.OutputPathDataEntity;
 
         bool isCheckedMenuItems = false;
         bool isChecked_Entity = false;
@@ -57,7 +57,7 @@ namespace RD_TableTool_WinForms
             fileMenu.DropDownItems.Add(saveFileMenuItem);
             fileMenu.DropDownItems.Add(SaveAsFileMenuItem);
             fileMenu.DropDownItems.Add(openFileMenuItem);
-           
+
 
             // Füge die Menüpunkte zum MenuStrip hinzu
             menuStrip.Items.Add(fileMenu);
@@ -72,10 +72,10 @@ namespace RD_TableTool_WinForms
             //optionsMenu.Click += new EventHandler(OptionsMenu_Click);
 
             // Füge Ereignishandler für die Untermenüpunkte hinzu
-           //newFileMenuItem.Click += new EventHandler(NewFileMenuItem_Click);
-           openFileMenuItem.Click += new EventHandler(OpenFileMenuItem_Click);
-           saveFileMenuItem.Click += new EventHandler(SaveFileMenuItem_Click);
-           SaveAsFileMenuItem.Click += new EventHandler(SaveAsFileMenuItem_Click);
+            //newFileMenuItem.Click += new EventHandler(NewFileMenuItem_Click);
+            openFileMenuItem.Click += new EventHandler(OpenFileMenuItem_Click);
+            saveFileMenuItem.Click += new EventHandler(SaveFileMenuItem_Click);
+            SaveAsFileMenuItem.Click += new EventHandler(SaveAsFileMenuItem_Click);
 
         }
 
@@ -139,7 +139,7 @@ namespace RD_TableTool_WinForms
         {
             if (isChecked_Privileges == false)
             {
-                isChecked_Privileges = true; 
+                isChecked_Privileges = true;
             }
             else
             {
@@ -152,7 +152,7 @@ namespace RD_TableTool_WinForms
             string name = this.NameTextBox.Text;
             string label = this.LabelTextBox.Text;
             string properties = this.PropertyTextBox.Text;
-            string formPattern = this.FormPatternCombobox.Text; 
+            string formPattern = this.FormPatternCombobox.Text;
 
             // Liste zum Speichern der Werte aus dem DataGrid
             List<Dictionary<string, string>> dataListValues = new List<Dictionary<string, string>>();
@@ -188,15 +188,15 @@ namespace RD_TableTool_WinForms
                         {
                             System.Diagnostics.Debug.WriteLine("CreateEDT: ist ja");
                             System.Diagnostics.Debug.WriteLine($"Der ist {dataGridNameValue}");
-                           // XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", OutputEDTPath);
-                            XML.CreateEDT(dataGridNameValue, dataGridNameValue,baseEDT, OutputEDTPath);
+                            // XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", OutputEDTPath);
+                            XML.CreateEDT(dataGridNameValue, dataGridNameValue, baseEDT, OutputEDTPath);
                         }
                     }
                 }
 
                 // Übergabe der Liste an die CreateTable-Methode
-                 XML.CreateTable(name, label, OutputTablePath, dataListValues);
-             
+                XML.CreateTable(name, label, OutputTablePath, dataListValues);
+
 
             }
             else
@@ -215,7 +215,7 @@ namespace RD_TableTool_WinForms
             if (isChecked_Entity)
             {
                 System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
-                XML.CreateDataEntity(name, DataEntityOutputPath,label);
+                XML.CreateDataEntity(name, DataEntityOutputPath, label, dataListValues);
             }
             if (isChecked_Privileges)
             {
@@ -224,7 +224,7 @@ namespace RD_TableTool_WinForms
 
             //als letztes 
             XML.CreateForm(name, FormsOutputpath, formPattern, dataListValues);
-           // XML.CreateForm(name, FormsOutputpath);
+            // XML.CreateForm(name, FormsOutputpath);
             MessageBox.Show("Tabelle wurde erstellt");
         }
 
@@ -274,7 +274,7 @@ namespace RD_TableTool_WinForms
 
         private void OpenFileMenuItem_Click(object sender, EventArgs e)
         {
-           System.Diagnostics.Debug.WriteLine($"Vor dem Laden: {Settings.Default.CurrentPath}"); 
+            System.Diagnostics.Debug.WriteLine($"Vor dem Laden: {Settings.Default.CurrentPath}");
             OpenFileDialog ofd = new OpenFileDialog()
             {
                 InitialDirectory = $"{scriptDirForm}",
@@ -295,7 +295,7 @@ namespace RD_TableTool_WinForms
             }
         }
 
-        private void SaveFileMenuItem_Click(object sender, EventArgs e) 
+        private void SaveFileMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("das ist nur Save");
 
@@ -310,7 +310,7 @@ namespace RD_TableTool_WinForms
             MessageBox.Show(sfd.ShowDialog() == DialogResult.OK ? $"Speichern: {sfd.FileName}" : "Abbruch");
             */
             //SaveFile(sfd.FileName);
-            SaveFile(); 
+            SaveFile();
         }
 
         private void SaveFile()
@@ -390,7 +390,7 @@ namespace RD_TableTool_WinForms
                     handler(node.InnerText); //falls Handler existiert gespeicherte Aktion ausgeführt 
                 }
             }
-            
+
             XmlNodeList nodes = doc.SelectNodes("//datagrid/field");
             // Zeile für Zeile hinzufügen
             foreach (XmlNode node in nodes)
@@ -422,7 +422,8 @@ namespace RD_TableTool_WinForms
                     new XElement("datagrid", //fügt ein neues Kind element hinzu welches um weitere erweitert wird 
                         this.dataGridView.Rows.Cast<DataGridViewRow>() //Konvertiert die Zeilen des DataGrid in eine Sammlung
                             .Where(row => !row.IsNewRow) //filtert die Zeilen heraus die neue Zeilen sind 
-                            .Select(row => { //Wendet die Lamda funktion auf alle 
+                            .Select(row =>
+                            { //Wendet die Lamda funktion auf alle 
                                 var fieldname = row.Cells["Column1"].Value?.ToString() ?? string.Empty; //Extrahiert den Wert in der Zelle Colum1 und konvertiert ihn in einen String ist der Wert null in einen Leeren string
                                 var fieldlabel = row.Cells["Column2"].Value?.ToString() ?? string.Empty;
                                 var baseEDT = row.Cells["Column3"].Value?.ToString() ?? string.Empty;
@@ -460,7 +461,7 @@ namespace RD_TableTool_WinForms
         //Methode zum ersetzen eines Inhalts eines Tags 
         private static void ReplaceTagContent(XmlDocument doc, string xpath, string newValue)
         {
-            XmlNodeList nodes = doc.SelectNodes(xpath); 
+            XmlNodeList nodes = doc.SelectNodes(xpath);
             if (nodes != null)
             {
                 foreach (XmlNode node in nodes) // Für jedes Element mit dem Namen xpath 
@@ -483,7 +484,7 @@ namespace RD_TableTool_WinForms
 
                     XmlElement fieldnameElement = doc.CreateElement("fieldname"); //erstellt ein Element mit dem Namen Fieldname
                     //Prüft ob das Dictonary den Key Enthält Wert wird abhängig von der Bedingung gesetztt 
-                    fieldnameElement.InnerText = row.ContainsKey("Name") ? row["Name"] : string.Empty; 
+                    fieldnameElement.InnerText = row.ContainsKey("Name") ? row["Name"] : string.Empty;
                     //Füpgt ein Kind element hinzu 
                     fieldElement.AppendChild(fieldnameElement);
 
@@ -506,6 +507,11 @@ namespace RD_TableTool_WinForms
                     datagridNode.AppendChild(fieldElement);// fügt ein neues 
                 }
             }
+        }
+
+        private void LabelTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         /*

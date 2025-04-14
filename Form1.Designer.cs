@@ -150,6 +150,7 @@
             LabelTextBox.Name = "LabelTextBox";
             LabelTextBox.Size = new Size(188, 27);
             LabelTextBox.TabIndex = 3;
+            LabelTextBox.TextChanged += LabelTextBox_TextChanged;
             // 
             // LabelLabel
             // 

@@ -593,7 +593,7 @@ namespace RD_Table_Tool
         */
 
 
-        public static void CreateDataEntity(string pTabellenName,string pOutputpath, string pLabel)
+        public static void CreateDataEntity(string pTabellenName,string pOutputpath, string pLabel, List<Dictionary<string, string>> fieldList)
         {
             string name = pTabellenName;
             string outputPath = pOutputpath;
@@ -674,6 +674,60 @@ namespace RD_Table_Tool
                     }
                 }
                 //hinzufügen der Felder
+
+                XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");
+
+                if (fieldNodes.Count >= 6)
+                {
+                    // Auf das sechste <Fields>-Tag zugreifen
+                    XmlNode sixthFieldNode = fieldNodes[5];
+                    //sixthFieldNode.InnerText = "Ist das die Richtige stelle ? ";
+
+                    foreach (Dictionary<string,string> fieldDict in fieldList)
+                    {
+                        if (fieldDict != null)
+                        {
+                            //Extrahieren von Feldwerten
+                            string fieldName = fieldDict["Name"];
+                            string fieldLabel = fieldDict["Label"];
+                            string fieldBaseEDT = fieldDict["BaseEDT"];
+                            string fieldCreatEDT = fieldDict["CreateEDT"];
+                            string fiedlAlternateKey = fieldDict["AlternateKey"];
+
+                            System.Diagnostics.Debug.WriteLine($" Fieldname: {fieldName}, fieldLabel {fieldLabel}, FieldBaseEDT {fieldBaseEDT}");
+
+                            XmlElement axDataEntityViewField = newDoc.CreateElement("AxDataEntityViewField");
+                            axDataEntityViewField.SetAttribute("xmlns", "");
+
+                            XmlAttribute typeAttr = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
+                            typeAttr.Value = "AxDataEntityViewMappedField";
+                            axDataEntityViewField.Attributes.Append(typeAttr);
+
+                            XmlElement nameElement = newDoc.CreateElement("Name");
+                            nameElement.InnerText = $"{fieldName}";
+                            axDataEntityViewField.AppendChild(nameElement);
+
+                            XmlElement dataFieldElement = newDoc.CreateElement("DataField");
+                            dataFieldElement.InnerText = $"{fieldName}";
+                            axDataEntityViewField.AppendChild(dataFieldElement);
+
+                            XmlElement dataSourceElement = newDoc.CreateElement("DataSource");
+                            dataSourceElement.InnerText = $"{name}";
+                            axDataEntityViewField.AppendChild(dataSourceElement);
+
+                            // Datenstruktur in das sechste <Fields>-Tag einfügen
+                            sixthFieldNode.AppendChild(axDataEntityViewField);
+
+                        }
+                    }
+
+                    // Datenstruktur in das sechste <Fields>-Tag einfügen
+                    
+
+                    // Hier kannst du nun mit sixthFieldNode weiterarbeiten
+                    System.Diagnostics.Debug.WriteLine("Sechstes <Fields>-Tag gefunden und bearbeitet");
+                }
+
 
                 //Speichert das Dokument muss am Ende stehen !!!!
                 newDoc.Save($"{outputPath}\\{name}Entity.xml");
