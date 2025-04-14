@@ -520,7 +520,6 @@ namespace RD_Table_Tool
                     Console.WriteLine("Fields-Element nicht gefunden.");
                 }
 
-
                 //Speichert das Dokument muss am Ende von allem Passieren !!
                 newDoc.Save($"{outputPath}\\{name}.xml");
             }
@@ -653,9 +652,24 @@ namespace RD_Table_Tool
                         }
                     }
 
-                    //
+                    //hinzufügen der Felder unter dem Pfad Keys/AxDataEntityViewKey/AxDataEntityViewKeyField
+                    XmlNode sevenFieldNode = fieldNodes[6];
+                    foreach (Dictionary<string, string> fieldDict in fieldList)
+                    {
+                        if (fieldDict != null)
+                        {
+                            //Extrahieren von Feldwerten
+                            string fieldName = fieldDict["Name"];
 
+                            XmlElement axDataEntityViewKeyField = newDoc.CreateElement("AxDataEntityViewKeyField");
 
+                            XmlElement dataField = newDoc.CreateElement("DataField");
+                            dataField.InnerText = fieldName;
+                            axDataEntityViewKeyField.AppendChild (dataField);
+
+                            sevenFieldNode.AppendChild(axDataEntityViewKeyField);
+                        }
+                    }
 
                     System.Diagnostics.Debug.WriteLine("Sechstes <Fields>-Tag gefunden und bearbeitet");
                 }
