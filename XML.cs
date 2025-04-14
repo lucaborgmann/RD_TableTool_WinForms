@@ -646,7 +646,8 @@ namespace RD_Table_Tool
                     { "PublicCollectionName", name },
                     { "PublicEntityName", name },
                     { "Table", name },
-                    { "Label",label}
+                    { "Label",label},
+                    { "DataManagementStagingTable",name}
                 };
 
                 foreach (var update in nodeUdates)
@@ -654,9 +655,19 @@ namespace RD_Table_Tool
                     XmlNodeList nodes = newDoc.GetElementsByTagName(update.Key);
                     foreach (XmlNode node in nodes)
                     {
-                        node.InnerText = update.Value;
+                        if (node.Name == "DataManagementStagingTable")
+                        {
+                            node.InnerText = $"{update.Value}Staging";
+                        }
+                        else
+                        {
+                            node.InnerText = update.Value;
+                        }
                     }
                 }
+
+                //Anpassen von DataManagmentStaging
+
 
                 //Speichert das Dokument muss am Ende stehen !!!!
                 newDoc.Save($"{outputPath}\\{name}Entity.xml");
