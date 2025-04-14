@@ -530,68 +530,6 @@ namespace RD_Table_Tool
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        /*
-        public static void createEntity(string pTableName, string pIndexName, string pDataField, string pOutputPath, string pTablePath)
-        {
-
-            System.Diagnostics.Debug.WriteLine("CreateEntity wird ausgeführt");
-            string tableName = pTableName;
-            string IndexName = pIndexName;
-            string outputPath = pOutputPath;
-            string tablePath = pTablePath;
-            string dataField = pDataField;
-
-            try
-            {
-                //erstmal Entity XML anlegen
-                //Lädt die Datei 
-                XmlDocument templateDoc = new XmlDocument();
-
-                templateDoc.Load($"{scriptDir}\\EntityTemplate.xml");
-                System.Diagnostics.Debug.WriteLine("CreateEntity: Lädt die Template-Datei");
-
-                // Schreibt die Werte der Template Datei in die neue XML Datei 
-                XmlDocument newDoc = new XmlDocument();
-                newDoc.LoadXml(templateDoc.OuterXml);
-
-                //Name,DataSource und Table anpassen 
-
-                XmlNodeList nodes = newDoc.SelectNodes("//DataSource | //Table");
-                foreach (XmlNode node in nodes)
-                {
-                    node.InnerText = tableName;
-                }
-
-                newDoc.Save(outputPath);
-
-
-                /*
-                //Table XML bearbeiten
-                XmlDocument doc = new XmlDocument();
-                doc.Load(tablePath);  //angegebene Tabelle öffnen 
-
-                //nur wenn da /index alleine steht muss dort <index> ergänzt werden 
-
-                //neuen Eintrag unter Index einfügen 
-                XmlElement newTableIndex = doc.CreateElement("AxTableField");
-                XmlElement fieldName = doc.CreateElement("Name");
-                fieldName.InnerText = pIndexName;
-
-                newTableIndex.AppendChild(fieldName);
-
-                doc.Save(tablePath);
-                */
-
-        /*
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex);
-                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        */
-
 
         public static void CreateDataEntity(string pTabellenName,string pOutputpath, string pLabel, List<Dictionary<string, string>> fieldList)
         {
@@ -717,7 +655,6 @@ namespace RD_Table_Tool
 
                     // Datenstruktur in das sechste <Fields>-Tag einfügen
                     
-
                     // Hier kannst du nun mit sixthFieldNode weiterarbeiten
                     System.Diagnostics.Debug.WriteLine("Sechstes <Fields>-Tag gefunden und bearbeitet");
                 }
