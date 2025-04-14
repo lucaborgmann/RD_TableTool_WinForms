@@ -689,13 +689,7 @@ namespace RD_Table_Tool
                         {
                             //Extrahieren von Feldwerten
                             string fieldName = fieldDict["Name"];
-                            string fieldLabel = fieldDict["Label"];
-                            string fieldBaseEDT = fieldDict["BaseEDT"];
-                            string fieldCreatEDT = fieldDict["CreateEDT"];
-                            string fiedlAlternateKey = fieldDict["AlternateKey"];
-
-                            System.Diagnostics.Debug.WriteLine($" Fieldname: {fieldName}, fieldLabel {fieldLabel}, FieldBaseEDT {fieldBaseEDT}");
-
+                           
                             XmlElement axDataEntityViewField = newDoc.CreateElement("AxDataEntityViewField");
                             axDataEntityViewField.SetAttribute("xmlns", "");
 
