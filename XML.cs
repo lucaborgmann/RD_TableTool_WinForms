@@ -590,6 +590,7 @@ namespace RD_Table_Tool
             }
         }
 
+
         public static void CreatePrivileges(string pOutputPath,string pTableName,string pTableLabel)
         {
             try
