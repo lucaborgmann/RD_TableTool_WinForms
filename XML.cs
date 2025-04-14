@@ -530,7 +530,7 @@ namespace RD_Table_Tool
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        /*
         public static void createEntity(string pTableName, string pIndexName, string pDataField, string pOutputPath, string pTablePath)
         {
 
@@ -582,6 +582,7 @@ namespace RD_Table_Tool
                 doc.Save(tablePath);
                 */
 
+        /*
             }
             catch (Exception ex)
             {
@@ -589,7 +590,16 @@ namespace RD_Table_Tool
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        */
 
+
+        public static void CreateDataEntity(string pTabellenName, string pOutputpath)
+        {
+            XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}\\DataEntityTemplate.xml");
+            newDoc.LoadXml(newDoc.OuterXml);
+
+            newDoc.Save(pOutputpath); 
+        }
 
         public static void CreatePrivileges(string pOutputPath,string pTableName,string pTableLabel)
         {
