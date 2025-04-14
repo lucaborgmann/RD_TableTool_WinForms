@@ -215,7 +215,7 @@ namespace RD_TableTool_WinForms
             if (isChecked_Entity)
             {
                 System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
-                XML.CreateDataEntity(name, DataEntityOutputPath);
+                XML.CreateDataEntity(name, DataEntityOutputPath,label);
             }
             if (isChecked_Privileges)
             {

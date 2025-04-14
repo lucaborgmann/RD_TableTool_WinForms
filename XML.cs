@@ -593,10 +593,11 @@ namespace RD_Table_Tool
         */
 
 
-        public static void CreateDataEntity(string pTabellenName, string pOutputpath)
+        public static void CreateDataEntity(string pTabellenName,string pOutputpath, string pLabel)
         {
             string name = pTabellenName;
             string outputPath = pOutputpath;
+            string label = pLabel;
 
             try
             {
@@ -638,6 +639,14 @@ namespace RD_Table_Tool
                     System.Diagnostics.Debug.WriteLine("Konnte nicht  erstezt werden");
                 }
 
+                //Label ersetzen 
+                XmlNodeList LabelNodes = newDoc.SelectNodes("//Label");
+                
+                foreach (XmlNode node in LabelNodes)
+                {
+                    node.InnerText = label;
+                }
+                
 
                 //Speichert das Dokument muss am Ende stehen !!!!
                 newDoc.Save($"{outputPath}\\{name}Entity.xml");
