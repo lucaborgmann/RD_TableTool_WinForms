@@ -666,8 +666,16 @@ namespace RD_Table_Tool
                     }
                 }
 
-                //Anpassen von DataManagmentStaging
-
+                //Das letzte Tag Name wird angepasst 
+                XmlNodeList nameNodes = newDoc.GetElementsByTagName("Name");
+                // Prüfen, ob überhaupt welche gefunden wurden
+                if (nameNodes.Count > 0)
+                {
+                    // Das letzte <Name>-Tag ansprechen
+                    XmlNode lastNameNode = nameNodes[nameNodes.Count - 1];
+                    lastNameNode.InnerText = name;
+                }
+                //hinzufügen der Felder
 
                 //Speichert das Dokument muss am Ende stehen !!!!
                 newDoc.Save($"{outputPath}\\{name}Entity.xml");
