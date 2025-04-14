@@ -595,11 +595,57 @@ namespace RD_Table_Tool
 
         public static void CreateDataEntity(string pTabellenName, string pOutputpath)
         {
-            XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}\\DataEntityTemplate.xml");
-            newDoc.LoadXml(newDoc.OuterXml);
+            string name = pTabellenName;
+            string outputPath = pOutputpath;
 
-            //newDoc.Save(pOutputpath);
-            newDoc.Save($"{pOutputpath}\\{pTabellenName}Entity.xml");
+            try
+            {
+                XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}\\DataEntityTemplate.xml");
+                newDoc.LoadXml(newDoc.OuterXml);
+
+                //Das erste Tag namen ersetzten
+                XmlNode nameNode = newDoc.GetElementsByTagName("Name").Item(0); // sucht nur das erste Tag Namen
+                if (nameNode != null)
+                {
+                    // Wert ändern
+                    nameNode.InnerText = $"{name}Entity";
+                    // ausgabe 
+                    System.Diagnostics.Debug.WriteLine("Das erste Tag name wurde gefunden");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Kein Element name gefunden"); 
+                }
+
+                //Namen der Entität ersetzen 
+                XmlNode declarationNode = newDoc.SelectSingleNode("//SourceCode/Declaration"); //Pfad zu der Declaration 
+
+                //Wenn Deklaration gefunden werden konnte und das erste Kindelement eine XmlCDataSection ist
+                if (declarationNode != null && declarationNode.FirstChild is XmlCDataSection cdataSection)
+                {
+                    string originalCode = cdataSection.Value; //speichert den aktuellen Inhalt der Section 
+
+                    // Ersetze den Klassennamen
+                    string modifiedCode = originalCode.Replace("IndexTest4Entity", $"{name}Entity");
+
+                    // Aktualisiert CDATA Inhalt
+                    cdataSection.Value = modifiedCode;
+                 
+                    System.Diagnostics.Debug.WriteLine("Konnte erstezt werden"); 
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Konnte nicht  erstezt werden");
+                }
+
+
+                //Speichert das Dokument muss am Ende stehen !!!!
+                newDoc.Save($"{outputPath}\\{name}Entity.xml");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public static void CreatePrivileges(string pOutputPath,string pTableName,string pTableLabel)
