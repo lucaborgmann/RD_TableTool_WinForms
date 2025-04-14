@@ -604,20 +604,44 @@ namespace RD_Table_Tool
                 XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}\\DataEntityTemplate.xml");
                 newDoc.LoadXml(newDoc.OuterXml);
 
-                //Das erste Tag namen ersetzten
-                XmlNode nameNode = newDoc.GetElementsByTagName("Name").Item(0); // sucht nur das erste Tag Namen
-                if (nameNode != null)
+
+                // Alle <Name> Tags auswählen
+                XmlNodeList nameNodes = newDoc.GetElementsByTagName("Name");
+                System.Diagnostics.Debug.WriteLine($"Name node größe: {nameNodes.Count}"); 
+
+                if (nameNodes.Count > 0)
                 {
-                    // Wert ändern
-                    nameNode.InnerText = $"{name}Entity";
-                    // ausgabe 
-                    System.Diagnostics.Debug.WriteLine("Das erste Tag name wurde gefunden");
+                    // Erstes <Name> Tag bearbeiten
+                    XmlNode firstNameNode = nameNodes[0];
+                    firstNameNode.InnerText = $"{name}Entity";
+                    System.Diagnostics.Debug.WriteLine("Erstes Element angepasst");
+
+                    // Letztes <Name> Tag bearbeiten
+                    XmlNode lastNameNode = nameNodes[nameNodes.Count - 1];
+                    lastNameNode.InnerText = name;
+                    System.Diagnostics.Debug.WriteLine("Letztes Element angepasst");
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine("Kein Element name gefunden"); 
+                    System.Diagnostics.Debug.WriteLine("Kein Element name gefunden");
                 }
 
+
+                /*
+                // ersten <Name> Tag überarbeiten 
+                XmlNodeList nameNodes = newDoc.SelectNodes("Name");
+                if (nameNodes.Count > 0)
+                {
+                    XmlNode firstNameNode = nameNodes[0];
+                    firstNameNode.InnerText = $"{name}Entity";
+
+                    System.Diagnostics.Debug.WriteLine("Elemente angepasst");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Kein Element name gefunden");
+                }
+                */
                 //Namen der Entität ersetzen 
                 XmlNode declarationNode = newDoc.SelectSingleNode("//SourceCode/Declaration"); //Pfad zu der Declaration 
 
@@ -666,15 +690,17 @@ namespace RD_Table_Tool
                     }
                 }
 
-                //Das letzte Tag Name wird angepasst 
-                XmlNodeList nameNodes = newDoc.GetElementsByTagName("Name");
+                /*
+                //Das letzte Tag Name wird angepasst (evtl noch oben einfügen)
+                XmlNodeList nameNodes2 = newDoc.GetElementsByTagName("Name");
                 // Prüfen, ob überhaupt welche gefunden wurden
-                if (nameNodes.Count > 0)
+                if (nameNodes2.Count > 0)
                 {
                     // Das letzte <Name>-Tag ansprechen
-                    XmlNode lastNameNode = nameNodes[nameNodes.Count - 1];
+                    XmlNode lastNameNode = nameNodes2[nameNodes2.Count - 1];
                     lastNameNode.InnerText = name;
                 }
+                */
                 //hinzufügen der Felder
 
                 //Speichert das Dokument muss am Ende stehen !!!!
