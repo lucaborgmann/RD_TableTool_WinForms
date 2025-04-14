@@ -653,9 +653,10 @@ namespace RD_Table_Tool
                         }
                     }
 
-                    // Datenstruktur in das sechste <Fields>-Tag einfügen
-                    
-                    // Hier kannst du nun mit sixthFieldNode weiterarbeiten
+                    //
+
+
+
                     System.Diagnostics.Debug.WriteLine("Sechstes <Fields>-Tag gefunden und bearbeitet");
                 }
 
