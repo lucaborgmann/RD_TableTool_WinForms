@@ -598,7 +598,8 @@ namespace RD_Table_Tool
             XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}\\DataEntityTemplate.xml");
             newDoc.LoadXml(newDoc.OuterXml);
 
-            newDoc.Save(pOutputpath); 
+            //newDoc.Save(pOutputpath);
+            newDoc.Save($"{pOutputpath}\\{pTabellenName}Entity.xml");
         }
 
         public static void CreatePrivileges(string pOutputPath,string pTableName,string pTableLabel)

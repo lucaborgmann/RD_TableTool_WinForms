@@ -3,22 +3,25 @@
   <Profiles />
   <Settings>
     <Setting Name="OutputMenuItemPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxMenuItemDisplay</Value>
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\MenuItems</Value>
     </Setting>
     <Setting Name="OutputEDTPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxEDT</Value>
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\EDT</Value>
     </Setting>
     <Setting Name="OutputTablePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxTable</Value>
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\Tables</Value>
     </Setting>
     <Setting Name="OutputFormsPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxForm</Value>
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\Forms</Value>
     </Setting>
     <Setting Name="CurrentPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OutputPrivilegesPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxSecurityPrivilege</Value>
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\Privileges</Value>
+    </Setting>
+    <Setting Name="OutputPathDataEntity" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\LucaBorgmann\OneDrive - Roedl Dynamics GmbH\Desktop\Abschlussprojekt\DataEntity</Value>
     </Setting>
   </Settings>
 </SettingsFile>

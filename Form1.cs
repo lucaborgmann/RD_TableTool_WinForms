@@ -23,7 +23,8 @@ namespace RD_TableTool_WinForms
         String OutputEDTPath = Settings.Default.OutputEDTPath;
         String OutputTablePath = Settings.Default.OutputTablePath;
         String FormsOutputpath = Settings.Default.OutputFormsPath;
-        String PrivilegesOutputPath = Settings.Default.OutputPrivilegesPath; 
+        String PrivilegesOutputPath = Settings.Default.OutputPrivilegesPath;
+        String DataEntityOutputPath = Settings.Default.OutputPathDataEntity; 
 
         bool isCheckedMenuItems = false;
         bool isChecked_Entity = false;
@@ -214,7 +215,7 @@ namespace RD_TableTool_WinForms
             if (isChecked_Entity)
             {
                 System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
-
+                XML.CreateDataEntity(name, DataEntityOutputPath);
             }
             if (isChecked_Privileges)
             {
