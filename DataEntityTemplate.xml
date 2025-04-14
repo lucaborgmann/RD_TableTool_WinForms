@@ -47,18 +47,6 @@ public class IndexTest4Entity extends common
 		</AxTableFieldGroup>
 	</FieldGroups>
 	<Fields>
-		<AxDataEntityViewField xmlns=""
-			i:type="AxDataEntityViewMappedField">
-			<Name>Field</Name>
-			<DataField>Field</DataField>
-			<DataSource>IndexTest4</DataSource>
-		</AxDataEntityViewField>
-		<AxDataEntityViewField xmlns=""
-			i:type="AxDataEntityViewMappedField">
-			<Name>Field2</Name>
-			<DataField>Field2</DataField>
-			<DataSource>IndexTest4</DataSource>
-		</AxDataEntityViewField>
 	</Fields>
 	<Keys>
 		<AxDataEntityViewKey>
