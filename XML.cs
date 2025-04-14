@@ -639,14 +639,24 @@ namespace RD_Table_Tool
                     System.Diagnostics.Debug.WriteLine("Konnte nicht  erstezt werden");
                 }
 
-                //Label ersetzen 
-                XmlNodeList LabelNodes = newDoc.SelectNodes("//Label");
-                
-                foreach (XmlNode node in LabelNodes)
+
+                //Überarbeiten von Table, PublicCollectionName,PublicEntityName und Label
+                var nodeUdates = new Dictionary<string, string>
                 {
-                    node.InnerText = label;
+                    { "PublicCollectionName", name },
+                    { "PublicEntityName", name },
+                    { "Table", name },
+                    { "Label",label}
+                };
+
+                foreach (var update in nodeUdates)
+                {
+                    XmlNodeList nodes = newDoc.GetElementsByTagName(update.Key);
+                    foreach (XmlNode node in nodes)
+                    {
+                        node.InnerText = update.Value;
+                    }
                 }
-                
 
                 //Speichert das Dokument muss am Ende stehen !!!!
                 newDoc.Save($"{outputPath}\\{name}Entity.xml");
