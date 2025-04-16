@@ -304,18 +304,6 @@ namespace RD_TableTool_WinForms
         private void SaveFileMenuItem_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("das ist nur Save");
-
-            //Quelle: Einstieg in C# mit Visual Studio 2022 von Thomas Theis Thomas Theis Seite 352
-            /*
-            SaveFileDialog sfd = new SaveFileDialog()
-            {
-                InitialDirectory = scriptDirForm,
-                Filter = "XML Dateien (*.xml)|*.xml",
-                Title = "Datei zum Speichern auswählen"
-            };
-            MessageBox.Show(sfd.ShowDialog() == DialogResult.OK ? $"Speichern: {sfd.FileName}" : "Abbruch");
-            */
-            //SaveFile(sfd.FileName);
             SaveFile();
         }
 
