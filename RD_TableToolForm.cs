@@ -12,7 +12,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RD_TableTool_WinForms
 {
-    public partial class Form1 : Form
+    public partial class RD_TableToolForm : Form
     {
         public DataGridView dataGridView; //um es überall in der Klasse zu verwenden
         public static string scriptDirForm = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -30,7 +30,7 @@ namespace RD_TableTool_WinForms
         bool isChecked_Entity = false;
         bool isChecked_Privileges = false;
 
-        public Form1()
+        public RD_TableToolForm()
         {
             InitializeComponent();
             InitializeMenu();

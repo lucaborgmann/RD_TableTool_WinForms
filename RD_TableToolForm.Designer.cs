@@ -1,6 +1,6 @@
 ﻿namespace RD_TableTool_WinForms
 {
-    partial class Form1
+    partial class RD_TableToolForm
     {
         /// <summary>
         ///  Required designer variable.
