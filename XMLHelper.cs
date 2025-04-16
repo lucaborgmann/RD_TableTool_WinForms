@@ -28,7 +28,7 @@ namespace RD_Table_Tool
             string outputPath = pOutputPath;
             XmlDocument newDoc = XMLHelper.LoadTemplate(pTemplatePath);
 
-            newDoc.LoadXml(newDoc.OuterXml);
+            newDoc.LoadXml(newDoc.OuterXml); //ergibt wenig sinn ist Doppelt 
 
 
             var nodeUpdates = new Dictionary<string, string>
@@ -61,6 +61,33 @@ namespace RD_Table_Tool
                 }
             }
             newDoc.Save(pOutputPath);
+        }
+
+        public static void CreateDataEntityPrivileges(string pName, string pTemplatePath, string pOutputPath, string type)
+        {
+            XmlDocument newDoc = XMLHelper.LoadTemplate(pTemplatePath);
+
+           XmlNodeList nameNodes = newDoc.GetElementsByTagName("Name");
+
+            if (nameNodes.Count>0)
+            {
+                XmlNode firstNameNode = nameNodes[0];
+                firstNameNode.InnerText = $"{pName}Entity{type}";
+                System.Diagnostics.Debug.WriteLine("Erstes Element angepasst");
+
+                // Letztes <Name> Tag bearbeiten
+                XmlNode lastNameNode = nameNodes[nameNodes.Count - 1];
+                //lastNameNode.InnerText = pName;
+                lastNameNode.InnerText = $"{pName}Entity";
+                System.Diagnostics.Debug.WriteLine("Letztes Element angepasst");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Kein Element name gefunden");
+            }
+
+            newDoc.Save(pOutputPath);
+
         }
     }
 }

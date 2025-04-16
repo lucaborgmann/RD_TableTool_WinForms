@@ -25,8 +25,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\Men" +
-            "uItems")]
+        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxMenuItemDisplay")]
         public string OutputMenuItemPath {
             get {
                 return ((string)(this["OutputMenuItemPath"]));
@@ -38,8 +37,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\EDT" +
-            "")]
+        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxEDT")]
         public string OutputEDTPath {
             get {
                 return ((string)(this["OutputEDTPath"]));
@@ -51,8 +49,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\Tab" +
-            "les")]
+        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxTable")]
         public string OutputTablePath {
             get {
                 return ((string)(this["OutputTablePath"]));
@@ -64,8 +61,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\For" +
-            "ms")]
+        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxForm")]
         public string OutputFormsPath {
             get {
                 return ((string)(this["OutputFormsPath"]));
@@ -89,8 +85,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\Pri" +
-            "vileges")]
+        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxSecurityPrivilege")]
         public string OutputPrivilegesPath {
             get {
                 return ((string)(this["OutputPrivilegesPath"]));
@@ -102,8 +97,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\Dat" +
-            "aEntity")]
+        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxDataEntityView")]
         public string OutputPathDataEntity {
             get {
                 return ((string)(this["OutputPathDataEntity"]));

@@ -218,6 +218,7 @@ namespace RD_TableTool_WinForms
                 {
                     System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
                     XML.CreateDataEntity(name, DataEntityOutputPath, label, dataListValues);
+                    XML.CreateDataEntityPrivileges(PrivilegesOutputPath,name);
                 }
                 if (isChecked_Privileges)
                 {
@@ -228,6 +229,7 @@ namespace RD_TableTool_WinForms
                 XML.CreateForm(name, FormsOutputpath, formPattern, dataListValues);
                 //MessageBox.Show("Tabelle wurde erstellt");
                 MessageBox.Show("Tabelle wurde erstellt", "Erfolg", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               
             }
             catch (Exception ex) 
             {

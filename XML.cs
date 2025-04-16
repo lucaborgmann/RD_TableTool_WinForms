@@ -12,16 +12,11 @@ namespace RD_Table_Tool
 {
     class XML
     {
-        public static string scriptDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); //Speichert den Pfad zum verzeichnis
+        public static string scriptDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); //Speichert den Pfad zum verzeichnis
         //Konstruktor
         public XML() { }
         public static void CreateMenuItem(string pName, string pLabel, string pOutputPath)
-        {
-            string name = pName;
-            string label = pLabel;
-            string outputPath = pOutputPath;
-
-            System.Diagnostics.Debug.WriteLine($"OutPut Path: {outputPath}");
+        { 
 
             try
             {
@@ -33,6 +28,10 @@ namespace RD_Table_Tool
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
                 XmlDocument newDoc = new XmlDocument();
                 newDoc.LoadXml(templateDoc.OuterXml);
+                
+                string name = pName;
+                string label = pLabel;
+                string outputPath = pOutputPath;
 
                 var nodeUpdates = new Dictionary<string, string>
         {
@@ -121,7 +120,7 @@ namespace RD_Table_Tool
                     // Wert zuweisen
                     // typeAttr.Value = "AxEdtString";
                     typeAttr.Value = $"AxEdt{baseEDT}";
-                    Console.WriteLine("i:type erfolgreich gesetzt.");
+                    //Console.WriteLine("i:type erfolgreich gesetzt.");
                 }
                 
 
@@ -438,9 +437,9 @@ namespace RD_Table_Tool
                     {
                         counter++;
 
-                        if (counter == 4) // Beim 4. <Controls>-Element einfügen
+                        if (counter == 4) // Beim 4. <Controls>-Element einfügen //ToDo: Prüfen ob es mit einem namen geht, wenn nicht genauer kommentieren 
                         {
-                            string tmpFieldName = "";
+                            string tmpFieldName = ""; //ToDo: Prüfen ob notwendig
                             string tmpBaseEDT = "";
 
                             string xsiNameSpace = "http://www.w3.org/2001/XMLSchema-instance";
@@ -696,6 +695,12 @@ namespace RD_Table_Tool
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
            
+        }
+
+        public static void CreateDataEntityPrivileges(string pOutputPath, string pTableName)
+        {
+            XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\DataEntityPrivilegesMaintain.xml", $"{pOutputPath}\\{pTableName}DataEntityMaintain.xml", "Maintain");
+            XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\DataEntityPrivilegesView.xml", $"{pOutputPath}\\{pTableName}DataEntityView.xml", "View");
         }
 
     }
