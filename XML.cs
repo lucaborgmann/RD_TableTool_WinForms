@@ -22,7 +22,7 @@ namespace RD_Table_Tool
             {
                 // Template laden
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\MenuItemTemplate.xml");
+                templateDoc.Load($"{scriptDir}\\Templates\\MenuItemTemplate.xml");
                 Debug.WriteLine("Lädt die Template-Datei");
 
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
@@ -67,10 +67,10 @@ namespace RD_Table_Tool
             try
             {
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\EdtTemplate.xml");
+                templateDoc.Load($"{scriptDir}\\Templates\\EdtTemplate.xml");
 
                 Debug.WriteLine("CrerateMenuItem: Lädt die Template-Datei: ");
-                Debug.WriteLine($"{scriptDir}\\EdtTemplate.xml");
+                Debug.WriteLine($"{scriptDir}\\Templates\\EdtTemplate.xml");
 
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
                 XmlDocument newDoc = new XmlDocument();
@@ -141,7 +141,7 @@ namespace RD_Table_Tool
             {
                 //Lädt das Template
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\TableTemplate.xml");
+                templateDoc.Load($"{scriptDir}\\Templates\\TableTemplate.xml");
                 Debug.WriteLine("CreateTable: Lädt die Template-Datei");
 
                 //erstellt das neue Dokument
@@ -336,7 +336,7 @@ namespace RD_Table_Tool
                 Debug.WriteLine("diese Create Form wird ausgeführt");
                 //Lädt die Datei 
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\FormTemplate2.xml");
+                templateDoc.Load($"{scriptDir}\\Templates\\FormTemplate2.xml");
 
                 Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate2.xml");
                 Debug.WriteLine("CreateForm: Lädt die Template-Datei");
@@ -522,7 +522,7 @@ namespace RD_Table_Tool
 
             try
             {
-                XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}\\DataEntityTemplate.xml");
+                XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}\\Templates\\DataEntityTemplate.xml");
                 newDoc.LoadXml(newDoc.OuterXml);
 
 
@@ -673,8 +673,8 @@ namespace RD_Table_Tool
         {
             try
             {
-                XMLHelper.CreatePrivilegesFile(pTableName, $"{scriptDir}\\PrivilegesMaintainTemplate.xml", pTableLabel, $"{pOutputPath}\\{pTableName}Maintain.xml", "Maintain");
-                XMLHelper.CreatePrivilegesFile(pTableName, $"{scriptDir}\\PrivilegesViewTemplate.xml", pTableLabel, $"{pOutputPath}\\{pTableName}View.xml", "View");
+                XMLHelper.CreatePrivilegesFile(pTableName, $"{scriptDir}\\Templates\\PrivilegesMaintainTemplate.xml", pTableLabel, $"{pOutputPath}\\{pTableName}Maintain.xml", "Maintain");
+                XMLHelper.CreatePrivilegesFile(pTableName, $"{scriptDir}\\Templates\\PrivilegesViewTemplate.xml", pTableLabel, $"{pOutputPath}\\{pTableName}View.xml", "View");
             }
             catch (Exception ex) 
             {
@@ -685,8 +685,8 @@ namespace RD_Table_Tool
 
         public static void CreateDataEntityPrivileges(string pOutputPath, string pTableName)
         {
-            XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\DataEntityPrivilegesMaintain.xml", $"{pOutputPath}\\{pTableName}DataEntityMaintain.xml", "Maintain");
-            XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\DataEntityPrivilegesView.xml", $"{pOutputPath}\\{pTableName}DataEntityView.xml", "View");
+            XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\Templates\\DataEntityPrivilegesMaintain.xml", $"{pOutputPath}\\{pTableName}DataEntityMaintain.xml", "Maintain");
+            XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\Templates\\DataEntityPrivilegesView.xml", $"{pOutputPath}\\{pTableName}DataEntityView.xml", "View");
         }
 
     }
