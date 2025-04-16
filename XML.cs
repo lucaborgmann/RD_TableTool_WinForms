@@ -336,9 +336,9 @@ namespace RD_Table_Tool
                 Debug.WriteLine("diese Create Form wird ausgeführt");
                 //Lädt die Datei 
                 XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\Templates\\FormTemplate2.xml");
+                templateDoc.Load($"{scriptDir}\\Templates\\FormTemplate.xml");
 
-                Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate2.xml");
+                Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate.xml");
                 Debug.WriteLine("CreateForm: Lädt die Template-Datei");
 
                 // Schreibt die Werte der Template Datei in die neue XML Datei 
