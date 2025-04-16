@@ -63,14 +63,6 @@ namespace RD_Table_Tool
 
         public static void CreateEDT(string pName, string pLabel, string pBaseEDT, string pOutputPath)
         {
-            string name = pName;
-            string label = pLabel;
-            string baseEDT = pBaseEDT;
-            string outputPath = pOutputPath;
-
-            
-            Debug.WriteLine("CrerateMenuItem: Methode wird aufgerufen");
-
 
             try
             {
@@ -83,6 +75,11 @@ namespace RD_Table_Tool
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
                 XmlDocument newDoc = new XmlDocument();
                 newDoc.LoadXml(templateDoc.OuterXml);
+
+                string name = pName;
+                string label = pLabel;
+                string baseEDT = pBaseEDT;
+                string outputPath = pOutputPath;
 
                 // Tags im Dokument updaten
                 XmlNodeList nodes = newDoc.GetElementsByTagName("Name");
@@ -126,7 +123,6 @@ namespace RD_Table_Tool
                 newDoc.Save($"{outputPath}\\{name}.xml");
                 Debug.WriteLine("CrerateMenuItem: XML-Datei aktualisiert");
                
-
             }
             catch (Exception ex)
             {
@@ -137,9 +133,7 @@ namespace RD_Table_Tool
         }
         public static void CreateTable(string pName, string pLabel, string pOutputPath, List<Dictionary<string, string>> fieldList)
         {
-            string name = pName;
-            string label = pLabel;
-            string outputPath = pOutputPath;
+
 
             System.Diagnostics.Debug.WriteLine($"Größe der Liste: {fieldList.Count}");
 
@@ -153,6 +147,10 @@ namespace RD_Table_Tool
                 //erstellt das neue Dokument
                 XmlDocument newDoc = new XmlDocument();
                 newDoc.LoadXml(templateDoc.OuterXml); // Template in neues Dokument kopieren
+
+                string name = pName;
+                string label = pLabel;
+                string outputPath = pOutputPath;
 
                 XmlNodeList nodes = newDoc.SelectNodes("//Name | //Label"); //Sucht alle XML-Knoten dessen taganme Name oder Label ist
                 XmlNode firstNameNode = null;
@@ -333,9 +331,6 @@ namespace RD_Table_Tool
 
         public static void CreateForm(string pName, string pOutputPath, string pFormpatterm, List<Dictionary<string, string>> fieldList)
         {
-            string name = pName;
-            string outputPath = pOutputPath;
-
             try
             {
                 Debug.WriteLine("diese Create Form wird ausgeführt");
@@ -359,12 +354,11 @@ namespace RD_Table_Tool
                 //ersten Knoten unter <Name> unter <AxForm> finden 
                 XmlNode nameNode = newDoc.SelectSingleNode("/ax:AxForm/ax:Name", nsManager);
 
+                string name = pName;
                 if (nameNode != null)
                 {
                     nameNode.InnerText = name;
                     Debug.WriteLine("CreateForm: Ersetzt den ersten Namen");
-
-
                 }
                 else
                 {
@@ -512,7 +506,7 @@ namespace RD_Table_Tool
                 {
                     Debug.WriteLine("Fields-Element nicht gefunden.");
                 }
-
+                string outputPath = pOutputPath;
                 //Speichert das Dokument muss am Ende von allem Passieren !!
                 newDoc.Save($"{outputPath}\\{name}.xml");
             }
@@ -525,9 +519,6 @@ namespace RD_Table_Tool
 
         public static void CreateDataEntity(string pTabellenName,string pOutputpath, string pLabel, List<Dictionary<string, string>> fieldList)
         {
-            string name = pTabellenName;
-            string outputPath = pOutputpath;
-            string label = pLabel;
 
             try
             {
@@ -535,6 +526,7 @@ namespace RD_Table_Tool
                 newDoc.LoadXml(newDoc.OuterXml);
 
 
+                string name = pTabellenName;
                 // Alle <Name> Tags auswählen
                 XmlNodeList nameNodes = newDoc.GetElementsByTagName("Name");
                 Debug.WriteLine($"Name node größe: {nameNodes.Count}"); 
@@ -577,6 +569,7 @@ namespace RD_Table_Tool
                     Debug.WriteLine("Konnte nicht  erstezt werden");
                 }
 
+                string label = pLabel;
 
                 //Überarbeiten von Table, PublicCollectionName,PublicEntityName und Label
                 var nodeUdates = new Dictionary<string, string>
@@ -666,7 +659,7 @@ namespace RD_Table_Tool
                     Debug.WriteLine("Sechstes <Fields>-Tag gefunden und bearbeitet");
                 }
 
-
+                string outputPath = pOutputpath;
                 //Speichert das Dokument muss am Ende stehen !!!!
                 newDoc.Save($"{outputPath}\\{name}Entity.xml");
             }
