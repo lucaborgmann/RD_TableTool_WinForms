@@ -20,17 +20,6 @@ namespace RD_Table_Tool
 
             try
             {
-                // Template laden
-                /*
-                XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}{Path.DirectorySeparatorChar}Templates{Path.DirectorySeparatorChar}MenuItemTemplate.xml");
-                Debug.WriteLine("Lädt die Template-Datei");
-                
-
-                // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
-                XmlDocument newDoc = new XmlDocument();
-                newDoc.LoadXml(templateDoc.OuterXml);
-                */
                 XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}{Path.DirectorySeparatorChar}Templates{Path.DirectorySeparatorChar}MenuItemTemplate.xml");
 
                 string name = pName;
@@ -71,18 +60,6 @@ namespace RD_Table_Tool
 
             try
             {
-                /*
-                XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\Templates\\EdtTemplate.xml");
-                templateDoc.Load($"{scriptDir}\\Templates\\EdtTemplate.xml");
-
-                Debug.WriteLine("CrerateMenuItem: Lädt die Template-Datei: ");
-                Debug.WriteLine($"{scriptDir}\\Templates\\EdtTemplate.xml");
-
-                // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
-                XmlDocument newDoc = new XmlDocument();
-                newDoc.LoadXml(templateDoc.OuterXml);
-                */
 
                 XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}{Path.DirectorySeparatorChar}Templates{Path.DirectorySeparatorChar}EdtTemplate.xml");
 
@@ -150,16 +127,7 @@ namespace RD_Table_Tool
 
             try
             {
-                /*
-                //Lädt das Template
-                XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\Templates\\TableTemplate.xml");
-                Debug.WriteLine("CreateTable: Lädt die Template-Datei");
 
-                //erstellt das neue Dokument
-                XmlDocument newDoc = new XmlDocument();
-                newDoc.LoadXml(templateDoc.OuterXml); // Template in neues Dokument kopieren
-                */
                 
                 XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}{Path.DirectorySeparatorChar}Templates{Path.DirectorySeparatorChar}TableTemplate.xml");
                
@@ -351,20 +319,6 @@ namespace RD_Table_Tool
         {
             try
             {
-                /*
-                Debug.WriteLine("diese Create Form wird ausgeführt");
-                //Lädt die Datei 
-                XmlDocument templateDoc = new XmlDocument();
-                templateDoc.Load($"{scriptDir}\\Templates\\FormTemplate.xml");
-
-                Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate.xml");
-                Debug.WriteLine("CreateForm: Lädt die Template-Datei");
-
-                // Schreibt die Werte der Template Datei in die neue XML Datei 
-                XmlDocument newDoc = new XmlDocument();
-                newDoc.LoadXml(templateDoc.OuterXml);
-                //bis hier evtl als Methode in eine eigene Helperklasse Outsourcen
-                */
 
                 XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}{Path.DirectorySeparatorChar}Templates{Path.DirectorySeparatorChar}FormTemplate.xml");
 
@@ -528,10 +482,6 @@ namespace RD_Table_Tool
                     Debug.WriteLine("Fields-Element nicht gefunden.");
                 }
                 string outputPath = pOutputPath;
-                //Speichert das Dokument muss am Ende von allem Passieren !!
-                //newDoc.Save($"{outputPath}\\{name}.xml");
-                //newDoc.Save($"{outputPath}\\{name}.xml");
-                //newDoc.Save(Path.Combine($"{outputPath}", $"{Path.DirectorySeparatorChar}", $"{name}.xml"));
                 newDoc.Save($"{outputPath}{Path.DirectorySeparatorChar}{name}.xml");
             }
             catch (Exception ex)
@@ -684,9 +634,6 @@ namespace RD_Table_Tool
                 }
 
                 string outputPath = pOutputpath;
-                //Speichert das Dokument muss am Ende stehen !!!!
-                //newDoc.Save($"{outputPath}\\{name}Entity.xml");
-                //newDoc.Save(Path.Combine($"{outputPath}", $"{Path.DirectorySeparatorChar}", $"{name}.xml"));
                 newDoc.Save($"{outputPath}{Path.DirectorySeparatorChar}{name}Entity.xml");
             }
             catch (Exception ex)
