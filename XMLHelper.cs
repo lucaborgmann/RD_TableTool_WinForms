@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.IO;
+using System.Diagnostics;
 
 namespace RD_Table_Tool
 {
@@ -74,17 +75,17 @@ namespace RD_Table_Tool
             {
                 XmlNode firstNameNode = nameNodes[0];
                 firstNameNode.InnerText = $"{pName}Entity{type}";
-                System.Diagnostics.Debug.WriteLine("Erstes Element angepasst");
+                Debug.WriteLine("Erstes Element angepasst");
 
                 // Letztes <Name> Tag bearbeiten
                 XmlNode lastNameNode = nameNodes[nameNodes.Count - 1];
                 //lastNameNode.InnerText = pName;
                 lastNameNode.InnerText = $"{pName}Entity";
-                System.Diagnostics.Debug.WriteLine("Letztes Element angepasst");
+                Debug.WriteLine("Letztes Element angepasst");
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("Kein Element name gefunden");
+                Debug.WriteLine("Kein Element name gefunden");
             }
 
             newDoc.Save(pOutputPath);
