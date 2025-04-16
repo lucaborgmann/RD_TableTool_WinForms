@@ -190,7 +190,6 @@ namespace RD_TableTool_WinForms
                             {
                                 Debug.WriteLine("CreateEDT: ist ja");
                                 Debug.WriteLine($"Der ist {dataGridNameValue}");
-                                // XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", OutputEDTPath);
                                 XML.CreateEDT(dataGridNameValue, dataGridNameValue, baseEDT, OutputEDTPath);
                             }
                         }
@@ -227,7 +226,6 @@ namespace RD_TableTool_WinForms
 
                 //als letztes 
                 XML.CreateForm(name, FormsOutputpath, formPattern, dataListValues);
-                //MessageBox.Show("Tabelle wurde erstellt");
                 MessageBox.Show("Tabelle wurde erstellt", "Erfolg", MessageBoxButtons.OK, MessageBoxIcon.Information);
                
             }
@@ -256,7 +254,6 @@ namespace RD_TableTool_WinForms
         // Ereignishandler für den "File"-Menüpunkt
         private void FileMenu_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("File menu clicked!");
             Debug.WriteLine("File Menu Clicked");
         }
 
@@ -294,7 +291,6 @@ namespace RD_TableTool_WinForms
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                //MessageBox.Show($"Öffnen: {ofd.FileName}");
                 // Hier kannst du den Code hinzufügen, um die Datei zu laden und zu verarbeiten
                 LoadFile(ofd.FileName);
                 Debug.WriteLine($"Nach dem Laden: {Settings.Default.CurrentPath}");

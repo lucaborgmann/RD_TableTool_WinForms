@@ -49,7 +49,6 @@ namespace RD_Table_Tool
                     }
                 }
                 // Neue XML-Datei speichern
-                //newDoc.Save($"C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\{name}.xml");
                 newDoc.Save($"{outputPath}\\{name}.xml");
                 Debug.WriteLine("XML-Datei aktualisiert");
 
@@ -76,8 +75,8 @@ namespace RD_Table_Tool
             try
             {
                 XmlDocument templateDoc = new XmlDocument();
-                //templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
                 templateDoc.Load($"{scriptDir}\\EdtTemplate.xml");
+
                 Debug.WriteLine("CrerateMenuItem: Lädt die Template-Datei: ");
                 Debug.WriteLine($"{scriptDir}\\EdtTemplate.xml");
 
@@ -221,6 +220,7 @@ namespace RD_Table_Tool
                                 XmlElement ignore = newDoc.CreateElement("IgnoreEDTRelation");
                                 ignore.InnerText = "Yes";
                                 axTableField.AppendChild(ignore);
+
                                 //Wichtig: Füge in das <Fields>-Tag ein, nicht an ein neues Root-Element
                                 fieldNode.AppendChild(axTableField);
                             }
@@ -603,15 +603,14 @@ namespace RD_Table_Tool
                         }
                     }
                 }
+                
                 //hinzufügen der Felder
-
                 XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");
 
                 if (fieldNodes.Count >= 6)
                 {
                     // Auf das sechste <Fields>-Tag zugreifen
                     XmlNode sixthFieldNode = fieldNodes[5];
-                    //sixthFieldNode.InnerText = "Ist das die Richtige stelle ? ";
 
                     foreach (Dictionary<string,string> fieldDict in fieldList)
                     {
