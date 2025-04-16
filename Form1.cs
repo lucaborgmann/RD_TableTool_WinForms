@@ -524,42 +524,6 @@ namespace RD_TableTool_WinForms
 
         }
 
-        /*
-        static Dictionary<string, string> DataGrid2Dictionary()
-        {
-            Dictionary<string, string> dataDictionary = new Dictionary<string, string>();
-
-            if (dataGridView2 != null)
-            {
-                // Erstellen einer Liste mit allen Feldern des DataGrids
-                foreach (DataGridViewRow row in dataGridView2.Rows) // für jedes Element im DataGrid
-                {
-                    if (!row.IsNewRow) // Ignoriere die neue Zeile
-                    {
-                        string dataGridNameValue = row.Cells["Column1"].Value?.ToString();
-                        string dataGridLabelValue = row.Cells["Column2"].Value?.ToString();
-                        string baseEDT = row.Cells["Column3"].Value?.ToString();
-                        string createEDT = row.Cells["Column4"].Value?.ToString();
-                        string alternateKey = row.Cells["Column5"].Value?.ToString();
-
-                        // Neues Dictionary für die Zeile erstellen
-                        Dictionary<string, string> rowData = new Dictionary<string, string>
-                        {
-                            { "Name", dataGridNameValue },
-                            { "Label", dataGridLabelValue },
-                            { "BaseEDT", baseEDT },
-                            { "CreateEDT", createEDT },
-                            { "AlternateKey", alternateKey }
-                        };
-
-                        dataListValues2.Add(rowData);
-                    }
-                }
-            }
-                return dataDictionary;
-        }
-        */
-
     }
 
 
