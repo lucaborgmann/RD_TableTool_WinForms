@@ -15,7 +15,7 @@ namespace RD_TableTool_WinForms
     public partial class RD_TableToolForm : Form
     {
         public DataGridView dataGridView; //um es überall in der Klasse zu verwenden
-        public static string scriptDirForm = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        public static string scriptDirForm = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         //public static string scriptDirForm = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
 
         //Pfade zu den AusgabeOrdnern
@@ -30,6 +30,7 @@ namespace RD_TableTool_WinForms
         bool isChecked_Entity = false;
         bool isChecked_Privileges = false;
 
+        
         public RD_TableToolForm()
         {
             InitializeComponent();
@@ -153,6 +154,8 @@ namespace RD_TableTool_WinForms
             string label = this.LabelTextBox.Text;
             string properties = this.PropertyTextBox.Text;
             string formPattern = this.FormPatternCombobox.Text;
+
+            Debug.WriteLine($" Das Trennzeichen ist {Path.DirectorySeparatorChar}");
 
             // Liste zum Speichern der Werte aus dem DataGrid
             List<Dictionary<string, string>> dataListValues = new List<Dictionary<string, string>>();
