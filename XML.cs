@@ -69,8 +69,8 @@ namespace RD_Table_Tool
             string baseEDT = pBaseEDT;
             string outputPath = pOutputPath;
 
-            //System.Diagnostics.Debug.WriteLine($"OutPut Path: {outputPath}");
-            System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Methode wird aufgerufen");
+            
+            Debug.WriteLine("CrerateMenuItem: Methode wird aufgerufen");
 
 
             try
@@ -80,6 +80,7 @@ namespace RD_Table_Tool
                 templateDoc.Load($"{scriptDir}\\EdtTemplate.xml");
                 Debug.WriteLine("CrerateMenuItem: Lädt die Template-Datei: ");
                 Debug.WriteLine($"{scriptDir}\\EdtTemplate.xml");
+
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
                 XmlDocument newDoc = new XmlDocument();
                 newDoc.LoadXml(templateDoc.OuterXml);
@@ -118,19 +119,14 @@ namespace RD_Table_Tool
                     }
 
                     // Wert zuweisen
-                    // typeAttr.Value = "AxEdtString";
                     typeAttr.Value = $"AxEdt{baseEDT}";
-                    //Console.WriteLine("i:type erfolgreich gesetzt.");
+                    
                 }
                 
-
-
-
-
                 // Neue XML-Datei speichern
                 newDoc.Save($"{outputPath}\\{name}.xml");
                 Debug.WriteLine("CrerateMenuItem: XML-Datei aktualisiert");
-                //updateBasedEDT(baseEDT,outputPath);
+               
 
             }
             catch (Exception ex)
@@ -347,7 +343,7 @@ namespace RD_Table_Tool
                 XmlDocument templateDoc = new XmlDocument();
                 templateDoc.Load($"{scriptDir}\\FormTemplate2.xml");
 
-               Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate2.xml");
+                Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate2.xml");
                 Debug.WriteLine("CreateForm: Lädt die Template-Datei");
 
                 // Schreibt die Werte der Template Datei in die neue XML Datei 
@@ -417,8 +413,6 @@ namespace RD_Table_Tool
 
                                 // DataField-Element erstellen und hinzufügen
                                 XmlElement dataFieldElement = newDoc.CreateElement("DataField");
-                                //dataFieldElement.InnerText = "NeuesDataField"; // Hier name des Feldes angeben 
-
                                 dataFieldElement.InnerText = kvp.Value;
 
                                 // DataField-Element zum AxFormDataSourceField-Element hinzufügen
@@ -516,7 +510,7 @@ namespace RD_Table_Tool
                 }
                 else
                 {
-                    Console.WriteLine("Fields-Element nicht gefunden.");
+                    Debug.WriteLine("Fields-Element nicht gefunden.");
                 }
 
                 //Speichert das Dokument muss am Ende von allem Passieren !!
