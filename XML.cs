@@ -685,8 +685,15 @@ namespace RD_Table_Tool
 
         public static void CreateDataEntityPrivileges(string pOutputPath, string pTableName)
         {
-            XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\Templates\\DataEntityPrivilegesMaintain.xml", $"{pOutputPath}\\{pTableName}DataEntityMaintain.xml", "Maintain");
-            XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\Templates\\DataEntityPrivilegesView.xml", $"{pOutputPath}\\{pTableName}DataEntityView.xml", "View");
+            try
+            {
+                XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\Templates\\DataEntityPrivilegesMaintain.xml", $"{pOutputPath}\\{pTableName}DataEntityMaintain.xml", "Maintain");
+                XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\Templates\\DataEntityPrivilegesView.xml", $"{pOutputPath}\\{pTableName}DataEntityView.xml", "View");
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }
