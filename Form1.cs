@@ -563,16 +563,6 @@ namespace RD_TableTool_WinForms
     }
 
 
-    //Klasse um die Daten besser speichern zu können (evtl rausnehmen wird aktuell nicht verwendet) 
-    public class DataGridViewRowData
-    {
-        public string Name { get; set; }
-        public string Label { get; set; }   
-        public string BaseEDT { get; set; }
 
-        public string CreateEDT {  get; set; }
-        public string alternateKey { get; set; }
-
-    }
 
 }
