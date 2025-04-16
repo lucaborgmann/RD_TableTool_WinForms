@@ -188,8 +188,8 @@ namespace RD_TableTool_WinForms
                             // Prüfen, ob ein neues EDT erstellt werden muss
                             if (createEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
                             {
-                                System.Diagnostics.Debug.WriteLine("CreateEDT: ist ja");
-                                System.Diagnostics.Debug.WriteLine($"Der ist {dataGridNameValue}");
+                                Debug.WriteLine("CreateEDT: ist ja");
+                                Debug.WriteLine($"Der ist {dataGridNameValue}");
                                 // XML.CreateEDT(dataGridNameValue, dataGridNameValue, "Test", OutputEDTPath);
                                 XML.CreateEDT(dataGridNameValue, dataGridNameValue, baseEDT, OutputEDTPath);
                             }
@@ -203,20 +203,20 @@ namespace RD_TableTool_WinForms
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine("DataGrid nicht initialisiert");
+                    Debug.WriteLine("DataGrid nicht initialisiert");
                 }
 
                 if (isCheckedMenuItems)
                 {
-                    System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
+                    Debug.WriteLine("Entity ist ausgewählt");
 
                     XML.CreateMenuItem(name, label, MenuItemOutputDirectoryPath);
-                    System.Diagnostics.Debug.WriteLine("Erstellt", "MenuItem wurde erstellt");
+                    Debug.WriteLine("Erstellt", "MenuItem wurde erstellt");
                 }
 
                 if (isChecked_Entity)
                 {
-                    System.Diagnostics.Debug.WriteLine("Entity ist ausgewählt");
+                    Debug.WriteLine("Entity ist ausgewählt");
                     XML.CreateDataEntity(name, DataEntityOutputPath, label, dataListValues);
                     XML.CreateDataEntityPrivileges(PrivilegesOutputPath,name);
                 }
@@ -257,19 +257,19 @@ namespace RD_TableTool_WinForms
         private void FileMenu_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("File menu clicked!");
-            System.Diagnostics.Debug.WriteLine("File Menu Clicked");
+            Debug.WriteLine("File Menu Clicked");
         }
 
         private void NewFileMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("New File Clicked");
+            Debug.WriteLine("New File Clicked");
         }
 
 
         private void SaveAsFileMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine($"Der Ordner der .exe ist {scriptDirForm}");
-            System.Diagnostics.Debug.WriteLine("Save as wurde gedrückt");
+            Debug.WriteLine($"Der Ordner der .exe ist {scriptDirForm}");
+            Debug.WriteLine("Save as wurde gedrückt");
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 Filter = "XML Files (*.xml)|*.xml",
@@ -284,7 +284,7 @@ namespace RD_TableTool_WinForms
 
         private void OpenFileMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine($"Vor dem Laden: {Settings.Default.CurrentPath}");
+            Debug.WriteLine($"Vor dem Laden: {Settings.Default.CurrentPath}");
             OpenFileDialog ofd = new OpenFileDialog()
             {
                 InitialDirectory = $"{scriptDirForm}",
@@ -297,7 +297,7 @@ namespace RD_TableTool_WinForms
                 //MessageBox.Show($"Öffnen: {ofd.FileName}");
                 // Hier kannst du den Code hinzufügen, um die Datei zu laden und zu verarbeiten
                 LoadFile(ofd.FileName);
-                System.Diagnostics.Debug.WriteLine($"Nach dem Laden: {Settings.Default.CurrentPath}");
+                Debug.WriteLine($"Nach dem Laden: {Settings.Default.CurrentPath}");
             }
             else
             {
@@ -307,7 +307,7 @@ namespace RD_TableTool_WinForms
 
         private void SaveFileMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("das ist nur Save");
+            Debug.WriteLine("das ist nur Save");
 
             //Quelle: Einstieg in C# mit Visual Studio 2022 von Thomas Theis Thomas Theis Seite 352
             /*

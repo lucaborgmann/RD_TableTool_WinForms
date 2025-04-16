@@ -23,7 +23,7 @@ namespace RD_Table_Tool
                 // Template laden
                 XmlDocument templateDoc = new XmlDocument();
                 templateDoc.Load($"{scriptDir}\\MenuItemTemplate.xml");
-                System.Diagnostics.Debug.WriteLine("Lädt die Template-Datei");
+                Debug.WriteLine("Lädt die Template-Datei");
 
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
                 XmlDocument newDoc = new XmlDocument();
@@ -51,12 +51,12 @@ namespace RD_Table_Tool
                 // Neue XML-Datei speichern
                 //newDoc.Save($"C:\\Users\\LucaBorgmann\\OneDrive - Roedl Dynamics GmbH\\Desktop\\Abschlussprojekt\\{name}.xml");
                 newDoc.Save($"{outputPath}\\{name}.xml");
-                System.Diagnostics.Debug.WriteLine("XML-Datei aktualisiert");
+                Debug.WriteLine("XML-Datei aktualisiert");
 
             }
             catch (XmlException ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
+                Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -78,8 +78,8 @@ namespace RD_Table_Tool
                 XmlDocument templateDoc = new XmlDocument();
                 //templateDoc.Load("C:\\Users\\LucaBorgmann\\source\\repos\\RD_TableTool_WinForms\\EdtTemplate.xml");
                 templateDoc.Load($"{scriptDir}\\EdtTemplate.xml");
-                System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Lädt die Template-Datei: ");
-                System.Diagnostics.Debug.WriteLine($"{scriptDir}\\EdtTemplate.xml");
+                Debug.WriteLine("CrerateMenuItem: Lädt die Template-Datei: ");
+                Debug.WriteLine($"{scriptDir}\\EdtTemplate.xml");
                 // Neue XML-Datei erstellen und den Inhalt der Template-Datei übernehmen
                 XmlDocument newDoc = new XmlDocument();
                 newDoc.LoadXml(templateDoc.OuterXml);
@@ -89,18 +89,18 @@ namespace RD_Table_Tool
                 foreach (XmlNode node in nodes)
                 {
                     node.InnerText = name;
-                    System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Ersetzt den Namen");
+                    Debug.WriteLine("CrerateMenuItem: Ersetzt den Namen");
                 }
 
                 nodes = newDoc.GetElementsByTagName("Label");
                 foreach (XmlNode node in nodes)
                 {
                     node.InnerText = label;
-                    System.Diagnostics.Debug.WriteLine("CrerateMenuItem: Ersetzt das Label");
+                    Debug.WriteLine("CrerateMenuItem: Ersetzt das Label");
                 }
 
-                System.Diagnostics.Debug.WriteLine("Bis hier wird es AusgeführtS");
-                System.Diagnostics.Debug.WriteLine($"BaseEDT Wert: {baseEDT}");
+                Debug.WriteLine("Bis hier wird es AusgeführtS");
+                Debug.WriteLine($"BaseEDT Wert: {baseEDT}");
 
                 XmlNamespaceManager nsmgr = new XmlNamespaceManager(newDoc.NameTable);
                 nsmgr.AddNamespace("i", "http://www.w3.org/2001/XMLSchema-instance");
@@ -129,13 +129,13 @@ namespace RD_Table_Tool
 
                 // Neue XML-Datei speichern
                 newDoc.Save($"{outputPath}\\{name}.xml");
-                System.Diagnostics.Debug.WriteLine("CrerateMenuItem: XML-Datei aktualisiert");
+                Debug.WriteLine("CrerateMenuItem: XML-Datei aktualisiert");
                 //updateBasedEDT(baseEDT,outputPath);
 
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
+                Debug.WriteLine($"Fehler beim Laden des XML-Dokuments: {ex.Message}");
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -153,7 +153,7 @@ namespace RD_Table_Tool
                 //Lädt das Template
                 XmlDocument templateDoc = new XmlDocument();
                 templateDoc.Load($"{scriptDir}\\TableTemplate.xml");
-                System.Diagnostics.Debug.WriteLine("CreateTable: Lädt die Template-Datei");
+                Debug.WriteLine("CreateTable: Lädt die Template-Datei");
 
                 //erstellt das neue Dokument
                 XmlDocument newDoc = new XmlDocument();
@@ -176,14 +176,14 @@ namespace RD_Table_Tool
                     if (node.Name == "Label")
                     {
                         node.InnerText = label;
-                        System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt das Label");
+                        Debug.WriteLine("CreateTable: Ersetzt das Label");
                     }
                 }
                 //falls die Variable firstNameNode umbenannt wurde wird der Inhalt des XML Elements Überschrieben
                 if (firstNameNode != null)
                 {
                     firstNameNode.InnerText = name;
-                    System.Diagnostics.Debug.WriteLine("CreateTable: Ersetzt den ersten Namen");
+                    Debug.WriteLine("CreateTable: Ersetzt den ersten Namen");
                 }
 
                 XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");  //sucht den XML Knoten Fiels 
@@ -192,7 +192,7 @@ namespace RD_Table_Tool
 
                 if (fieldNode != null) // Wenn Felder angegeben wurden 
                 {
-                    System.Diagnostics.Debug.WriteLine("CreateTable: fieldNode ist nicht leer");
+                   Debug.WriteLine("CreateTable: fieldNode ist nicht leer");
 
                     foreach (Dictionary<string, string> fieldDict in fieldList)
                     {
@@ -246,7 +246,7 @@ namespace RD_Table_Tool
 
                             if (fiedlAlternateKey.Equals("Yes", StringComparison.OrdinalIgnoreCase))
                             {
-                                System.Diagnostics.Debug.WriteLine("AlternateKey ist als ja ausgewählt");
+                                Debug.WriteLine("AlternateKey ist als ja ausgewählt");
                             }
                         }
                     }
@@ -254,7 +254,7 @@ namespace RD_Table_Tool
                     // Wenn ein Alternate Key angegeben ist wird ein Index angelegt 
                     if (hasAlternateKey)
                     {
-                        System.Diagnostics.Debug.WriteLine("Erstelle AxTableIndex für AlternateKey");
+                        Debug.WriteLine("Erstelle AxTableIndex für AlternateKey");
 
                         XmlNodeList indexesNodes = newDoc.SelectNodes("//Indexes"); //sucht nach dem Tag Indexes
                         if (indexesNodes != null && indexesNodes.Count > 0) //wenn index vorhanden und nciht gleich null ist
@@ -291,7 +291,7 @@ namespace RD_Table_Tool
                         }
                         else
                         {
-                            System.Diagnostics.Debug.WriteLine("Indexes-Knoten wurde nicht gefunden!");
+                            Debug.WriteLine("Indexes-Knoten wurde nicht gefunden!");
                         }
                     }
 
@@ -317,16 +317,16 @@ namespace RD_Table_Tool
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
+                   Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
                 }
 
                 //nur zum Debuggen ? 
                 string[] paths = { @$"{outputPath}", $"{name}", ".xml" };
                 string fullPath = Path.Combine(paths); 
-                System.Diagnostics.Debug.WriteLine($"Ausgabe fullpath: {fullPath}");
+                Debug.WriteLine($"Ausgabe fullpath: {fullPath}");
 
                 newDoc.Save($"{outputPath}\\{name}.xml");
-                System.Diagnostics.Debug.WriteLine("CreateTable: XML-Datei aktualisiert");
+                Debug.WriteLine("CreateTable: XML-Datei aktualisiert");
             }
             catch (Exception ex)
             {
@@ -342,13 +342,13 @@ namespace RD_Table_Tool
 
             try
             {
-                System.Diagnostics.Debug.WriteLine("diese Create Form wird ausgeführt");
+                Debug.WriteLine("diese Create Form wird ausgeführt");
                 //Lädt die Datei 
                 XmlDocument templateDoc = new XmlDocument();
                 templateDoc.Load($"{scriptDir}\\FormTemplate2.xml");
 
-                System.Diagnostics.Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate2.xml");
-                System.Diagnostics.Debug.WriteLine("CreateForm: Lädt die Template-Datei");
+               Debug.WriteLine($"der Pfad zum Template ist: {scriptDir}\\TableTemplate2.xml");
+                Debug.WriteLine("CreateForm: Lädt die Template-Datei");
 
                 // Schreibt die Werte der Template Datei in die neue XML Datei 
                 XmlDocument newDoc = new XmlDocument();
@@ -366,13 +366,13 @@ namespace RD_Table_Tool
                 if (nameNode != null)
                 {
                     nameNode.InnerText = name;
-                    System.Diagnostics.Debug.WriteLine("CreateForm: Ersetzt den ersten Namen");
+                    Debug.WriteLine("CreateForm: Ersetzt den ersten Namen");
 
 
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine("CreateForm: <Name> -Tag nicht gefunden!");
+                    Debug.WriteLine("CreateForm: <Name> -Tag nicht gefunden!");
                 }
 
                 //es muss noch in der Zeile  public class TestForm extends FormRun "TestForm" durch den Namen ergänzt werde
@@ -409,7 +409,7 @@ namespace RD_Table_Tool
                     {
                         foreach (var kvp in dict)
                         {
-                            System.Diagnostics.Debug.WriteLine($"Dictonary ausgeben Create Form {kvp.Key},Value: {kvp.Value}");
+                            Debug.WriteLine($"Dictonary ausgeben Create Form {kvp.Key},Value: {kvp.Value}");
                             if (kvp.Key == "Name")
                             {
                                 // Neues AxFormDataSourceField-Element erstellen
@@ -456,7 +456,7 @@ namespace RD_Table_Tool
                                 tmpFieldName = dict.ContainsKey("Name") ? dict["Name"] : "";
                                 tmpBaseEDT = dict.ContainsKey("BaseEDT") ? dict["BaseEDT"] : "";
 
-                                System.Diagnostics.Debug.WriteLine($"Processing Field: {tmpFieldName}, Type: {tmpBaseEDT}");
+                                Debug.WriteLine($"Processing Field: {tmpFieldName}, Type: {tmpBaseEDT}");
 
                                 // Überprüfen, ob ein <AxFormControl> mit dem gleichen DataField-Wert existiert
                                 bool exists = controlsNode.SelectNodes("AxFormControl").Cast<XmlNode>()
@@ -524,7 +524,7 @@ namespace RD_Table_Tool
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
+                Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -543,23 +543,23 @@ namespace RD_Table_Tool
 
                 // Alle <Name> Tags auswählen
                 XmlNodeList nameNodes = newDoc.GetElementsByTagName("Name");
-                System.Diagnostics.Debug.WriteLine($"Name node größe: {nameNodes.Count}"); 
+                Debug.WriteLine($"Name node größe: {nameNodes.Count}"); 
 
                 if (nameNodes.Count > 0)
                 {
                     // Erstes <Name> Tag bearbeiten
                     XmlNode firstNameNode = nameNodes[0];
                     firstNameNode.InnerText = $"{name}Entity";
-                    System.Diagnostics.Debug.WriteLine("Erstes Element angepasst");
+                    Debug.WriteLine("Erstes Element angepasst");
 
                     // Letztes <Name> Tag bearbeiten
                     XmlNode lastNameNode = nameNodes[nameNodes.Count - 1];
                     lastNameNode.InnerText = name;
-                    System.Diagnostics.Debug.WriteLine("Letztes Element angepasst");
+                    Debug.WriteLine("Letztes Element angepasst");
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine("Kein Element name gefunden");
+                    Debug.WriteLine("Kein Element name gefunden");
                 }
 
                 //Namen der Entität ersetzen 
@@ -576,11 +576,11 @@ namespace RD_Table_Tool
                     // Aktualisiert CDATA Inhalt
                     cdataSection.Value = modifiedCode;
                  
-                    System.Diagnostics.Debug.WriteLine("Konnte erstezt werden"); 
+                    Debug.WriteLine("Konnte erstezt werden"); 
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine("Konnte nicht  erstezt werden");
+                    Debug.WriteLine("Konnte nicht  erstezt werden");
                 }
 
 
@@ -670,7 +670,7 @@ namespace RD_Table_Tool
                         }
                     }
 
-                    System.Diagnostics.Debug.WriteLine("Sechstes <Fields>-Tag gefunden und bearbeitet");
+                    Debug.WriteLine("Sechstes <Fields>-Tag gefunden und bearbeitet");
                 }
 
 
