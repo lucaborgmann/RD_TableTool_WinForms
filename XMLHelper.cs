@@ -30,7 +30,7 @@ namespace RD_Table_Tool
             string outputPath = pOutputPath;
             XmlDocument newDoc = XMLHelper.LoadTemplate(pTemplatePath);
 
-            newDoc.LoadXml(newDoc.OuterXml); //ergibt wenig sinn ist Doppelt 
+            newDoc.LoadXml(newDoc.OuterXml); 
 
 
             var nodeUpdates = new Dictionary<string, string>
