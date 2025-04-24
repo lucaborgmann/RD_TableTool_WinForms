@@ -17,13 +17,10 @@ namespace RD_Table_Tool
         {
             XmlDocument templateDoc = new XmlDocument();
             templateDoc.Load(templatePath);
-
-            XmlDocument newDoc = new XmlDocument();
-            newDoc.LoadXml(templateDoc.OuterXml);
-
-            return newDoc;
+            return templateDoc;
         }
-        public static void CreatePrivilegesFile(string pName, string pTemplatePath, string pTableLabel,string pOutputPath,string type)
+
+        public static void CreatePrivilegesFile(string pName, string pTemplatePath, string pTableLabel,string pOutputPath,string pType)
         {
             string name = pName; 
             string label = pTableLabel;
@@ -32,14 +29,12 @@ namespace RD_Table_Tool
 
             newDoc.LoadXml(newDoc.OuterXml); 
 
-
             var nodeUpdates = new Dictionary<string, string>
             {
                 { "Name", name },
                 { "Label", label },
                 { "ObjectName", name }
             };
-
 
             bool isFirstNameTag = true;
 
@@ -52,9 +47,8 @@ namespace RD_Table_Tool
                     if (update.Key == "Name" && isFirstNameTag)
                     {
                         // Ausnahme für das erste Tag "Name"
-                        node.InnerText = $"{update.Value}{type}";
+                        node.InnerText = $"{update.Value}{pType}";
                         isFirstNameTag = false;
-                        //continue; // Überspringt das erste "Name" Tag
                     }
                     else
                     {
@@ -79,7 +73,6 @@ namespace RD_Table_Tool
 
                 // Letztes <Name> Tag bearbeiten
                 XmlNode lastNameNode = nameNodes[nameNodes.Count - 1];
-                //lastNameNode.InnerText = pName;
                 lastNameNode.InnerText = $"{pName}Entity";
                 Debug.WriteLine("Letztes Element angepasst");
             }

@@ -16,7 +16,6 @@ namespace RD_TableTool_WinForms
     {
         public DataGridView dataGridView; //um es überall in der Klasse zu verwenden
         public static string scriptDirForm = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        //public static string scriptDirForm = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
 
         //Pfade zu den AusgabeOrdnern
         String MenuItemOutputDirectoryPath = Settings.Default.OutputMenuItemPath;
@@ -30,7 +29,7 @@ namespace RD_TableTool_WinForms
         bool isChecked_Entity = false;
         bool isChecked_Privileges = false;
 
-        
+
         public RD_TableToolForm()
         {
             InitializeComponent();
@@ -70,10 +69,9 @@ namespace RD_TableTool_WinForms
 
             // Füge Ereignishandler für die Menüpunkte hinzu
             fileMenu.Click += new EventHandler(FileMenu_Click);
-            //optionsMenu.Click += new EventHandler(OptionsMenu_Click);
+           
 
             // Füge Ereignishandler für die Untermenüpunkte hinzu
-            //newFileMenuItem.Click += new EventHandler(NewFileMenuItem_Click);
             openFileMenuItem.Click += new EventHandler(OpenFileMenuItem_Click);
             saveFileMenuItem.Click += new EventHandler(SaveFileMenuItem_Click);
             SaveAsFileMenuItem.Click += new EventHandler(SaveAsFileMenuItem_Click);
@@ -220,7 +218,7 @@ namespace RD_TableTool_WinForms
                 {
                     Debug.WriteLine("Entity ist ausgewählt");
                     XML.CreateDataEntity(name, DataEntityOutputPath, label, dataListValues);
-                    XML.CreateDataEntityPrivileges(PrivilegesOutputPath,name);
+                    XML.CreateDataEntityPrivileges(PrivilegesOutputPath, name);
                 }
                 if (isChecked_Privileges)
                 {
@@ -230,13 +228,13 @@ namespace RD_TableTool_WinForms
                 //als letztes 
                 XML.CreateForm(name, FormsOutputpath, formPattern, dataListValues);
                 MessageBox.Show("Tabelle wurde erstellt", "Erfolg", MessageBoxButtons.OK, MessageBoxIcon.Information);
-               
+
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
 
@@ -511,6 +509,12 @@ namespace RD_TableTool_WinForms
 
         }
 
+        
+        private void NameTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        
     }
 
 

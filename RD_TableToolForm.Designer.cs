@@ -168,6 +168,7 @@
             NameTextBox.Name = "NameTextBox";
             NameTextBox.Size = new Size(137, 27);
             NameTextBox.TabIndex = 1;
+            NameTextBox.TextChanged += NameTextBox_TextChanged;
             // 
             // NameLabel
             // 
@@ -199,7 +200,7 @@
             OkButton.UseVisualStyleBackColor = true;
             OkButton.Click += OkButton_Click;
             // 
-            // Form1
+            // RD_TableToolForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -208,7 +209,7 @@
             Controls.Add(CancelButton);
             Controls.Add(groupBox1);
             Controls.Add(menuStrip3);
-            Name = "Form1";
+            Name = "RD_TableToolForm";
             Text = "RD_TableTool";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

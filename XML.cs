@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace RD_Table_Tool
 {
-    class XML
+    class  XML
     {
         public static string scriptDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); //Speichert den Pfad zum verzeichnis
         //Konstruktor
@@ -20,32 +20,32 @@ namespace RD_Table_Tool
 
             try
             {
+                //verwendet die Methode LoadTEmplate der Helperklasse um ein Standard MenuItem Dokument zu erstellen
                 XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}{Path.DirectorySeparatorChar}Templates{Path.DirectorySeparatorChar}MenuItemTemplate.xml");
 
                 string name = pName;
                 string label = pLabel;
                 string outputPath = pOutputPath;
 
+                //Dictonary mit allen Tags die geändert werden müssen 
                 var nodeUpdates = new Dictionary<string, string>
-        {
+                {
                     { "Name", name },
                     { "Label", label },
                     { "Object", name }
                 };
 
-                foreach (var update in nodeUpdates)
+                foreach (var update in nodeUpdates) //iteriert durch alle Einträge im Dictonary
                 {
                     XmlNodeList nodes = newDoc.GetElementsByTagName(update.Key);
-                    foreach (XmlNode node in nodes)
+                    foreach (XmlNode node in nodes) //iteriert alle gefundenen Knoten 
                     {
-                        node.InnerText = update.Value;
+                        node.InnerText = update.Value; // Passt den Wert des Knotens an 
                     }
                 }
                 // Neue XML-Datei speichern
                 newDoc.Save($"{outputPath}{Path.DirectorySeparatorChar}{name}.xml");
-                //newDoc.Save(Path.Combine($"{outputPath}",$"{Path.DirectorySeparatorChar}",$"{name}.xml"));
                 Debug.WriteLine("XML-Datei aktualisiert");
-
             }
             catch (XmlException ex)
             {
@@ -57,10 +57,8 @@ namespace RD_Table_Tool
 
         public static void CreateEDT(string pName, string pLabel, string pBaseEDT, string pOutputPath)
         {
-
             try
             {
-
                 XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}{Path.DirectorySeparatorChar}Templates{Path.DirectorySeparatorChar}EdtTemplate.xml");
 
                 string name = pName;
@@ -68,29 +66,24 @@ namespace RD_Table_Tool
                 string baseEDT = pBaseEDT;
                 string outputPath = pOutputPath;
 
-                // Tags im Dokument updaten
-                XmlNodeList nodes = newDoc.GetElementsByTagName("Name");
+                XmlNodeList nodes = newDoc.GetElementsByTagName("Name"); // Tag Name im Dokument updaten
                 foreach (XmlNode node in nodes)
                 {
                     node.InnerText = name;
                     Debug.WriteLine("CrerateMenuItem: Ersetzt den Namen");
                 }
 
-                nodes = newDoc.GetElementsByTagName("Label");
+                nodes = newDoc.GetElementsByTagName("Label");// Tag Label im Dokument updaten
                 foreach (XmlNode node in nodes)
                 {
                     node.InnerText = label;
                     Debug.WriteLine("CrerateMenuItem: Ersetzt das Label");
                 }
 
-                Debug.WriteLine("Bis hier wird es AusgeführtS");
-                Debug.WriteLine($"BaseEDT Wert: {baseEDT}");
-
                 XmlNamespaceManager nsmgr = new XmlNamespaceManager(newDoc.NameTable);
                 nsmgr.AddNamespace("i", "http://www.w3.org/2001/XMLSchema-instance");
 
-                // AxEdt-Node holen
-                XmlNode axEdtNode = newDoc.SelectSingleNode("//AxEdt", nsmgr);
+                XmlNode axEdtNode = newDoc.SelectSingleNode("//AxEdt", nsmgr);// AxEdt - Node aus dem neuen Dokument abrufen
                 if (axEdtNode != null)
                 {
                     // Attribut 'i:type' setzen oder aktualisieren
@@ -100,15 +93,9 @@ namespace RD_Table_Tool
                         typeAttr = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
                         axEdtNode.Attributes.Append(typeAttr);
                     }
-
-                    // Wert zuweisen
-                    typeAttr.Value = $"AxEdt{baseEDT}";
-                    
+                    typeAttr.Value = $"AxEdt{baseEDT}"; // Wert zuweisen
                 }
-
-                // Neue XML-Datei speichern
-                //newDoc.Save($"{outputPath}\\{name}.xml");
-                newDoc.Save($"{outputPath}{Path.DirectorySeparatorChar}{name}.xml");
+                newDoc.Save($"{outputPath}{Path.DirectorySeparatorChar}{name}.xml");// Neue XML-Datei speichern
                 Debug.WriteLine("CrerateMenuItem: XML-Datei aktualisiert");
                
             }
@@ -121,14 +108,10 @@ namespace RD_Table_Tool
         }
         public static void CreateTable(string pName, string pLabel, string pOutputPath, List<Dictionary<string, string>> fieldList)
         {
-
-
-            System.Diagnostics.Debug.WriteLine($"Größe der Liste: {fieldList.Count}");
+            Debug.WriteLine($"Größe der Liste: {fieldList.Count}");
 
             try
             {
-
-                
                 XmlDocument newDoc = XMLHelper.LoadTemplate($"{scriptDir}{Path.DirectorySeparatorChar}Templates{Path.DirectorySeparatorChar}TableTemplate.xml");
                
                 string name = pName;
@@ -143,7 +126,7 @@ namespace RD_Table_Tool
                     if (node.Name == "Name")
                     {
                         firstNameNode = node;
-                        break;
+                        break; //beendet die Schleife wenn das erste Tag <Name> geändert wurde 
                     }
                 }
 
@@ -163,7 +146,7 @@ namespace RD_Table_Tool
                 }
 
                 XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");  //sucht den XML Knoten Fiels 
-                bool hasAlternateKey = fieldList.Any(f => f.ContainsKey("AlternateKey") && f["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase));
+                bool hasAlternateKey = fieldList.Any(f => f.ContainsKey("AlternateKey") && f["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase));//Prüft ob mindestens ein AlternateKey angegeben ist
                 XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null;// Wenn mindestens ein Element enthalten ist wird das letzte Berücksichtigt sonst auf Null gesetzt 
 
                 if (fieldNode != null) // Wenn Felder angegeben wurden 
@@ -181,13 +164,13 @@ namespace RD_Table_Tool
                             string fieldCreatEDT = fieldDict["CreateEDT"];
                             string fiedlAlternateKey = fieldDict["AlternateKey"];
 
-                            if (fieldCreatEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                            if (fieldCreatEDT.Equals("Yes", StringComparison.OrdinalIgnoreCase))// prüft ob ein EDT angelegt werden soll 
                             {
                                 XmlElement axTableField = newDoc.CreateElement("AxTableField");
                                 axTableField.SetAttribute("xmlns", "");
 
                                 XmlAttribute typeAttr = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
-                                typeAttr.Value = $"AxTableField{fieldBaseEDT}";
+                                typeAttr.Value = $"AxTableField{fieldBaseEDT}"; //fügt das BaseEDT in der XML-Datei ein 
                                 axTableField.Attributes.Append(typeAttr);
 
                                 XmlElement fieldNameElement = newDoc.CreateElement("Name");
@@ -202,7 +185,7 @@ namespace RD_Table_Tool
                                 ignore.InnerText = "Yes";
                                 axTableField.AppendChild(ignore);
 
-                                //Wichtig: Füge in das <Fields>-Tag ein, nicht an ein neues Root-Element
+                                //Wichtig: Füge in das <Fields>-Tag ein
                                 fieldNode.AppendChild(axTableField);
                             }
                             else
@@ -302,10 +285,7 @@ namespace RD_Table_Tool
                 string fullPath = Path.Combine(paths); 
                 Debug.WriteLine($"Ausgabe fullpath: {fullPath}");
 
-                //newDoc.Save($"{outputPath}\\{name}.xml");
-                // newDoc.Save(Path.Combine($"{outputPath}", $"{Path.DirectorySeparatorChar}", $"{name}.xml"));
                 newDoc.Save($"{outputPath}{Path.DirectorySeparatorChar}{name}.xml");
-
                 Debug.WriteLine("CreateTable: XML-Datei aktualisiert");
             }
             catch (Exception ex)
@@ -577,7 +557,7 @@ namespace RD_Table_Tool
                 if (fieldNodes.Count >= 6)
                 {
                     // Auf das sechste <Fields>-Tag zugreifen
-                    XmlNode sixthFieldNode = fieldNodes[5];
+                    XmlNode sixthFieldNode = fieldNodes[5]; //Änderungen an dem sechsten Element der 
 
                     foreach (Dictionary<string,string> fieldDict in fieldList)
                     {
@@ -612,7 +592,7 @@ namespace RD_Table_Tool
                     }
 
                     //hinzufügen der Felder unter dem Pfad Keys/AxDataEntityViewKey/AxDataEntityViewKeyField
-                    XmlNode sevenFieldNode = fieldNodes[6];
+                    XmlNode sevenFieldNode = fieldNodes[6]; // Änderungen an dem siebten Knoten des Templates 
                     foreach (Dictionary<string, string> fieldDict in fieldList)
                     {
                         if (fieldDict != null)
