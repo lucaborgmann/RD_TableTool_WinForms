@@ -104,11 +104,6 @@ namespace RD_TableTool_WinForms
         }
 
 
-        private void menuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
@@ -252,11 +247,7 @@ namespace RD_TableTool_WinForms
         {
             isChecked_Entity = true;
         }
-        // Ereignishandler für den "File"-Menüpunkt
-        private void FileMenu_Click(object sender, EventArgs e)
-        {
-            Debug.WriteLine("File Menu Clicked");
-        }
+   
         private void SaveAsFileMenuItem_Click(object sender, EventArgs e)
         {
             Debug.WriteLine($"Der Ordner der .exe ist {scriptDirForm}");
@@ -271,6 +262,11 @@ namespace RD_TableTool_WinForms
             {
                 SaveFileAs(saveFileDialog.FileName);
             }
+        }
+        // Ereignishandler für den "File"-Menüpunkt
+        private void FileMenu_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("File Menu Clicked");
         }
 
         private void OpenFileMenuItem_Click(object sender, EventArgs e)
