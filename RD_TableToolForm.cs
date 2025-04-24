@@ -257,13 +257,6 @@ namespace RD_TableTool_WinForms
         {
             Debug.WriteLine("File Menu Clicked");
         }
-
-        private void NewFileMenuItem_Click(object sender, EventArgs e)
-        {
-            Debug.WriteLine("New File Clicked");
-        }
-
-
         private void SaveAsFileMenuItem_Click(object sender, EventArgs e)
         {
             Debug.WriteLine($"Der Ordner der .exe ist {scriptDirForm}");

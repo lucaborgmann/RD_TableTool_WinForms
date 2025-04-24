@@ -80,9 +80,7 @@ namespace RD_Table_Tool
             {
                 Debug.WriteLine("Kein Element name gefunden");
             }
-
             newDoc.Save(pOutputPath);
-
         }
     }
 }
