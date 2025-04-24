@@ -232,7 +232,6 @@ namespace RD_TableTool_WinForms
 
         }
 
-
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -439,9 +438,7 @@ namespace RD_TableTool_WinForms
             {
                 MessageBox.Show($"Ein unerwarteter Fehler ist aufgetreten: {ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
-
         //Methode zum ersetzen eines Inhalts eines Tags 
         private static void ReplaceTagContent(XmlDocument doc, string xpath, string newValue)
         {
@@ -454,7 +451,6 @@ namespace RD_TableTool_WinForms
                 }
             }
         }
-
         static void UpdateDataGridContent(XmlDocument doc, List<Dictionary<string, string>> pDictionaryList)
         {
             XmlNode datagridNode = doc.SelectSingleNode("//datagrid"); // Wählt das XML Element datagrird aus 
@@ -492,21 +488,13 @@ namespace RD_TableTool_WinForms
                 }
             }
         }
-
         private void LabelTextBox_TextChanged(object sender, EventArgs e)
         {
 
         }
-
-        
         private void NameTextBox_TextChanged(object sender, EventArgs e)
         {
 
-        }
-        
+        }   
     }
-
-
-
-
 }
