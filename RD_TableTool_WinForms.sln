@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RD_TableTool_WinForms", "RD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{D12B24ED-D77F-41C1-AC6D-BA778FE2D2AA}"
 	ProjectSection(SolutionItems) = preProject
+		FileHelper.cs = FileHelper.cs
 		FormHelper.cs = FormHelper.cs
 	EndProjectSection
 EndProject

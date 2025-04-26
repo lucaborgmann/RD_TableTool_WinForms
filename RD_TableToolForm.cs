@@ -259,7 +259,8 @@ namespace RD_TableTool_WinForms
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                SaveFileAs(saveFileDialog.FileName);
+                //SaveFileAs(saveFileDialog.FileName);
+                FileHelper.SaveFileAs(saveFileDialog.FileName, this.NameTextBox, this.LabelTextBox, this.PropertyTextBox, this.FormPatternCombobox, dataGridView);
             }
         }
         // Ereignishandler für den "File"-Menüpunkt
@@ -281,7 +282,8 @@ namespace RD_TableTool_WinForms
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 // Hier kannst du den Code hinzufügen, um die Datei zu laden und zu verarbeiten
-                LoadFile(ofd.FileName);
+                //LoadFile(ofd.FileName);
+                FileHelper.LoadFile(ofd.FileName, this.NameTextBox, this.LabelTextBox, this.PropertyTextBox, this.FormPatternCombobox,dataGridView);
                 Debug.WriteLine($"Nach dem Laden: {Settings.Default.CurrentPath}");
             }
             else
@@ -293,9 +295,10 @@ namespace RD_TableTool_WinForms
         private void SaveFileMenuItem_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("das ist nur Save");
-            SaveFile();
+            FileHelper.SaveFile(Settings.Default.CurrentPath, this.NameTextBox.Text, this.LabelTextBox.Text, this.PropertyTextBox.Text, this.FormPatternCombobox.Text, dataGridView);
         }
 
+        /*
         private void SaveFile()
         {
             if (!string.IsNullOrEmpty(Settings.Default.CurrentPath))
@@ -350,7 +353,9 @@ namespace RD_TableTool_WinForms
                 }
             }
         }
+        */
 
+        /*
         private void LoadFile(string pFilePath)
         {
             Settings.Default.CurrentPath = pFilePath; // Sorgt dafür das der Save Funktion weiß welche Datei geöffnet ist 
@@ -389,7 +394,8 @@ namespace RD_TableTool_WinForms
                 dataGridView.Rows.Add(fieldName, fieldLabel, baseEDT, createEDT, alternateKey);
             }
         }
-
+        */
+        /*
         private void SaveFileAs(string pFilePath)
         {
 
@@ -440,6 +446,7 @@ namespace RD_TableTool_WinForms
                 MessageBox.Show($"Ein unerwarteter Fehler ist aufgetreten: {ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        */
         private void LabelTextBox_TextChanged(object sender, EventArgs e)
         {
 
