@@ -66,17 +66,17 @@ namespace RD_Table_Tool
                 string baseEDT = pBaseEDT;
                 string outputPath = pOutputPath;
 
-                XmlNodeList nodes = newDoc.GetElementsByTagName("Name"); // Tag Name im Dokument updaten
+                XmlNodeList nodes = newDoc.GetElementsByTagName("Name"); // nach dem Tag Name suchen 
                 foreach (XmlNode node in nodes)
                 {
-                    node.InnerText = name;
+                    node.InnerText = name; //Inhalt des Tags überarbeiten
                     Debug.WriteLine("CrerateMenuItem: Ersetzt den Namen");
                 }
 
-                nodes = newDoc.GetElementsByTagName("Label");// Tag Label im Dokument updaten
+                nodes = newDoc.GetElementsByTagName("Label");// nach dem Tag Label suchen 
                 foreach (XmlNode node in nodes)
                 {
-                    node.InnerText = label;
+                    node.InnerText = label; //Inhalt des Tags überarbeiten
                     Debug.WriteLine("CrerateMenuItem: Ersetzt das Label");
                 }
 
@@ -93,7 +93,7 @@ namespace RD_Table_Tool
                         typeAttr = newDoc.CreateAttribute("i", "type", "http://www.w3.org/2001/XMLSchema-instance");
                         axEdtNode.Attributes.Append(typeAttr);
                     }
-                    typeAttr.Value = $"AxEdt{baseEDT}"; // Wert zuweisen
+                    typeAttr.Value = $"AxEdt{baseEDT}"; //DatenTyp anpassen 
                 }
                 newDoc.Save($"{outputPath}{Path.DirectorySeparatorChar}{name}.xml");// Neue XML-Datei speichern
                 Debug.WriteLine("CrerateMenuItem: XML-Datei aktualisiert");
