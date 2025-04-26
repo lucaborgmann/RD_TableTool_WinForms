@@ -375,6 +375,8 @@ namespace RD_TableTool_WinForms
             }
 
             XmlNodeList nodes = doc.SelectNodes("//datagrid/field");
+
+            dataGridView.Rows.Clear(); //verhindert das Tabellen anderer Tabellen noch im DataGrid enthalten sind 
             // Zeile für Zeile hinzufügen
             foreach (XmlNode node in nodes)
             {
