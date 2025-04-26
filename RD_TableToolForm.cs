@@ -300,17 +300,17 @@ namespace RD_TableTool_WinForms
         {
             if (!string.IsNullOrEmpty(Settings.Default.CurrentPath))
             {
-                MessageBox.Show($"Die aktuelle Datei ist: {Settings.Default.CurrentPath}", "Es gibt eine aktuelle Datei");
+               // MessageBox.Show($"Die aktuelle Datei ist: {Settings.Default.CurrentPath}", "Es gibt eine aktuelle Datei");
                 dataGridView.EndEdit(); //Alle Daten aus dem 
 
                 XmlDocument doc = new XmlDocument();
                 doc.Load(Settings.Default.CurrentPath);
 
                 //Ruft die Methode zum Ersetzen der Tag inhalte auf 
-                ReplaceTagContent(doc, "//name", this.NameTextBox.Text);
-                ReplaceTagContent(doc, "//label", this.LabelTextBox.Text);
-                ReplaceTagContent(doc, "//property", this.PropertyTextBox.Text);
-                ReplaceTagContent(doc, "//formpattern", this.FormPatternCombobox.Text);
+                FormHelper.ReplaceTagContent(doc, "//name", this.NameTextBox.Text);
+                FormHelper.ReplaceTagContent(doc, "//label", this.LabelTextBox.Text);
+                FormHelper.ReplaceTagContent(doc, "//property", this.PropertyTextBox.Text);
+                FormHelper.ReplaceTagContent(doc, "//formpattern", this.FormPatternCombobox.Text);
 
 
                 //DataGrid in ein Dictonary auslesen und als Parameter an UpdateDataGridContent übergeben 
@@ -344,7 +344,7 @@ namespace RD_TableTool_WinForms
                         }
                     }
 
-                    UpdateDataGridContent(doc, dataListValues); //Methode zum Überarbeiten des DataGrids in der XML-Datei aufrufen
+                    FormHelper.UpdateDataGridContent(doc, dataListValues); //Methode zum Überarbeiten des DataGrids in der XML-Datei aufrufen
 
                     doc.Save(Settings.Default.CurrentPath); //Dokument speichern
                 }
@@ -395,8 +395,7 @@ namespace RD_TableTool_WinForms
 
             try
             {
-                string filePath = pFilePath;
-
+                string filePath = pFilePath; 
                 var data = new XElement("root",
                     new XElement("name", this.NameTextBox.Text),
                     new XElement("label", this.LabelTextBox.Text),
@@ -431,7 +430,7 @@ namespace RD_TableTool_WinForms
                 // XML-Dokument erstellen und speichern
                 var xmlDocument = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), data);
                 xmlDocument.Save(filePath);
-
+                Settings.Default.CurrentPath = pFilePath; // ermöglicht das fehlerfreie Verwenden der Save Methode da der aktuelle Pfad belegt wird
                 MessageBox.Show("XML-Datei erfolgreich gespeichert!", "Erfolg", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -439,7 +438,9 @@ namespace RD_TableTool_WinForms
                 MessageBox.Show($"Ein unerwarteter Fehler ist aufgetreten: {ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        
         //Methode zum ersetzen eines Inhalts eines Tags 
+        /*
         private static void ReplaceTagContent(XmlDocument doc, string xpath, string newValue)
         {
             XmlNodeList nodes = doc.SelectNodes(xpath);
@@ -451,6 +452,10 @@ namespace RD_TableTool_WinForms
                 }
             }
         }
+        */
+        
+
+        /*
         static void UpdateDataGridContent(XmlDocument doc, List<Dictionary<string, string>> pDictionaryList)
         {
             XmlNode datagridNode = doc.SelectSingleNode("//datagrid"); // Wählt das XML Element datagrird aus 
@@ -488,6 +493,7 @@ namespace RD_TableTool_WinForms
                 }
             }
         }
+        */
         private void LabelTextBox_TextChanged(object sender, EventArgs e)
         {
 
