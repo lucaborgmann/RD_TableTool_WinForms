@@ -1,5 +1,6 @@
 ﻿using RD_TableTool_WinForms.Properties;
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -44,75 +45,80 @@ namespace RD_TableTool_WinForms
 
         private static List<Dictionary<string, string>> ExtractDataGridValues(DataGridView dataGridView)
         {
-            var dataListValues = new List<Dictionary<string, string>>();
+            var dataListValues = new List<Dictionary<string, string>>(); //Liste von Dictonarys
 
-            if (dataGridView != null)
+            if (dataGridView != null) // wenn nicht NUllS
             {
-                foreach (DataGridViewRow row in dataGridView.Rows)
+                foreach (DataGridViewRow row in dataGridView.Rows) // iteriert durch die dataGridView
                 {
-                    if (!row.IsNewRow)
+                    if (!row.IsNewRow) // Überprüft, ob die Zeile keine neue Zeile ist 
                     {
-                        var rowData = new Dictionary<string, string>
-                    {
-                            { "Name", row.Cells["Column1"].Value?.ToString() },
+                        //Erstellt ein Dictionary für die aktuelle Zeile und extrahiert die Werte der Zellen
+                        var rowData = new Dictionary<string, string> 
+                        {
+                            { "Name", row.Cells["Column1"].Value?.ToString() },// Extrahiert den Wert der Zelle "Column1"
                             { "Label", row.Cells["Column2"].Value?.ToString() },
                             { "BaseEDT", row.Cells["Column3"].Value?.ToString() },
                             { "CreateEDT", row.Cells["Column4"].Value?.ToString() },
                             { "AlternateKey", row.Cells["Column5"].Value?.ToString() }
-                    };
+                        };
 
-                        dataListValues.Add(rowData);
+                        dataListValues.Add(rowData); // Fügt das Dictionary zur Liste hinzu
+
                     }
                 }
             }
 
-            return dataListValues;
+            return dataListValues; // Gibt die Liste von Dictionaries zurück
         }
 
         public static void LoadFile(
             string filePath,
-            TextBox nameTextBox, // Muss Textbox sein wegen unten
+            TextBox nameTextBox, 
             TextBox labelTextBox,
             TextBox propertyTextBox,
             ComboBox formPatternComboBox,
             DataGridView dataGridView)
         {
-            if (string.IsNullOrEmpty(filePath)) return;
+            if (string.IsNullOrEmpty(filePath)) //prüft ob der Pfad NULL oder leer ist 
+            {
+                return; // beendet die Methode
+            }
 
             Settings.Default.CurrentPath = filePath; // Aktuellen Pfad merken
 
             XmlDocument doc = new XmlDocument();
             doc.Load(filePath);
 
-            Dictionary<string, Action<string>> tagHandlers = new Dictionary<string, Action<string>>
+            Dictionary<string, Action<string>> tagHandlers = new Dictionary<string, Action<string>> // Dictonary mit Lamda Funktionen
             {
-                { "name", value => nameTextBox.Text = value },
+                { "name", value => nameTextBox.Text = value },  // wenn der Key "Name" ist wird der Wert in der Textbox übernommen
                 { "label", value => labelTextBox.Text = value },
                 { "property", value => propertyTextBox.Text = value },
                 { "formpattern", value => formPatternComboBox.Text = value }
             };
 
-            foreach (XmlNode node in doc.DocumentElement.ChildNodes)
+            foreach (XmlNode node in doc.DocumentElement.ChildNodes) //Durchläuft alle Kindknoten in dem XML Dokument
             {
-                if (tagHandlers.TryGetValue(node.Name, out var handler))
+                if (tagHandlers.TryGetValue(node.Name, out var handler)) //Prüft ob der Name des Knotens im Dictonary vorhanden ist
                 {
-                    handler(node.InnerText);
+                    handler(node.InnerText); //ausführen der entsprechenden Aktion
                 }
             }
 
             XmlNodeList nodes = doc.SelectNodes("//datagrid/field");
 
-            dataGridView.Rows.Clear();
+            dataGridView.Rows.Clear(); // entfernt bestehende Einträge 
 
-            foreach (XmlNode node in nodes)
+            foreach (XmlNode node in nodes) //Iterriert durch die NodeList
             {
-                string fieldName = node.SelectSingleNode("fieldname")?.InnerText ?? "Kein Wert";
+                string fieldName = node.SelectSingleNode("fieldname")?.InnerText ?? "Kein Wert"; //Extrahiert den Wert 'fieldname'-Knotens sonst "Kein Wert"
                 string fieldLabel = node.SelectSingleNode("fieldlabel")?.InnerText ?? "Kein Wert";
                 string baseEDT = node.SelectSingleNode("baseEDT")?.InnerText ?? "Kein Wert";
                 string createEDT = node.SelectSingleNode("createEDT")?.InnerText ?? "Kein Wert";
                 string alternateKey = node.SelectSingleNode("alternateKey")?.InnerText ?? "Kein Wert";
 
-                dataGridView.Rows.Add(fieldName, fieldLabel, baseEDT, createEDT, alternateKey);
+                dataGridView.Rows.Add(fieldName, fieldLabel, baseEDT, createEDT, alternateKey); // fügt den Wert im DataGrid hinzu
             }
         }
 
@@ -124,7 +130,10 @@ namespace RD_TableTool_WinForms
             ComboBox formPatternComboBox,
             DataGridView dataGridView)
         {
-            if (string.IsNullOrEmpty(filePath)) return;
+            if (string.IsNullOrEmpty(filePath)) // wenn der Pfad leer oder NULL ist wird die Methode beendet
+            {
+                return;
+            }
 
             dataGridView.EndEdit(); // sorgt dafür, dass alle Daten aus dem DataGrid übernommen werden 
 
@@ -140,14 +149,11 @@ namespace RD_TableTool_WinForms
                             .Where(row => !row.IsNewRow) // filtert die Zeilen heraus, die neue Zeilen sind 
                             .Select(row =>
                             { // wendet die Lambda-Funktion auf alle Zeilen an
-                                var fieldname = row.Cells["Column1"].Value?.ToString() ?? string.Empty; // extrahiert den Wert in der Zelle Column1 und konvertiert ihn in einen String; ist der Wert null, wird ein leerer String verwendet
+                                var fieldname = row.Cells["Column1"].Value?.ToString() ?? string.Empty; // extrahiert und konvertiertden Wert in der Zelle Column1 
                                 var fieldlabel = row.Cells["Column2"].Value?.ToString() ?? string.Empty;
                                 var baseEDT = row.Cells["Column3"].Value?.ToString() ?? string.Empty;
                                 var createEDT = row.Cells["Column4"].Value?.ToString() ?? string.Empty;
                                 var alternateKey = row.Cells["Column5"].Value?.ToString() ?? string.Empty;
-
-                                // Debugging-Ausgabe
-                                Console.WriteLine($"fieldname: {fieldname}, fieldlabel: {fieldlabel}, baseEDT: {baseEDT}, createEDT: {createEDT}, alternateKey: {alternateKey}");
 
                                 // erstellt ein neues XML-Element "field" mit den extrahierten Werten als Kind-Elemente
                                 return new XElement("field",
