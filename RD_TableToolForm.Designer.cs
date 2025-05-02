@@ -74,7 +74,7 @@
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "TableSetup";
-            groupBox1.Enter += groupBox1_Enter;
+            //groupBox1.Enter += groupBox1_Enter;
             // 
             // CreateMenuItemsCheckBox
             // 

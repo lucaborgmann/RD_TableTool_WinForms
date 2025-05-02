@@ -103,11 +103,12 @@ namespace RD_TableTool_WinForms
             this.Controls.Add(dataGridView);
         }
 
-
+        /*
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }
+        */
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -281,10 +282,10 @@ namespace RD_TableTool_WinForms
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                // Hier kannst du den Code hinzufügen, um die Datei zu laden und zu verarbeiten
-                //LoadFile(ofd.FileName);
-                FileHelper.LoadFile(ofd.FileName, this.NameTextBox, this.LabelTextBox, this.PropertyTextBox, this.FormPatternCombobox,dataGridView);
-                Debug.WriteLine($"Nach dem Laden: {Settings.Default.CurrentPath}");
+                FileHelper.LoadFile(ofd.FileName, 
+                    this.NameTextBox,
+                    this.LabelTextBox, this.PropertyTextBox, 
+                    this.FormPatternCombobox,dataGridView);
             }
             else
             {
@@ -295,7 +296,12 @@ namespace RD_TableTool_WinForms
         private void SaveFileMenuItem_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("das ist nur Save");
-            FileHelper.SaveFile(Settings.Default.CurrentPath, this.NameTextBox.Text, this.LabelTextBox.Text, this.PropertyTextBox.Text, this.FormPatternCombobox.Text, dataGridView);
+            FileHelper.SaveFile(Settings.Default.CurrentPath, 
+                this.NameTextBox.Text, 
+                this.LabelTextBox.Text, 
+                this.PropertyTextBox.Text,
+                this.FormPatternCombobox.Text,
+                dataGridView);
         }
         private void LabelTextBox_TextChanged(object sender, EventArgs e)
         {

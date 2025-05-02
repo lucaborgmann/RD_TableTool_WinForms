@@ -146,7 +146,6 @@ namespace RD_Table_Tool
                 }
 
                 XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");  //sucht den XML Knoten Fiels 
-                bool hasAlternateKey = fieldList.Any(f => f.ContainsKey("AlternateKey") && f["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase));//Prüft ob mindestens ein AlternateKey angegeben ist
                 XmlNode fieldNode = fieldNodes?.Count > 0 ? fieldNodes[fieldNodes.Count - 1] : null;// Wenn mindestens ein Element enthalten ist wird das letzte Berücksichtigt sonst auf Null gesetzt 
 
                 if (fieldNode != null) // Wenn Felder angegeben wurden 
@@ -185,7 +184,7 @@ namespace RD_Table_Tool
                                 ignore.InnerText = "Yes";
                                 axTableField.AppendChild(ignore);
 
-                                //Wichtig: Füge in das <Fields>-Tag ein
+                                //fügt den neuen Knoten unter <Fields>-Tag ein
                                 fieldNode.AppendChild(axTableField);
                             }
                             else
@@ -210,7 +209,7 @@ namespace RD_Table_Tool
                             }
                         }
                     }
-
+                    bool hasAlternateKey = fieldList.Any(f => f.ContainsKey("AlternateKey") && f["AlternateKey"].Equals("Yes", StringComparison.OrdinalIgnoreCase));//Prüft ob mindestens ein AlternateKey angegeben ist
                     // Wenn ein Alternate Key angegeben ist wird ein Index angelegt 
                     if (hasAlternateKey)
                     {
@@ -279,11 +278,6 @@ namespace RD_Table_Tool
                 {
                    Debug.WriteLine("Das Field-Tag konnte nicht gefunden werden");
                 }
-
-                //nur zum Debuggen ? 
-                string[] paths = { @$"{outputPath}", $"{name}", ".xml" };
-                string fullPath = Path.Combine(paths); 
-                Debug.WriteLine($"Ausgabe fullpath: {fullPath}");
 
                 newDoc.Save($"{outputPath}{Path.DirectorySeparatorChar}{name}.xml");
                 Debug.WriteLine("CreateTable: XML-Datei aktualisiert");
@@ -379,11 +373,10 @@ namespace RD_Table_Tool
                     foreach (XmlNode controlsNode in controlsNodes)
                     {
                         counter++;
-
-                        if (counter == 4) // Beim 4. <Controls>-Element einfügen //ToDo: Prüfen ob es mit einem namen geht, wenn nicht genauer kommentieren 
+                        if (counter == 4) //Einfügen nur beim vierten Countrolls Knoten nötig
                         {
-                            string tmpFieldName = ""; //ToDo: Prüfen ob notwendig
-                            string tmpBaseEDT = "";
+                            string tmpFieldName; 
+                            string tmpBaseEDT;
 
                             string xsiNameSpace = "http://www.w3.org/2001/XMLSchema-instance";
 
@@ -553,7 +546,6 @@ namespace RD_Table_Tool
                 
                 //hinzufügen der Felder
                 XmlNodeList fieldNodes = newDoc.SelectNodes("//Fields");
-
                 if (fieldNodes.Count >= 6)
                 {
                     // Auf das sechste <Fields>-Tag zugreifen
@@ -592,7 +584,7 @@ namespace RD_Table_Tool
                     }
 
                     //hinzufügen der Felder unter dem Pfad Keys/AxDataEntityViewKey/AxDataEntityViewKeyField
-                    XmlNode sevenFieldNode = fieldNodes[6]; // Änderungen an dem siebten Knoten des Templates 
+                    XmlNode sevenFieldNode = fieldNodes[6]; // Änderungen nur am siebten Knoten des Templates nötig
                     foreach (Dictionary<string, string> fieldDict in fieldList)
                     {
                         if (fieldDict != null)

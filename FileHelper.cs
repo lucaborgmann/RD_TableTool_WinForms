@@ -80,17 +80,19 @@ namespace RD_TableTool_WinForms
             ComboBox formPatternComboBox,
             DataGridView dataGridView)
         {
-            if (string.IsNullOrEmpty(filePath)) //prüft ob der Pfad NULL oder leer ist 
+            try
             {
-                return; // beendet die Methode
-            }
+                if (string.IsNullOrEmpty(filePath)) //prüft ob der Pfad NULL oder leer ist 
+                {
+                    return; // beendet die Methode
+                }
 
-            Settings.Default.CurrentPath = filePath; // Aktuellen Pfad merken
+                Settings.Default.CurrentPath = filePath; // Aktuellen Pfad merken
 
-            XmlDocument doc = new XmlDocument();
-            doc.Load(filePath);
+                XmlDocument doc = new XmlDocument();
+                doc.Load(filePath);
 
-            Dictionary<string, Action<string>> tagHandlers = new Dictionary<string, Action<string>> // Dictonary mit Lamda Funktionen
+                Dictionary<string, Action<string>> tagHandlers = new Dictionary<string, Action<string>> // Dictonary mit Lamda Funktionen
             {
                 { "name", value => nameTextBox.Text = value },  // wenn der Key "Name" ist wird der Wert in der Textbox übernommen
                 { "label", value => labelTextBox.Text = value },
@@ -98,27 +100,32 @@ namespace RD_TableTool_WinForms
                 { "formpattern", value => formPatternComboBox.Text = value }
             };
 
-            foreach (XmlNode node in doc.DocumentElement.ChildNodes) //Durchläuft alle Kindknoten in dem XML Dokument
-            {
-                if (tagHandlers.TryGetValue(node.Name, out var handler)) //Prüft ob der Name des Knotens im Dictonary vorhanden ist
+                foreach (XmlNode node in doc.DocumentElement.ChildNodes) //Durchläuft alle Kindknoten in dem XML Dokument
                 {
-                    handler(node.InnerText); //ausführen der entsprechenden Aktion
+                    if (tagHandlers.TryGetValue(node.Name, out var handler)) //Prüft ob der Name des Knotens im Dictonary vorhanden ist
+                    {
+                        handler(node.InnerText); //ausführen der entsprechenden Aktion
+                    }
+                }
+
+                XmlNodeList nodes = doc.SelectNodes("//datagrid/field");
+
+                dataGridView.Rows.Clear(); // entfernt bestehende Einträge 
+
+                foreach (XmlNode node in nodes) //Iterriert durch die NodeList
+                {
+                    string fieldName = node.SelectSingleNode("fieldname")?.InnerText ?? "Kein Wert"; //Extrahiert den Wert 'fieldname'-Knotens sonst "Kein Wert"
+                    string fieldLabel = node.SelectSingleNode("fieldlabel")?.InnerText ?? "Kein Wert";
+                    string baseEDT = node.SelectSingleNode("baseEDT")?.InnerText ?? "Kein Wert";
+                    string createEDT = node.SelectSingleNode("createEDT")?.InnerText ?? "Kein Wert";
+                    string alternateKey = node.SelectSingleNode("alternateKey")?.InnerText ?? "Kein Wert";
+
+                    dataGridView.Rows.Add(fieldName, fieldLabel, baseEDT, createEDT, alternateKey); // fügt den Wert im DataGrid hinzu
                 }
             }
-
-            XmlNodeList nodes = doc.SelectNodes("//datagrid/field");
-
-            dataGridView.Rows.Clear(); // entfernt bestehende Einträge 
-
-            foreach (XmlNode node in nodes) //Iterriert durch die NodeList
+            catch(Exception ex) 
             {
-                string fieldName = node.SelectSingleNode("fieldname")?.InnerText ?? "Kein Wert"; //Extrahiert den Wert 'fieldname'-Knotens sonst "Kein Wert"
-                string fieldLabel = node.SelectSingleNode("fieldlabel")?.InnerText ?? "Kein Wert";
-                string baseEDT = node.SelectSingleNode("baseEDT")?.InnerText ?? "Kein Wert";
-                string createEDT = node.SelectSingleNode("createEDT")?.InnerText ?? "Kein Wert";
-                string alternateKey = node.SelectSingleNode("alternateKey")?.InnerText ?? "Kein Wert";
-
-                dataGridView.Rows.Add(fieldName, fieldLabel, baseEDT, createEDT, alternateKey); // fügt den Wert im DataGrid hinzu
+                MessageBox.Show($"Ein unerwarteter Fehler ist aufgetreten: {ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -183,4 +190,3 @@ namespace RD_TableTool_WinForms
 
     }
 }
-
