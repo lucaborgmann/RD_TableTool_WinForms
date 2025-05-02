@@ -6,9 +6,9 @@ using System.Xml.Linq;
 
 namespace RD_TableTool_WinForms
 {
-    public class FileHelper
+    public class DraftFileHandler
     {
-        public FileHelper()
+        public DraftFileHandler()
         {
         }
 
@@ -31,14 +31,14 @@ namespace RD_TableTool_WinForms
             XmlDocument doc = new XmlDocument();
             doc.Load(filePath);
 
-            FormHelper.ReplaceTagContent(doc, "//name", nameText);
-            FormHelper.ReplaceTagContent(doc, "//label", labelText);
-            FormHelper.ReplaceTagContent(doc, "//property", propertyText);
-            FormHelper.ReplaceTagContent(doc, "//formpattern", formPatternText);
+            DraftFileHelper.ReplaceTagContent(doc, "//name", nameText);
+            DraftFileHelper.ReplaceTagContent(doc, "//label", labelText);
+            DraftFileHelper.ReplaceTagContent(doc, "//property", propertyText);
+            DraftFileHelper.ReplaceTagContent(doc, "//formpattern", formPatternText);
 
             List<Dictionary<string, string>> dataListValues = ExtractDataGridValues(dataGridView);
 
-            FormHelper.UpdateDataGridContent(doc, dataListValues);
+            DraftFileHelper.UpdateDataGridContent(doc, dataListValues);
 
             doc.Save(filePath);
         }

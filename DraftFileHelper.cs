@@ -3,9 +3,9 @@ using System.Xml;
 
 namespace RD_TableTool_WinForms
 {
-    public class FormHelper
+    public class DraftFileHelper
     {
-        public FormHelper()
+        public DraftFileHelper()
         {
 
         }

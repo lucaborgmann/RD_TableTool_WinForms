@@ -261,7 +261,7 @@ namespace RD_TableTool_WinForms
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 //SaveFileAs(saveFileDialog.FileName);
-                FileHelper.SaveFileAs(saveFileDialog.FileName, this.NameTextBox, this.LabelTextBox, this.PropertyTextBox, this.FormPatternCombobox, dataGridView);
+                DraftFileHandler.SaveFileAs(saveFileDialog.FileName, this.NameTextBox, this.LabelTextBox, this.PropertyTextBox, this.FormPatternCombobox, dataGridView);
             }
         }
         // Ereignishandler für den "File"-Menüpunkt
@@ -282,7 +282,7 @@ namespace RD_TableTool_WinForms
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                FileHelper.LoadFile(ofd.FileName, 
+                DraftFileHandler.LoadFile(ofd.FileName, 
                     this.NameTextBox,
                     this.LabelTextBox, this.PropertyTextBox, 
                     this.FormPatternCombobox,dataGridView);
@@ -296,7 +296,7 @@ namespace RD_TableTool_WinForms
         private void SaveFileMenuItem_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("das ist nur Save");
-            FileHelper.SaveFile(Settings.Default.CurrentPath, 
+            DraftFileHandler.SaveFile(Settings.Default.CurrentPath, 
                 this.NameTextBox.Text, 
                 this.LabelTextBox.Text, 
                 this.PropertyTextBox.Text,
