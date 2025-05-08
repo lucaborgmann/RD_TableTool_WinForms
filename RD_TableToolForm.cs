@@ -160,7 +160,8 @@ namespace RD_TableTool_WinForms
                 if (dataGridView != null)
                 {
                     // Erstellen einer Liste mit allen Feldern des DataGrids
-                    foreach (DataGridViewRow row in dataGridView.Rows) // für jedes Element im DataGrid
+                    // für jedes Element im DataGrid
+                    foreach (DataGridViewRow row in dataGridView.Rows) 
                     {
                         if (!row.IsNewRow) // Ignoriere die neue Zeile
                         {
@@ -173,11 +174,11 @@ namespace RD_TableTool_WinForms
                             // Neues Dictionary für die Zeile erstellen
                             Dictionary<string, string> rowData = new Dictionary<string, string>
                         {
-                            { "Name", dataGridNameValue },
-                            { "Label", dataGridLabelValue },
-                            { "BaseEDT", baseEDT },
-                            { "CreateEDT", createEDT },
-                            { "AlternateKey", alternateKey }
+                                { "Name", dataGridNameValue },
+                                { "Label", dataGridLabelValue },
+                                { "BaseEDT", baseEDT },
+                                { "CreateEDT", createEDT },
+                                { "AlternateKey", alternateKey }
                         };
 
                             dataListValues.Add(rowData);
@@ -187,7 +188,10 @@ namespace RD_TableTool_WinForms
                             {
                                 Debug.WriteLine("CreateEDT: ist ja");
                                 Debug.WriteLine($"Der ist {dataGridNameValue}");
-                                XML.CreateEDT(dataGridNameValue, dataGridNameValue, baseEDT, OutputEDTPath);
+                                XML.CreateEDT(dataGridNameValue, 
+                                    dataGridNameValue, 
+                                    baseEDT,
+                                    OutputEDTPath);
                             }
                         }
                     }
@@ -261,7 +265,12 @@ namespace RD_TableTool_WinForms
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 //SaveFileAs(saveFileDialog.FileName);
-                DraftFileHandler.SaveFileAs(saveFileDialog.FileName, this.NameTextBox, this.LabelTextBox, this.PropertyTextBox, this.FormPatternCombobox, dataGridView);
+                DraftFileHandler.SaveFileAs(saveFileDialog.FileName, 
+                                            this.NameTextBox, 
+                                            this.LabelTextBox, 
+                                            this.PropertyTextBox, 
+                                            this.FormPatternCombobox,
+                                            dataGridView);
             }
         }
         // Ereignishandler für den "File"-Menüpunkt
@@ -295,7 +304,6 @@ namespace RD_TableTool_WinForms
 
         private void SaveFileMenuItem_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("das ist nur Save");
             DraftFileHandler.SaveFile(Settings.Default.CurrentPath, 
                 this.NameTextBox.Text, 
                 this.LabelTextBox.Text, 

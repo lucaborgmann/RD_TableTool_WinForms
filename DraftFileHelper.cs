@@ -58,6 +58,35 @@ namespace RD_TableTool_WinForms
                 }
             }
         }
+        public static List<Dictionary<string, string>> ExtractDataGridValues(DataGridView dataGridView)
+        {
+            var dataListValues = new List<Dictionary<string, string>>(); //Liste von Dictonarys
+
+            if (dataGridView != null) // wenn nicht NUllS
+            {
+                foreach (DataGridViewRow row in dataGridView.Rows) // iteriert durch die dataGridView
+                {
+                    if (!row.IsNewRow) // Überprüft, ob die Zeile keine neue Zeile ist 
+                    {
+                        //Erstellt ein Dictionary für die aktuelle Zeile und extrahiert die Werte der Zellen
+                        var rowData = new Dictionary<string, string>
+                        {
+                            { "Name", row.Cells["Column1"].Value?.ToString() },// Extrahiert den Wert der Zelle "Column1"
+                            { "Label", row.Cells["Column2"].Value?.ToString() },
+                            { "BaseEDT", row.Cells["Column3"].Value?.ToString() },
+                            { "CreateEDT", row.Cells["Column4"].Value?.ToString() },
+                            { "AlternateKey", row.Cells["Column5"].Value?.ToString() }
+                        };
+
+                        dataListValues.Add(rowData); // Fügt das Dictionary zur Liste hinzu
+
+                    }
+                }
+            }
+
+            return dataListValues; // Gibt die Liste von Dictionaries zurück
+        }
     }
+
 
 }
