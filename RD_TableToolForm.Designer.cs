@@ -74,7 +74,6 @@
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "TableSetup";
-            //groupBox1.Enter += groupBox1_Enter;
             // 
             // CreateMenuItemsCheckBox
             // 
@@ -133,6 +132,7 @@
             PropertyTextBox.Name = "PropertyTextBox";
             PropertyTextBox.Size = new Size(186, 27);
             PropertyTextBox.TabIndex = 5;
+            PropertyTextBox.Visible = false;
             // 
             // PropertyLabel
             // 
@@ -142,6 +142,7 @@
             PropertyLabel.Size = new Size(65, 20);
             PropertyLabel.TabIndex = 4;
             PropertyLabel.Text = "Property";
+            PropertyLabel.Visible = false;
             PropertyLabel.Click += PropertyLabel_Click;
             // 
             // LabelTextBox
