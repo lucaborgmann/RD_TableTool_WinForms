@@ -90,40 +90,6 @@ namespace RD_TableTool_WinForms
             DataGrid.Columns.Add("Column5", "Alternate Key");
         }
 
-        //Datagrid Initalisieren
-        /*
-        private void InitializeDataGridView()
-        {
-
-            int gridHeight = 250;
-            int bottomMargin = 80; // Abstand zum unteren Rand
-            int gridTop = this.ClientSize.Height - gridHeight - bottomMargin;
-
-            // Erstelle ein neues DataGridView-Steuerelement
-            dataGridView = new DataGridView
-            {
-                Location = new Point(10,  gridTop), // Positioniere das DataGridView
-                Size = new Size(this.ClientSize.Width - 20, gridHeight), // Setze die Größe des DataGridView
-                AllowUserToAddRows = true, // Erlaube das Hinzufügen von Zeilen
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill //füllt die Spaltenbreite automatisch auf 
-            };
-
-            dataGridView.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-
-            // Füge fünf Spalten hinzu
-            dataGridView.Columns.Add("Column1", "Name");
-            dataGridView.Columns.Add("Column2", "Label");
-            dataGridView.Columns.Add("Column3", "BaseEDT");
-            dataGridView.Columns.Add("Column4", "CreateEDT");
-            dataGridView.Columns.Add("Column5", "Alternate Key");
-
-            FormPatternCombobox.Items.Add("Simple List");
-
-            // Füge das DataGridView zum Formular hinzu
-            this.Controls.Add(dataGridView);
-        }
-        */
-
         /*
         private void groupBox1_Enter(object sender, EventArgs e)
         {
