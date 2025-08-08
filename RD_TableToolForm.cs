@@ -14,7 +14,7 @@ namespace RD_TableTool_WinForms
 {
     public partial class RD_TableToolForm : Form
     {
-        public DataGridView dataGridView; //um es überall in der Klasse zu verwenden
+        //public DataGridView dataGridView; //um es überall in der Klasse zu verwenden
         public static string scriptDirForm = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
         //Pfade zu den AusgabeOrdnern
@@ -34,9 +34,12 @@ namespace RD_TableTool_WinForms
         {
             InitializeComponent();
             InitializeMenu();
-            InitializeDataGridView();
+            //InitializeDataGridView();
+            InitializeDataGrid();
             this.FormBorderStyle = FormBorderStyle.FixedSingle; //Verhindert das Vergrößern des Fensters 
             this.MaximizeBox = false; // Optional: Deaktiviert die Maximieren-Schaltfläche
+
+            FormPatternCombobox.Items.Add("Simple List");
         }
 
         private void InitializeMenu()
@@ -78,17 +81,34 @@ namespace RD_TableTool_WinForms
 
         }
 
+        private void InitializeDataGrid()
+        { 
+            DataGrid.Columns.Add("Column1", "Name");
+            DataGrid.Columns.Add("Column2", "Label");
+            DataGrid.Columns.Add("Column3", "BaseEDT");
+            DataGrid.Columns.Add("Column4", "CreateEDT");
+            DataGrid.Columns.Add("Column5", "Alternate Key");
+        }
+
         //Datagrid Initalisieren
+        /*
         private void InitializeDataGridView()
         {
+
+            int gridHeight = 250;
+            int bottomMargin = 80; // Abstand zum unteren Rand
+            int gridTop = this.ClientSize.Height - gridHeight - bottomMargin;
+
             // Erstelle ein neues DataGridView-Steuerelement
             dataGridView = new DataGridView
             {
-                Location = new Point(10, 300), // Positioniere das DataGridView
-                Size = new Size(750, 250), // Setze die Größe des DataGridView
+                Location = new Point(10,  gridTop), // Positioniere das DataGridView
+                Size = new Size(this.ClientSize.Width - 20, gridHeight), // Setze die Größe des DataGridView
                 AllowUserToAddRows = true, // Erlaube das Hinzufügen von Zeilen
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill //füllt die Spaltenbreite automatisch auf 
             };
+
+            dataGridView.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 
             // Füge fünf Spalten hinzu
             dataGridView.Columns.Add("Column1", "Name");
@@ -102,6 +122,7 @@ namespace RD_TableTool_WinForms
             // Füge das DataGridView zum Formular hinzu
             this.Controls.Add(dataGridView);
         }
+        */
 
         /*
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -157,11 +178,11 @@ namespace RD_TableTool_WinForms
             try
             {
                 // Falls das DataGrid initialisiert ist
-                if (dataGridView != null)
+                if (DataGrid != null)
                 {
                     // Erstellen einer Liste mit allen Feldern des DataGrids
                     // für jedes Element im DataGrid
-                    foreach (DataGridViewRow row in dataGridView.Rows) 
+                    foreach (DataGridViewRow row in DataGrid.Rows) 
                     {
                         if (!row.IsNewRow) // Ignoriere die neue Zeile
                         {
@@ -270,7 +291,7 @@ namespace RD_TableTool_WinForms
                                             this.LabelTextBox, 
                                             this.PropertyTextBox, 
                                             this.FormPatternCombobox,
-                                            dataGridView);
+                                            DataGrid);
             }
         }
         // Ereignishandler für den "File"-Menüpunkt
@@ -294,7 +315,7 @@ namespace RD_TableTool_WinForms
                 DraftFileHandler.LoadFile(ofd.FileName, 
                     this.NameTextBox,
                     this.LabelTextBox, this.PropertyTextBox, 
-                    this.FormPatternCombobox,dataGridView);
+                    this.FormPatternCombobox, DataGrid);
             }
             else
             {
@@ -309,7 +330,7 @@ namespace RD_TableTool_WinForms
                 this.LabelTextBox.Text, 
                 this.PropertyTextBox.Text,
                 this.FormPatternCombobox.Text,
-                dataGridView);
+                DataGrid);
         }
         private void LabelTextBox_TextChanged(object sender, EventArgs e)
         {

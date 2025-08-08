@@ -43,7 +43,9 @@
             NameLabel = new Label();
             CancelButton = new Button();
             OkButton = new Button();
+            DataGrid = new DataGridView();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DataGrid).BeginInit();
             SuspendLayout();
             // 
             // menuStrip3
@@ -201,11 +203,22 @@
             OkButton.UseVisualStyleBackColor = true;
             OkButton.Click += OkButton_Click;
             // 
+            // DataGrid
+            // 
+            DataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            DataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DataGrid.Location = new Point(12, 292);
+            DataGrid.Name = "DataGrid";
+            DataGrid.RowHeadersWidth = 51;
+            DataGrid.Size = new Size(758, 238);
+            DataGrid.TabIndex = 6;
+            // 
             // RD_TableToolForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(782, 615);
+            Controls.Add(DataGrid);
             Controls.Add(OkButton);
             Controls.Add(CancelButton);
             Controls.Add(groupBox1);
@@ -214,6 +227,7 @@
             Text = "RD_TableTool";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)DataGrid).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -235,5 +249,6 @@
         private CheckBox CreateMenuItemsCheckBox;
         private Button CancelButton;
         private Button OkButton;
+        private DataGridView DataGrid;
     }
 }
