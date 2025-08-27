@@ -224,7 +224,7 @@
             Controls.Add(groupBox1);
             Controls.Add(menuStrip3);
             Name = "RD_TableToolForm";
-            Text = "RD_TableTool";
+            Text = "Visionet TableTool";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)DataGrid).EndInit();
