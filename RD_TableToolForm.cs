@@ -318,21 +318,40 @@ namespace RD_TableTool_WinForms
         //Methode für den Eventhandler des Optionstab
         private void OptionsFileMenuItem_Click(object sender, EventArgs e)
         {
+            /*
             using (ModelSelectionForm modelForm = new ModelSelectionForm())
             {
 
                 modelForm.StartPosition = FormStartPosition.CenterParent; // Wichtig!
                 var result = modelForm.ShowDialog(this); // "this" gibt das Hauptfenster als Paren
 
-                /*
+                
                 if (modelForm.ShowDialog() == DialogResult.OK)
                 {
                     //string selectedModel = modelForm.SelectedModel;
                     //MessageBox.Show($"Selected model: {selectedModel}", "Model Selection");
                     // Hier kannst du mit dem ausgewählten Modell weiterarbeiten
                 }
-                */
+               
             }
+            */
+
+
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                folderDialog.Description = "Please select a model.";
+                folderDialog.ShowNewFolderButton = true;
+
+                DialogResult result = folderDialog.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
+                {
+                    string selectedPath = folderDialog.SelectedPath;
+                    MessageBox.Show($"Ausgewählter Ordner: {selectedPath}", "Ordnerauswahl");
+                }
+            }
+
+
         }
 
     }
