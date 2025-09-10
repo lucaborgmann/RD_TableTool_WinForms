@@ -84,6 +84,9 @@ namespace RD_TableTool_WinForms
             saveFileMenuItem.Click += new EventHandler(SaveFileMenuItem_Click);
             SaveAsFileMenuItem.Click += new EventHandler(SaveAsFileMenuItem_Click);
 
+            //Hinzufügen eines Ereignishandlers für den Options Tab
+            optionsFileMenuItem.Click += new EventHandler(OptionsFileMenuItem_Click);
+
         }
 
         private void InitializeDataGrid()
@@ -310,6 +313,27 @@ namespace RD_TableTool_WinForms
         private void NameTextBox_TextChanged(object sender, EventArgs e)
         {
 
-        }   
+        }
+
+        //Methode für den Eventhandler des Optionstab
+        private void OptionsFileMenuItem_Click(object sender, EventArgs e)
+        {
+            using (ModelSelectionForm modelForm = new ModelSelectionForm())
+            {
+
+                modelForm.StartPosition = FormStartPosition.CenterParent; // Wichtig!
+                var result = modelForm.ShowDialog(this); // "this" gibt das Hauptfenster als Paren
+
+                /*
+                if (modelForm.ShowDialog() == DialogResult.OK)
+                {
+                    //string selectedModel = modelForm.SelectedModel;
+                    //MessageBox.Show($"Selected model: {selectedModel}", "Model Selection");
+                    // Hier kannst du mit dem ausgewählten Modell weiterarbeiten
+                }
+                */
+            }
+        }
+
     }
 }

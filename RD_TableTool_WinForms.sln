@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Pr
 	ProjectSection(SolutionItems) = preProject
 		FileHelper.cs = FileHelper.cs
 		FormHelper.cs = FormHelper.cs
+		ModelInputForm.cs = ModelInputForm.cs
 	EndProjectSection
 EndProject
 Global
