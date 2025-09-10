@@ -106,5 +106,29 @@ namespace RD_TableTool_WinForms.Properties {
                 this["OutputPathDataEntity"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SelectedModel {
+            get {
+                return ((string)(this["SelectedModel"]));
+            }
+            set {
+                this["SelectedModel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Model {
+            get {
+                return ((string)(this["Model"]));
+            }
+            set {
+                this["Model"] = value;
+            }
+        }
     }
 }

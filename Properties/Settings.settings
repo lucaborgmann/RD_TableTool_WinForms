@@ -23,5 +23,11 @@
     <Setting Name="OutputPathDataEntity" Type="System.String" Scope="User">
       <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxDataEntityView</Value>
     </Setting>
+    <Setting Name="SelectedModel" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Model" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

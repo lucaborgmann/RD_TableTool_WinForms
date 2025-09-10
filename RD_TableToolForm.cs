@@ -342,12 +342,27 @@ namespace RD_TableTool_WinForms
                 folderDialog.Description = "Please select a model.";
                 folderDialog.ShowNewFolderButton = true;
 
+
+                // Standardordner setzen
+                //folderDialog.SelectedPath = @"K:\AosService\PackagesLocalDirectory";
+
+                //nur zum testen 
+                Debug.WriteLine($"Zum testen der Settingsdatei: SelectedModel: {Settings.Default.SelectedModel}. Model: {Settings.Default.Model} ");
+
+
                 DialogResult result = folderDialog.ShowDialog();
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
                 {
                     string selectedPath = folderDialog.SelectedPath;
+                    Settings.Default.SelectedModel = selectedPath; //weißt den gewählten Pfad dem ausgewähltem Model in der Settingsdatei zu 
                     MessageBox.Show($"Ausgewählter Ordner: {selectedPath}", "Ordnerauswahl");
+                    Debug.WriteLine($"gesamter Pfad Ordner: {selectedPath}");
+
+                    string lastFolder = new DirectoryInfo(selectedPath).Name; // speichert den letzten Ordnernamen um ihn nochmal anheften zu können
+                    Debug.WriteLine($"letzter Ordner: {lastFolder}");
+                    Settings.Default.Model = lastFolder; // Weißt das Model in Model erneut zu 
+                    Settings.Default.Save();
                 }
             }
 
