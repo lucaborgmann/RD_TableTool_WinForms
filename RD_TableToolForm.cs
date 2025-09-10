@@ -56,11 +56,16 @@ namespace RD_TableTool_WinForms
             ToolStripMenuItem openFileMenuItem = new ToolStripMenuItem("Open");
             ToolStripMenuItem saveFileMenuItem = new ToolStripMenuItem("Save");
 
+            //Erstelle Untermenüpunkte für "Options"
+            ToolStripMenuItem optionsFileMenuItem = new ToolStripMenuItem("Select Model");
+
             // Füge die Untermenüpunkte dem "File"-Menü hinzu
             fileMenu.DropDownItems.Add(saveFileMenuItem);
             fileMenu.DropDownItems.Add(SaveAsFileMenuItem);
             fileMenu.DropDownItems.Add(openFileMenuItem);
 
+            //Unterpunkte dem "Options"-Menü hinzufügen
+            optionsMenu.DropDownItems.Add(optionsFileMenuItem);
 
             // Füge die Menüpunkte zum MenuStrip hinzu
             menuStrip.Items.Add(fileMenu);
