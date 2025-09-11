@@ -3,25 +3,25 @@
   <Profiles />
   <Settings>
     <Setting Name="OutputMenuItemPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxMenuItemDisplay</Value>
+      <Value Profile="(Default)">\AxMenuItemDisplay</Value>
     </Setting>
     <Setting Name="OutputEDTPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxEDT</Value>
+      <Value Profile="(Default)">\AxEDT</Value>
     </Setting>
     <Setting Name="OutputTablePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxTable</Value>
+      <Value Profile="(Default)">\AxTable</Value>
     </Setting>
     <Setting Name="OutputFormsPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxForm</Value>
+      <Value Profile="(Default)">\AxForm</Value>
     </Setting>
     <Setting Name="CurrentPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="OutputPrivilegesPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxSecurityPrivilege</Value>
+      <Value Profile="(Default)">\AxSecurityPrivilege</Value>
     </Setting>
     <Setting Name="OutputPathDataEntity" Type="System.String" Scope="User">
-      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory\BAU\BAU\AxDataEntityView</Value>
+      <Value Profile="(Default)">\AxDataEntityView</Value>
     </Setting>
     <Setting Name="SelectedModel" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

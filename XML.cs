@@ -632,8 +632,8 @@ namespace RD_Table_Tool
         {
             try
             {
-                XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\Templates\\DataEntityPrivilegesMaintain.xml", $"{pOutputPath}\\{pTableName}DataEntityMaintain.xml", "Maintain");
-                XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\Templates\\DataEntityPrivilegesView.xml", $"{pOutputPath}\\{pTableName}DataEntityView.xml", "View");
+                XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\Templates\\DataEntityPrivilegesMaintain.xml", $"{pOutputPath}\\{pTableName}DataEntityMaintain.xml", "Maintain"); //hier evtl das Problem der Entitäten
+                XMLHelper.CreateDataEntityPrivileges(pTableName, $"{scriptDir}\\Templates\\DataEntityPrivilegesView.xml", $"{pOutputPath}\\{pTableName}DataEntityView.xml", "View");  //hier evtl das Problem der Entitäten
             }
             catch (Exception ex) 
             {

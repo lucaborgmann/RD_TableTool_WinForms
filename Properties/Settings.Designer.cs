@@ -25,7 +25,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxMenuItemDisplay")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\AxMenuItemDisplay")]
         public string OutputMenuItemPath {
             get {
                 return ((string)(this["OutputMenuItemPath"]));
@@ -37,7 +37,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxEDT")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\AxEDT")]
         public string OutputEDTPath {
             get {
                 return ((string)(this["OutputEDTPath"]));
@@ -49,7 +49,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxTable")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\AxTable")]
         public string OutputTablePath {
             get {
                 return ((string)(this["OutputTablePath"]));
@@ -61,7 +61,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxForm")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\AxForm")]
         public string OutputFormsPath {
             get {
                 return ((string)(this["OutputFormsPath"]));
@@ -85,7 +85,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxSecurityPrivilege")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\AxSecurityPrivilege")]
         public string OutputPrivilegesPath {
             get {
                 return ((string)(this["OutputPrivilegesPath"]));
@@ -97,7 +97,7 @@ namespace RD_TableTool_WinForms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("K:\\AosService\\PackagesLocalDirectory\\BAU\\BAU\\AxDataEntityView")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\AxDataEntityView")]
         public string OutputPathDataEntity {
             get {
                 return ((string)(this["OutputPathDataEntity"]));

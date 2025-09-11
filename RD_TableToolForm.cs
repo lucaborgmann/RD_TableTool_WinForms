@@ -18,12 +18,21 @@ namespace RD_TableTool_WinForms
         public static string scriptDirForm = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
         //Pfade zu den AusgabeOrdnern
-        String MenuItemOutputDirectoryPath = Settings.Default.OutputMenuItemPath;
+        // String MenuItemOutputDirectoryPath = Settings.Default.OutputMenuItemPath;
+        String MenuItemOutputDirectoryPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputMenuItemPath}";
+        String OutputEDTPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputEDTPath}";
+        String OutputTablePath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputTablePath}";
+        String FormsOutputpath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputFormsPath}";
+        String PrivilegesOutputPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputPrivilegesPath}";
+        String DataEntityOutputPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputPathDataEntity}";
+
+        /*
         String OutputEDTPath = Settings.Default.OutputEDTPath;
         String OutputTablePath = Settings.Default.OutputTablePath;
         String FormsOutputpath = Settings.Default.OutputFormsPath;
         String PrivilegesOutputPath = Settings.Default.OutputPrivilegesPath;
         String DataEntityOutputPath = Settings.Default.OutputPathDataEntity;
+        */
 
         bool isCheckedMenuItems = false;
         bool isChecked_Entity = false;
@@ -344,11 +353,11 @@ namespace RD_TableTool_WinForms
 
 
                 // Standardordner setzen
-                //folderDialog.SelectedPath = @"K:\AosService\PackagesLocalDirectory";
+                //folderDialog.SelectedPath = @"K:\AosService\PackagesLocalDirectory"; // hier noch den Standard pfad in die Settingsdatei übernehmen
 
-                //nur zum testen 
-                Debug.WriteLine($"Zum testen der Settingsdatei: SelectedModel: {Settings.Default.SelectedModel}. Model: {Settings.Default.Model} ");
 
+                string fullpath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputMenuItemPath}";
+                Debug.WriteLine($"Zum testen des Pfades: {fullpath}");
 
                 DialogResult result = folderDialog.ShowDialog();
 
@@ -363,6 +372,16 @@ namespace RD_TableTool_WinForms
                     Debug.WriteLine($"letzter Ordner: {lastFolder}");
                     Settings.Default.Model = lastFolder; // Weißt das Model in Model erneut zu 
                     Settings.Default.Save();
+
+                    //nur zum testen 
+                    /*
+                    MessageBox.Show($"Pfad zu den MenuItems: {MenuItemOutputDirectoryPath}", "Ordnerauswahl");
+                    MessageBox.Show($"Pfad zu den EDTs: {OutputEDTPath}", "Ordnerauswahl");
+                    MessageBox.Show($"Pfad zu den Tables: {OutputTablePath}", "Ordnerauswahl");
+                    MessageBox.Show($"Pfad zu den Forms: {FormsOutputpath}", "Ordnerauswahl");
+                    MessageBox.Show($"Pfad zu den Privileges: {PrivilegesOutputPath}", "Ordnerauswahl");
+                    MessageBox.Show($"Pfad zu den DataEntity: {DataEntityOutputPath}", "Ordnerauswahl");
+                    */
                 }
             }
 
