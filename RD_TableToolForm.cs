@@ -343,7 +343,7 @@ namespace RD_TableTool_WinForms
                 {
                     string selectedPath = folderDialog.SelectedPath;
                     Settings.Default.SelectedModel = selectedPath; //weißt den gewählten Pfad dem ausgewähltem Model in der Settingsdatei zu 
-                    MessageBox.Show($"Ausgewählter Ordner: {selectedPath}", "Ordnerauswahl");
+                    // MessageBox.Show($"Ausgewählter Ordner: {selectedPath}", "Ordnerauswahl");
                     Debug.WriteLine($"gesamter Pfad Ordner: {selectedPath}");
 
                     string lastFolder = new DirectoryInfo(selectedPath).Name; // speichert den letzten Ordnernamen um ihn nochmal anheften zu können
@@ -356,15 +356,6 @@ namespace RD_TableTool_WinForms
                     Debug.WriteLine($"Zum testen des Pfades: {fullpath}");
                     refreshPaths(); 
 
-                    //nur zum testen 
-                    /*
-                    MessageBox.Show($"Pfad zu den MenuItems: {MenuItemOutputDirectoryPath}", "Ordnerauswahl");
-                    MessageBox.Show($"Pfad zu den EDTs: {OutputEDTPath}", "Ordnerauswahl");
-                    MessageBox.Show($"Pfad zu den Tables: {OutputTablePath}", "Ordnerauswahl");
-                    MessageBox.Show($"Pfad zu den Forms: {FormsOutputpath}", "Ordnerauswahl");
-                    MessageBox.Show($"Pfad zu den Privileges: {PrivilegesOutputPath}", "Ordnerauswahl");
-                    MessageBox.Show($"Pfad zu den DataEntity: {DataEntityOutputPath}", "Ordnerauswahl");
-                    */
                 }
             }
         }
