@@ -29,6 +29,7 @@ namespace RD_TableTool_WinForms
         bool isChecked_Entity = false;
         bool isChecked_Privileges = false;
 
+       ToolStripMenuItem optionsFileMenuItem; //Deklarieren um sie beim Start verwenden zu können
 
         public RD_TableToolForm()
         {
@@ -48,7 +49,7 @@ namespace RD_TableTool_WinForms
 
                 DialogResult result = MessageBox.Show(
                     "Möchten Sie ein Model angeben?",
-                    "Pfad angeben",
+                    "Modell auswählen",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
                 );
@@ -57,12 +58,13 @@ namespace RD_TableTool_WinForms
                 if (result == DialogResult.Yes)
                 {
                     // Hier den SelectModel Knopf für den User drücken
+                    optionsFileMenuItem.PerformClick();
                 }
                 else
                 {
                     //MessageBox.Show("Es ist kein Model angegeben!");
                     MessageBox.Show(
-                        "Es ist kein Model angegeben!", // Text
+                        "Es wurde kein Modell angegeben – Tabellen können nicht erstellt werden!", // Text
                         "Warnung",                      // Titel
                         MessageBoxButtons.OK,           // Buttons
                         MessageBoxIcon.Exclamation      // Icon (Ausrufezeichen)
@@ -90,7 +92,7 @@ namespace RD_TableTool_WinForms
             ToolStripMenuItem saveFileMenuItem = new ToolStripMenuItem("Save");
 
             //Erstelle Untermenüpunkte für "Options"
-            ToolStripMenuItem optionsFileMenuItem = new ToolStripMenuItem("Select Model");
+            optionsFileMenuItem = new ToolStripMenuItem("Select Model");
 
             // Füge die Untermenüpunkte dem "File"-Menü hinzu
             fileMenu.DropDownItems.Add(saveFileMenuItem);
@@ -119,7 +121,6 @@ namespace RD_TableTool_WinForms
 
             //Hinzufügen eines Ereignishandlers für den Options Tab
             optionsFileMenuItem.Click += new EventHandler(OptionsFileMenuItem_Click);
-
         }
 
         private void InitializeDataGrid()
