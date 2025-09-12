@@ -355,10 +355,6 @@ namespace RD_TableTool_WinForms
                 // Standardordner setzen
                 //folderDialog.SelectedPath = @"K:\AosService\PackagesLocalDirectory"; // hier noch den Standard pfad in die Settingsdatei übernehmen
 
-
-                string fullpath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputMenuItemPath}";
-                Debug.WriteLine($"Zum testen des Pfades: {fullpath}");
-
                 DialogResult result = folderDialog.ShowDialog();
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
@@ -373,6 +369,11 @@ namespace RD_TableTool_WinForms
                     Settings.Default.Model = lastFolder; // Weißt das Model in Model erneut zu 
                     Settings.Default.Save();
 
+
+                    string fullpath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputMenuItemPath}";
+                    Debug.WriteLine($"Zum testen des Pfades: {fullpath}");
+                    refreshPaths(); 
+
                     //nur zum testen 
                     /*
                     MessageBox.Show($"Pfad zu den MenuItems: {MenuItemOutputDirectoryPath}", "Ordnerauswahl");
@@ -384,8 +385,15 @@ namespace RD_TableTool_WinForms
                     */
                 }
             }
-
-
+        }
+        private void refreshPaths()
+        {
+            MenuItemOutputDirectoryPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputMenuItemPath}";
+            OutputEDTPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputEDTPath}";
+            OutputTablePath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputTablePath}";
+            FormsOutputpath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputFormsPath}";
+            PrivilegesOutputPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputPrivilegesPath}";
+            DataEntityOutputPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputPathDataEntity}";
         }
 
     }
