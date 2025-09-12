@@ -68,7 +68,7 @@ namespace RD_Table_Tool
             if (nameNodes.Count>0)
             {
                 XmlNode firstNameNode = nameNodes[0];
-                firstNameNode.InnerText = $"{pName}Entity{type}"; //hier DataEntity statt Etity ? 
+                firstNameNode.InnerText = $"{pName}DataEntity{type}"; //hier DataEntity statt Etity ? 
                 Debug.WriteLine("Erstes Element angepasst");
 
                 // Letztes <Name> Tag bearbeiten
