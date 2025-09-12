@@ -39,6 +39,39 @@ namespace RD_TableTool_WinForms
             this.FormBorderStyle = FormBorderStyle.FixedSingle; //Verhindert das Vergrößern des Fensters 
             this.MaximizeBox = false; // Optional: Deaktiviert die Maximieren-Schaltfläche
 
+            //deleteSettings();  //nur zum Testen später wieder herausnehmen 
+
+            //Prüfen ob ein Model angegeben ist
+            if (string.IsNullOrEmpty(Settings.Default.SelectedModel))
+            {
+                //MessageBox.Show("Kein Pfad angegeben");
+
+                DialogResult result = MessageBox.Show(
+                    "Möchten Sie ein Model angeben?",
+                    "Pfad angeben",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+
+                if (result == DialogResult.Yes)
+                {
+                    // Hier den SelectModel Knopf für den User drücken
+                }
+                else
+                {
+                    //MessageBox.Show("Es ist kein Model angegeben!");
+                    MessageBox.Show(
+                        "Es ist kein Model angegeben!", // Text
+                        "Warnung",                      // Titel
+                        MessageBoxButtons.OK,           // Buttons
+                        MessageBoxIcon.Exclamation      // Icon (Ausrufezeichen)
+                    );
+                }
+
+
+            }
+
             FormPatternCombobox.Items.Add("Simple List");
         }
 
@@ -358,6 +391,13 @@ namespace RD_TableTool_WinForms
             FormsOutputpath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputFormsPath}";
             PrivilegesOutputPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputPrivilegesPath}";
             DataEntityOutputPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputPathDataEntity}";
+        }
+
+        private void deleteSettings()
+        {
+            Settings.Default.SelectedModel = string.Empty;
+            Settings.Default.Model = string.Empty;
+            Settings.Default.Save();
         }
 
     }
