@@ -18,21 +18,12 @@ namespace RD_TableTool_WinForms
         public static string scriptDirForm = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
         //Pfade zu den AusgabeOrdnern
-        // String MenuItemOutputDirectoryPath = Settings.Default.OutputMenuItemPath;
         String MenuItemOutputDirectoryPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputMenuItemPath}";
         String OutputEDTPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputEDTPath}";
         String OutputTablePath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputTablePath}";
         String FormsOutputpath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputFormsPath}";
         String PrivilegesOutputPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputPrivilegesPath}";
         String DataEntityOutputPath = $"{Settings.Default.SelectedModel}\\{Settings.Default.Model}{Settings.Default.OutputPathDataEntity}";
-
-        /*
-        String OutputEDTPath = Settings.Default.OutputEDTPath;
-        String OutputTablePath = Settings.Default.OutputTablePath;
-        String FormsOutputpath = Settings.Default.OutputFormsPath;
-        String PrivilegesOutputPath = Settings.Default.OutputPrivilegesPath;
-        String DataEntityOutputPath = Settings.Default.OutputPathDataEntity;
-        */
 
         bool isCheckedMenuItems = false;
         bool isChecked_Entity = false;
