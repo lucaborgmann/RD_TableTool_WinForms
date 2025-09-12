@@ -95,7 +95,7 @@ namespace RD_TableTool_WinForms
 
             //Erstelle Untermenüpunkte für "Options"
             optionsFileMenuItem = new ToolStripMenuItem("Select Model");
-            ToolStripMenuItem clearModell = new ToolStripMenuItem("Clear Model");
+            //ToolStripMenuItem clearModell = new ToolStripMenuItem("Clear Model");
 
             // Füge die Untermenüpunkte dem "File"-Menü hinzu
             fileMenu.DropDownItems.Add(saveFileMenuItem);
@@ -104,7 +104,7 @@ namespace RD_TableTool_WinForms
 
             //Unterpunkte dem "Options"-Menü hinzufügen
             optionsMenu.DropDownItems.Add(optionsFileMenuItem);
-            optionsMenu.DropDownItems.Add(clearModell);
+            //optionsMenu.DropDownItems.Add(clearModell);
 
             // Füge die Menüpunkte zum MenuStrip hinzu
             menuStrip.Items.Add(fileMenu);
@@ -125,7 +125,7 @@ namespace RD_TableTool_WinForms
 
             //Hinzufügen eines Ereignishandlers für den Options Tab
             optionsFileMenuItem.Click += new EventHandler(OptionsFileMenuItem_Click);
-            clearModell.Click += new EventHandler(deleteSettings);
+            //clearModell.Click += new EventHandler(deleteSettings);
         }
 
         private void InitializeDataGrid()
