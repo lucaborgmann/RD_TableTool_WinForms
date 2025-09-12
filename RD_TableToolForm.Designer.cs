@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RD_TableToolForm));
             menuStrip3 = new MenuStrip();
             groupBox1 = new GroupBox();
             CreateMenuItemsCheckBox = new CheckBox();
@@ -223,6 +224,7 @@
             Controls.Add(CancelButton);
             Controls.Add(groupBox1);
             Controls.Add(menuStrip3);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "RD_TableToolForm";
             Text = "Visionet TableTool";
             groupBox1.ResumeLayout(false);

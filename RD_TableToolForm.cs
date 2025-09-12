@@ -48,6 +48,7 @@ namespace RD_TableTool_WinForms
                 //MessageBox.Show("Kein Pfad angegeben");
 
                 DialogResult result = MessageBox.Show(
+                     this, 
                     "Möchten Sie ein Model angeben?",
                     "Modell auswählen",
                     MessageBoxButtons.YesNo,
@@ -64,6 +65,7 @@ namespace RD_TableTool_WinForms
                 {
                     //MessageBox.Show("Es ist kein Model angegeben!");
                     MessageBox.Show(
+                        this,
                         "Es wurde kein Modell angegeben – Tabellen können nicht erstellt werden!", // Text
                         "Warnung",                      // Titel
                         MessageBoxButtons.OK,           // Buttons
