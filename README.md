@@ -15,6 +15,7 @@ This tool is used to automatically create Microsoft Dynamics elements and save t
   When the GUI opens, you can specify the name and label of the table under "TableSetup". Using the checkboxes, you can additionally create other elements such as DataEntities or MenuItems.
   In the lower DataGrid section, you can enter properties for each individual table field.By clicking OK, the Dynamics 365FO Elements can be created.
 </p>
+<h3>Save and open Drafts</h3>
 
 <h2>Item Source:</h2>
 Ico-Source: https://www.iconarchive.com/show/material-light-icons-by-pictogrammers/table-icon.html
