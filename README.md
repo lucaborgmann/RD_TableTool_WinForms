@@ -13,8 +13,3 @@ Ico-Source: https://www.iconarchive.com/show/material-light-icons-by-pictogramme
 
 
 <h2>Edit this Script </h2>
-
-This program is purely written with the AutoIt script editor SciTE.
-Free Download links: 
-1.  [AutoIt3](https://www.autoitscript.com/site/autoit/downloads/).
-2.	[SciTE](https://www.autoitscript.com/site/autoit-script-editor/downloads/).
