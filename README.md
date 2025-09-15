@@ -9,7 +9,7 @@ This tool is used to automatically create Microsoft Dynamics elements and save t
 </p>
 <img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/blob/master/FirstOpen_Screenshot.png" alt="First Dialog">
 <p>
-  If you don't select a model, no tables can be created.
+  If you don't select a model, no tables can be created.The model can later be changed via Options → Select Model. 
 </p>
 
 <h2>Item Source:</h2>
