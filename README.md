@@ -11,6 +11,9 @@ This tool is used to automatically create Microsoft Dynamics elements and save t
 <p>
   If you don't select a model, no tables can be created.The model can later be changed via Options → Select Model. 
 </p>
+<p>
+  When the GUI opens, you can specify the name and label of the table under "TableSetup". Using the checkboxes, you can additionally create other elements such as DataEntities or MenuItems.
+</p>
 
 <h2>Item Source:</h2>
 Ico-Source: https://www.iconarchive.com/show/material-light-icons-by-pictogrammers/table-icon.html
