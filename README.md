@@ -10,4 +10,11 @@ This tool is used to automatically create Microsoft Dynamics elements and save t
 
 <h2>Item Source:</h2>
 Ico-Source: https://www.iconarchive.com/show/material-light-icons-by-pictogrammers/table-icon.html
-<h2>Edit this Script:</h2>
+
+
+<h2>Edit this Script </h2>
+
+This program is purely written with the AutoIt script editor SciTE.
+Free Download links: 
+1.  [AutoIt3](https://www.autoitscript.com/site/autoit/downloads/).
+2.	[SciTE](https://www.autoitscript.com/site/autoit-script-editor/downloads/).
