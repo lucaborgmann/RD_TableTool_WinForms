@@ -36,3 +36,6 @@ Ico-Source: https://www.iconarchive.com/show/material-light-icons-by-pictogramme
 
 
 <h2>Edit this Script </h2>
+<p>
+  All rights are reserved by Visionet Dynamics GmbH. Please modify the code only with the permission of Visionet Dynamics GmbH
+</p>
