@@ -1,5 +1,7 @@
 <h1>Visionet Table Tool</h1>
-This tool is used to automatically create Microsoft Dynamics elements and save them in the designated folders
+<p>
+  This tool is used to automatically create Microsoft Dynamics elements and save them in the designated folders
+</p>
 <br>
 <img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/blob/master/TableTool_Screenshot.png" alt="GUI des TableTools">
 <h2>How to install:</h2>
