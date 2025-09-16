@@ -6,7 +6,8 @@
 <h2>How to install:</h2>
 <p>
 To install, download the repository files as a ZIP folder using the green 'Code → Download ZIP' button and extract them on your system, or clone the repository via GitHub. If you only want to use the tool, download the setup file from the latest release in the 
-  <a href="https://github.com/roedl-dynamics/RD_Tools">Visionet_Tools</a>
+  <a href="https://github.com/roedl-dynamics/RD_Tools">Visionet_Tools</a>.
+  In the repository, you can find additional useful tools.
 </p>
 <h2>How to use:</h2>
 <p>
