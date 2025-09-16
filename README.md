@@ -16,7 +16,11 @@ This tool is used to automatically create Microsoft Dynamics elements and save t
   In the lower DataGrid section, you can enter properties for each individual table field.By clicking OK, the Dynamics 365FO Elements can be created.
 </p>
 <h3>Save and open Drafts</h3>
+<p>
 Entries can be saved using a FileOpen dialog either in the 'TableDrafts' folder or at any other location of your choice via File → Save As.
+Saved drafts can be opened via File → Open using the FileOpen dialog that appears
+</p>
+
 
 <h2>Item Source:</h2>
 Ico-Source: https://www.iconarchive.com/show/material-light-icons-by-pictogrammers/table-icon.html
