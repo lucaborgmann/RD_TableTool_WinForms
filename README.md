@@ -12,6 +12,7 @@ This tool is used to automatically create Microsoft Dynamics elements and save t
   If you don't select a model, no tables can be created.The model can later be changed via Options → Select Model. 
 </p>
  <img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/blob/master/OptionsOpen_Screenshot.png" alt="">
+<h3>Creating Elements in the GUI</h3>
 <p>
   When the GUI opens, you can specify the name and label of the table under "TableSetup". Using the checkboxes, you can additionally create other elements such as DataEntities or MenuItems.
   In the lower DataGrid section, you can enter properties for each individual table field.By clicking OK, the Dynamics 365FO Elements can be created.
