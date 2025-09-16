@@ -2,7 +2,7 @@
 <p>
   This tool is used to automatically create Microsoft Dynamics elements and save them in the designated folders
 </p>
-<img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/blob/master/TableTool_Screenshot.png" alt="GUI des TableTools">
+<img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/tree/master/Screenshots/TableTool_Screenshot.png" alt="GUI des TableTools">
 <h2>How to install:</h2>
 <p>
 To install, download the repository files as a ZIP folder using the green 'Code → Download ZIP' button and extract them on your system, or clone the repository via GitHub. If you only want to use the tool, download the setup file from the latest release in the 
@@ -13,11 +13,11 @@ To install, download the repository files as a ZIP folder using the green 'Code 
 <p>
   When you start the tool for the first time, a window will open. By confirming with "Yes", you can select the desired model via a folder open dialog. It's important to select the first folder of the model.
 </p>
-<img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/blob/master/FirstOpen_Screenshot.png" alt="First Dialog">
+<img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/tree/master/Screenshots/FirstOpen_Screenshot.png" alt="First Dialog">
 <p>
   If you don't select a model, no tables can be created.The model can later be changed via Options → Select Model. 
 </p>
- <img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/blob/master/OptionsOpen_Screenshot.png" alt="">
+ <img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/tree/master/Screenshots/OptionsOpen_Screenshot.png" alt="">
 <h3>Creating Elements in the GUI</h3>
 <p>
   When the GUI opens, you can specify the name and label of the table under "TableSetup". Using the checkboxes, you can additionally create other elements such as DataEntities or MenuItems.
@@ -28,7 +28,7 @@ To install, download the repository files as a ZIP folder using the green 'Code 
 Entries can be saved using a FileOpen dialog either in the 'TableDrafts' folder or at any other location of your choice via File → Save As.
 Saved drafts can be opened via File → Open using the FileOpen dialog that appears. If a draft is currently open, it can be saved with a simple click on Save.
 </p>
- <img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/blob/master/FileMenuItem.png" alt="">
+ <img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/tree/master/Screenshots/FileMenuItem.png" alt="">
 
 
 <h2>Item Source:</h2>
