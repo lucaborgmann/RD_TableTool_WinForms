@@ -17,10 +17,10 @@ This tool is used to automatically create Microsoft Dynamics elements and save t
 </p>
 <h3>Save and open Drafts</h3>
 <p>
-  <img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/blob/master/FileMenuItem.png" alt="">
 Entries can be saved using a FileOpen dialog either in the 'TableDrafts' folder or at any other location of your choice via File → Save As.
-Saved drafts can be opened via File → Open using the FileOpen dialog that appears. If a draft is currently open, it can be saved with a simple click on Save
+Saved drafts can be opened via File → Open using the FileOpen dialog that appears. If a draft is currently open, it can be saved with a simple click on Save.
 </p>
+ <img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/blob/master/FileMenuItem.png" alt="">
 
 
 <h2>Item Source:</h2>
