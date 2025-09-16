@@ -5,7 +5,8 @@
 <img src="https://github.com/lucaborgmann/RD_TableTool_WinForms/blob/master/TableTool_Screenshot.png" alt="GUI des TableTools">
 <h2>How to install:</h2>
 <p>
-To install, download the repository files as a ZIP folder using the green 'Code → Download ZIP' button and extract them on your system, or clone the repository via GitHub. If you only want to use the tool, download the setup file from the latest release in the RD_Tools repository
+To install, download the repository files as a ZIP folder using the green 'Code → Download ZIP' button and extract them on your system, or clone the repository via GitHub. If you only want to use the tool, download the setup file from the latest release in the 
+  <a href="https://github.com/roedl-dynamics/RD_Tools">Visionet_Tools</a>
 </p>
 <h2>How to use:</h2>
 <p>
